@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>generator-commons</name>
+	<name>entity-generator-engine</name>
 	<comment>Project generator-commons created by Buildship.</comment>
 	<projects>
 	</projects>
@@ -22,7 +22,7 @@
 	</natures>
 	<filteredResources>
 		<filter>
-			<id>1602917474109</id>
+			<id>0</id>
 			<name></name>
 			<type>30</type>
 			<matcher>
