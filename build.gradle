@@ -12,10 +12,13 @@
  * the License.
  */
 
+import io.franzbecker.gradle.lombok.task.DelombokTask
+
 plugins {
     id 'java'
     id 'maven-publish'
-    id 'com.palantir.git-version' version '0.12.2'
+    id 'com.palantir.git-version' version '0.12.3'
+    id 'io.franzbecker.gradle-lombok' version '4.0.0'
 }
 
 publishing {
@@ -65,8 +68,13 @@ dependencies {
     implementation 'org.projectlombok:lombok:1.18.12'
 	annotationProcessor 'org.projectlombok:lombok:1.18.12'
 
+    implementation 'com.google.googlejavaformat:google-java-format:1.9'
+
     implementation 'org.thinkit.common:dev-utils:v1.0.2'
+    implementation 'org.thinkit.generator.common.duke:java-generator-commons:v1.0.2'
     implementation 'org.thinkit.api.catalog:catalog-api:v1.0.2'
+    implementation 'org.thinkit.framework.envali:entity-validator:v1.0.3'
+    implementation 'org.thinkit.framework.content:content-framework:v1.0.5'
 }
 
 test {
@@ -79,11 +87,30 @@ test {
     }
 }
 
-task("reference", type: Javadoc) {
-    source = sourceSets.main.allJava
-    title = 'Generator Commons'
+lombok {
+    version = "1.18.16"
+}
+
+task delombok( type: DelombokTask ) {
+    description = 'Generates delomboked source.'
+
+    sourceSets.all {
+        if ( it.name != SourceSet.TEST_SOURCE_SET_NAME ) {
+            it.allJava.srcDirs.each {
+                args( it, '-d', "${buildDir}/${delombok.name}" )
+            }
+        }
+    }
+}
+
+javadoc {
+    dependsOn delombok
+
+    source = file( "${buildDir}/${delombok.name}" )
+    title = 'Entity Generator Engine'
     options.links('https://docs.oracle.com/en/java/javase/13/docs/api/')
     options.charSet("utf-8")
     options.showFromPublic()
     destinationDir = file('./docs')
+    failOnError = false
 }
