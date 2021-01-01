@@ -72,7 +72,7 @@ public final class EntityResourceGroup extends ArrayList<EntityResource> impleme
      *
      * @return {@link EntityResourceGroup} クラスの新しいインスタンス
      */
-    public static EntityResourceGroup of() {
+    public static EntityResourceGroup newInstance() {
         return new EntityResourceGroup();
     }
 

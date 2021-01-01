@@ -21,6 +21,7 @@ import org.thinkit.framework.envali.annotation.NestedEntity;
 import org.thinkit.framework.envali.annotation.RequireNonEmpty;
 import org.thinkit.framework.envali.annotation.RequireNonNull;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
+import org.thinkit.generator.common.duke.dto.JavaResourceMatrix;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -41,7 +42,7 @@ import lombok.ToString;
 @Builder(toBuilder = true)
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public final class EntityMatrix implements ValidatableEntity, Serializable {
+public final class EntityMatrix implements JavaResourceMatrix, ValidatableEntity, Serializable {
 
     /**
      * シリアルバージョンUID
