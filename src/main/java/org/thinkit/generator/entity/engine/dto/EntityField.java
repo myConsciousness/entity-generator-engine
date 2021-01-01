@@ -15,8 +15,12 @@
 package org.thinkit.generator.entity.engine.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.thinkit.framework.envali.annotation.NestedEntity;
 import org.thinkit.framework.envali.annotation.RequireNonEmpty;
+import org.thinkit.framework.envali.annotation.RequireNonNull;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 
 import lombok.AccessLevel;
@@ -72,4 +76,13 @@ public final class EntityField implements ValidatableEntity, Serializable {
     @Getter
     @RequireNonEmpty
     private String description;
+
+    /**
+     * エンティティ定義リスト
+     */
+    @Getter
+    @Builder.Default
+    @RequireNonNull
+    @NestedEntity
+    private List<EntityDefinition> childEntityDefinitions = new ArrayList<>(0);
 }
