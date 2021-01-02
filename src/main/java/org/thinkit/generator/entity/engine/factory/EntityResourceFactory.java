@@ -59,6 +59,11 @@ import lombok.ToString;
 public final class EntityResourceFactory extends ResourceFactory {
 
     /**
+     * サポート外メッセージ
+     */
+    private static final String UNSUPPORTED_MESSAGE = "This method is not supposed to be called when Entity class is created";
+
+    /**
      * {@link EntityResourceFactory} のシングルトンインスタンスを返却します。
      *
      * @return {@link EntityResourceFactory} のシングルトンインスタンス
@@ -80,185 +85,164 @@ public final class EntityResourceFactory extends ResourceFactory {
     }
 
     @Override
-    public Annotation createAnnotation(@NonNull AnnotationPattern arg0) {
-        // TODO Auto-generated method stub
-        return null;
+    public Copyright createCopyright(@NonNull String creator) {
+        return EntityCopyright.of(creator);
     }
 
     @Override
-    public AnnotationParameter createAnnotationParameter(@NonNull String arg0) {
-        // TODO Auto-generated method stub
-        return null;
+    @Deprecated
+    public Copyright createCopyright(@NonNull String projectName, @NonNull String fileName, @NonNull String encoding,
+            @NonNull String creator, @NonNull String creationDate) {
+        throw new UnsupportedOperationException(UNSUPPORTED_MESSAGE);
     }
 
     @Override
-    public ClassBody createClassBody(@NonNull ClassDescription arg0, @NonNull String arg1) {
-        // TODO Auto-generated method stub
-        return null;
+    public ClassDescription createClassDescription(@NonNull String creator, @NonNull String version) {
+        return EntityClassDescription.of(creator, version);
     }
 
     @Override
-    public ClassDescription createClassDescription(@NonNull String arg0, @NonNull String arg1) {
-        // TODO Auto-generated method stub
-        return null;
+    @Deprecated
+    public ClassDescription createClassDescription(@NonNull String description, @NonNull String creator,
+            @NonNull String version) {
+        throw new UnsupportedOperationException(UNSUPPORTED_MESSAGE);
     }
 
     @Override
-    public ClassDescription createClassDescription(@NonNull String arg0, @NonNull String arg1, @NonNull String arg2) {
-        // TODO Auto-generated method stub
-        return null;
+    public Description createDescription(@NonNull String description) {
+        return EntityDescription.of(description);
     }
 
     @Override
-    public Constructor createConstructor(@NonNull String arg0, @NonNull FunctionDescription arg1) {
-        // TODO Auto-generated method stub
-        return null;
+    public Inheritance createInheritance(@NonNull String literal) {
+        return EntityInheritance.of(literal);
     }
 
     @Override
-    public ConstructorProcess createConstructorProcess(String arg0) {
-        // TODO Auto-generated method stub
-        return null;
+    public Inheritance createInheritance(@NonNull String literal, @NonNull Generics generics) {
+        return EntityInheritance.of(literal, generics);
     }
 
     @Override
-    public ConstructorProcess createConstructorProcess(@NonNull String arg0, @NonNull String arg1) {
-        // TODO Auto-generated method stub
-        return null;
+    public Interface createInterface(@NonNull String literal) {
+        return EntityInterface.of(literal);
     }
 
     @Override
-    public Copyright createCopyright(@NonNull String arg0) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Copyright createCopyright(@NonNull String arg0, @NonNull String arg1, @NonNull String arg2,
-            @NonNull String arg3, @NonNull String arg4) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public DependentPackage createDependentPackage(@NonNull String arg0) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Description createDescription(@NonNull String arg0) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public DescriptionTag createDescriptionTag(@NonNull String arg0, @NonNull String arg1) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public DescriptionTag createDescriptionTag(@NonNull String arg0, @NonNull String arg1,
-            @NonNull AnnotationPattern arg2) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public EnumDefinition createEnumDefinition(@NonNull String arg0) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Enumeration createEnumeration(@NonNull EnumDefinition arg0, @NonNull Description arg1) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public Field createField(@NonNull FieldDefinition arg0, @NonNull Description arg1) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public FieldDefinition createFieldDefinition(@NonNull String arg0, @NonNull String arg1) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public FieldDefinition createFieldDefinition(@NonNull String arg0, @NonNull String arg1, @NonNull String arg2) {
-        // TODO Auto-generated method stub
-        return null;
-    }
-
-    @Override
-    public FunctionDescription createFunctionDescription(@NonNull String arg0) {
-        // TODO Auto-generated method stub
-        return null;
+    public Interface createInterface(@NonNull String literal, @NonNull Generics generics) {
+        return EntityInterface.of(literal, generics);
     }
 
     @Override
     public Generics createGenerics() {
-        // TODO Auto-generated method stub
-        return null;
+        return EntityGenerics.of();
     }
 
     @Override
-    public Inheritance createInheritance(@NonNull String arg0) {
-        // TODO Auto-generated method stub
-        return null;
+    public EnumDefinition createEnumDefinition(@NonNull String literal) {
+        throw new UnsupportedOperationException(UNSUPPORTED_MESSAGE);
     }
 
     @Override
-    public Inheritance createInheritance(@NonNull String arg0, @NonNull Generics arg1) {
-        // TODO Auto-generated method stub
-        return null;
+    public Enumeration createEnumeration(@NonNull EnumDefinition enumDefinition, @NonNull Description description) {
+        throw new UnsupportedOperationException(UNSUPPORTED_MESSAGE);
     }
 
     @Override
-    public Interface createInterface(@NonNull String arg0) {
-        // TODO Auto-generated method stub
-        return null;
+    public FieldDefinition createFieldDefinition(@NonNull String dataType, @NonNull String variableName) {
+        return EntityFieldDefinition.of(dataType, variableName);
     }
 
     @Override
-    public Interface createInterface(@NonNull String arg0, @NonNull Generics arg1) {
-        // TODO Auto-generated method stub
-        return null;
+    @Deprecated
+    public FieldDefinition createFieldDefinition(@NonNull String dataType, @NonNull String variableName,
+            @NonNull String initialValue) {
+        throw new UnsupportedOperationException(UNSUPPORTED_MESSAGE);
     }
 
     @Override
-    public Method createMethod(@NonNull Modifier arg0, @NonNull String arg1, @NonNull String arg2,
-            @NonNull FunctionDescription arg3) {
-        // TODO Auto-generated method stub
-        return null;
+    public Field createField(@NonNull FieldDefinition fieldDefinition, @NonNull Description description) {
+        return EntityField.of(fieldDefinition, description);
     }
 
     @Override
-    public MethodProcess createMethodProcess(@NonNull String arg0) {
-        // TODO Auto-generated method stub
-        return null;
+    public FunctionDescription createFunctionDescription(@NonNull String description) {
+        return EntityMethodDescription.of(description);
     }
 
     @Override
-    public Package createPackage(@NonNull String arg0) {
-        // TODO Auto-generated method stub
-        return null;
+    @Deprecated
+    public DescriptionTag createDescriptionTag(@NonNull String variableName, @NonNull String description) {
+        throw new UnsupportedOperationException(UNSUPPORTED_MESSAGE);
     }
 
     @Override
-    public Parameter createParameter(@NonNull String arg0, @NonNull String arg1) {
-        // TODO Auto-generated method stub
-        return null;
+    public DescriptionTag createDescriptionTag(@NonNull String variableName, @NonNull String description,
+            @NonNull AnnotationPattern annotationPattern) {
+        return EntityDescriptionTag.of(variableName, description, annotationPattern);
     }
 
     @Override
-    public Resource createResource(@NonNull Copyright arg0, @NonNull Package arg1, @NonNull ClassBody arg2) {
-        // TODO Auto-generated method stub
-        return null;
+    public Constructor createConstructor(@NonNull String functionName,
+            @NonNull FunctionDescription functionDescription) {
+        return EntityConstructor.of(functionName, functionDescription);
+    }
+
+    @Override
+    public Parameter createParameter(@NonNull String dataType, @NonNull String variableName) {
+        return EntityParameter.of(dataType, variableName);
+    }
+
+    @Override
+    public ConstructorProcess createConstructorProcess(String variableName) {
+        return EntityConstructorProcess.of(variableName);
+    }
+
+    @Override
+    @Deprecated
+    public ConstructorProcess createConstructorProcess(@NonNull String variableName, @NonNull String getterName) {
+        throw new UnsupportedOperationException(UNSUPPORTED_MESSAGE);
+    }
+
+    @Override
+    public Method createMethod(@NonNull Modifier modifier, @NonNull String returnType, @NonNull String methodName,
+            @NonNull FunctionDescription methodDescription) {
+        return EntityMethod.of(modifier, returnType, methodName, methodDescription);
+    }
+
+    @Override
+    public MethodProcess createMethodProcess(@NonNull String variableName) {
+        return EntityMethodProcess.of(variableName);
+    }
+
+    @Override
+    public DependentPackage createDependentPackage(@NonNull String dependentPackage) {
+        return EntityDependentPackage.of(dependentPackage);
+    }
+
+    @Override
+    public Package createPackage(@NonNull String packageName) {
+        return EntityPackage.of(packageName);
+    }
+
+    @Override
+    public Annotation createAnnotation(@NonNull AnnotationPattern annotationPattern) {
+        return EntityAnnotation.of(annotationPattern);
+    }
+
+    @Override
+    public AnnotationParameter createAnnotationParameter(@NonNull String fieldName) {
+        return EntityAnnotationParameter.of(fieldName);
+    }
+
+    @Override
+    public ClassBody createClassBody(@NonNull ClassDescription classDescription, @NonNull String resourceName) {
+        return EntityClassBody.of(classDescription, resourceName);
+    }
+
+    @Override
+    public Resource createResource(@NonNull Copyright copyright, @NonNull Package packageName,
+            @NonNull ClassBody classBody) {
+        return EntityResource.of(copyright, packageName, classBody);
     }
 }
