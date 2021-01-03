@@ -15,10 +15,12 @@
 package org.thinkit.generator.entity.engine.dto;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.thinkit.framework.envali.annotation.RequireNonEmpty;
 import org.thinkit.framework.envali.annotation.RequireNonNull;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
-import org.thinkit.generator.common.duke.catalog.LombokState;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -47,10 +49,17 @@ public final class EntityMeta implements ValidatableEntity, Serializable {
     private static final long serialVersionUID = -31638454104269393L;
 
     /**
-     * Lombok適用状態
+     * バージョン
      */
     @Getter
-    @Builder.Default
+    @RequireNonEmpty
+    private String version;
+
+    /**
+     * 依存パッケージリスト
+     */
+    @Getter
     @RequireNonNull
-    private LombokState lombokState = LombokState.NONE;
+    @Builder.Default
+    private List<String> dependentPackages = new ArrayList<>(0);
 }
