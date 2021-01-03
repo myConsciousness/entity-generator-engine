@@ -74,13 +74,13 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
     public EntityResourceGroup format(@NonNull EntityMatrix entityMatrix) {
 
         final EntityResourceGroup entityResourceGroup = EntityResourceGroup.newInstance();
-        this.formatEntityResourceRecursively(entityMatrix.getEntityCreator(), entityMatrix.getEntityDefinitions(),
+        this.createResourceRecursively(entityMatrix.getEntityCreator(), entityMatrix.getEntityDefinitions(),
                 entityResourceGroup);
 
         return entityResourceGroup;
     }
 
-    private void formatEntityResourceRecursively(@NonNull final EntityCreator entityCreator,
+    private void createResourceRecursively(@NonNull final EntityCreator entityCreator,
             @NonNull final List<EntityDefinition> entityDefinitions,
             @NonNull final EntityResourceGroup entityResourceGroup) {
 
@@ -111,7 +111,7 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
             final List<EntityDefinition> childEntityDefinition = entityField.getChildEntityDefinitions();
 
             if (!childEntityDefinition.isEmpty()) {
-                this.formatEntityResourceRecursively(entityCreator, childEntityDefinition, entityResourceGroup);
+                this.createResourceRecursively(entityCreator, childEntityDefinition, entityResourceGroup);
             }
         });
 
