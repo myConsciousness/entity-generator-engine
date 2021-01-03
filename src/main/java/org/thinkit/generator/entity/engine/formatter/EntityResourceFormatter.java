@@ -16,6 +16,15 @@ package org.thinkit.generator.entity.engine.formatter;
 
 import java.util.List;
 
+import org.thinkit.generator.common.duke.catalog.AnnotationPattern;
+import org.thinkit.generator.common.duke.factory.Annotation;
+import org.thinkit.generator.common.duke.factory.ClassBody;
+import org.thinkit.generator.common.duke.factory.ClassDescription;
+import org.thinkit.generator.common.duke.factory.Copyright;
+import org.thinkit.generator.common.duke.factory.Description;
+import org.thinkit.generator.common.duke.factory.Field;
+import org.thinkit.generator.common.duke.factory.FieldDefinition;
+import org.thinkit.generator.common.duke.factory.Package;
 import org.thinkit.generator.common.duke.factory.Resource;
 import org.thinkit.generator.common.duke.factory.ResourceFactory;
 import org.thinkit.generator.common.duke.formatter.JavaResourceFormatter;
@@ -23,7 +32,6 @@ import org.thinkit.generator.entity.engine.dto.EntityCreator;
 import org.thinkit.generator.entity.engine.dto.EntityDefinition;
 import org.thinkit.generator.entity.engine.dto.EntityField;
 import org.thinkit.generator.entity.engine.dto.EntityMatrix;
-import org.thinkit.generator.entity.engine.dto.EntityMeta;
 import org.thinkit.generator.entity.engine.dto.EntityResource;
 import org.thinkit.generator.entity.engine.dto.EntityResourceGroup;
 import org.thinkit.generator.entity.engine.factory.EntityResourceFactory;
@@ -66,58 +74,77 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
     public EntityResourceGroup format(@NonNull EntityMatrix entityMatrix) {
 
         final EntityResourceGroup entityResourceGroup = EntityResourceGroup.newInstance();
-
-        if (!this.formatEntityResourceRecursively(entityMatrix.getEntityCreator(), entityMatrix.getEntityDefinitions(),
-                entityResourceGroup)) {
-            return null;
-        }
+        this.formatEntityResourceRecursively(entityMatrix.getEntityCreator(), entityMatrix.getEntityDefinitions(),
+                entityResourceGroup);
 
         return entityResourceGroup;
     }
 
-    private boolean formatEntityResourceRecursively(@NonNull final EntityCreator entityCreator,
+    private void formatEntityResourceRecursively(@NonNull final EntityCreator entityCreator,
             @NonNull final List<EntityDefinition> entityDefinitions,
             @NonNull final EntityResourceGroup entityResourceGroup) {
 
-        for (final EntityDefinition entityDefinition : entityDefinitions) {
+        entityDefinitions.forEach(entityDefinition -> {
             final String className = entityDefinition.getClassName();
-            final Resource resource = this.formatResource(className, entityDefinition.getEntityFields(),
-                    entityDefinition.getEntityMeta(), entityCreator, entityResourceGroup);
-
-            if (resource == null) {
-                return false;
-            }
+            final Resource resource = EntityResourceFactory.getInstance().createResource(
+                    this.createCopyright(entityCreator), this.createPackage(entityDefinition),
+                    this.createClassBody(className, entityCreator, entityDefinition, entityResourceGroup));
 
             entityResourceGroup.add(EntityResource.builder().packageName(entityDefinition.getPackageName())
                     .resourceName(className).resource(resource.createResource()).build());
-        }
-
-        return true;
+        });
     }
 
-    private Resource formatResource(@NonNull final String className, @NonNull final List<EntityField> entityFields,
-            @NonNull final EntityMeta entityMeta, @NonNull final EntityCreator entityCreator,
-            @NonNull final EntityResourceGroup entityResourceGroup) {
+    private ClassBody createClassBody(@NonNull final String className, @NonNull final EntityCreator entityCreator,
+            @NonNull final EntityDefinition entityDefinition, @NonNull final EntityResourceGroup entityResourceGroup) {
 
-        final ResourceFactory resourceFactory = EntityResourceFactory.getInstance();
-        final Resource resource = null;
+        final ResourceFactory factory = EntityResourceFactory.getInstance();
+        final ClassDescription classDescription = factory.createClassDescription(entityCreator.getCreator(),
+                entityDefinition.getEntityMeta().getVersion());
 
-        for (final EntityField entityField : entityFields) {
-            final String dataType = entityField.getDataType();
-            final String variableName = entityField.getVariableName();
+        final ClassBody classBody = factory.createClassBody(classDescription, className);
+        this.addClassAnnotation(classBody);
 
-            resourceFactory.createFieldDefinition(dataType, variableName, entityField.getInitialValue());
+        entityDefinition.getEntityFields().forEach(entityField -> {
+            classBody.add(this.createField(entityField));
 
-            final List<EntityDefinition> child = entityField.getChildEntityDefinitions();
+            final List<EntityDefinition> childEntityDefinition = entityField.getChildEntityDefinitions();
 
-            if (!child.isEmpty()) {
-
-                if (!this.formatEntityResourceRecursively(entityCreator, child, entityResourceGroup)) {
-                    return null;
-                }
+            if (!childEntityDefinition.isEmpty()) {
+                this.formatEntityResourceRecursively(entityCreator, childEntityDefinition, entityResourceGroup);
             }
-        }
+        });
 
-        return resource;
+        return classBody;
+    }
+
+    private void addClassAnnotation(@NonNull ClassBody classBody) {
+
+        final ResourceFactory factory = EntityResourceFactory.getInstance();
+
+        classBody.add(factory.createAnnotation(AnnotationPattern.LOMBOK_TO_STRING));
+        classBody.add(factory.createAnnotation(AnnotationPattern.LOMBOK_EQUALS_AND_HASH_CODE));
+
+        final Annotation builderAnnotation = factory.createAnnotation(AnnotationPattern.LOMBOK_BUILDER)
+                .add(factory.createAnnotationParameter("toBuilder").add(true));
+        classBody.add(builderAnnotation);
+    }
+
+    private Copyright createCopyright(@NonNull EntityCreator entityCreator) {
+        return EntityResourceFactory.getInstance().createCopyright(entityCreator.getCreator());
+    }
+
+    private Package createPackage(@NonNull EntityDefinition entityDefinition) {
+        return EntityResourceFactory.getInstance().createPackage(entityDefinition.getPackageName());
+    }
+
+    private Field createField(@NonNull EntityField entityField) {
+
+        final ResourceFactory factory = EntityResourceFactory.getInstance();
+        final Description description = factory.createDescription(entityField.getDescription());
+        final FieldDefinition fieldDefinition = factory.createFieldDefinition(entityField.getDataType(),
+                entityField.getVariableName(), entityField.getInitialValue());
+
+        return factory.createField(fieldDefinition, description);
     }
 }
