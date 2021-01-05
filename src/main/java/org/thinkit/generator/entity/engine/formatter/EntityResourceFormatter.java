@@ -33,6 +33,7 @@ import org.thinkit.generator.common.duke.factory.Resource;
 import org.thinkit.generator.common.duke.factory.ResourceFactory;
 import org.thinkit.generator.common.duke.formatter.JavaResourceFormatter;
 import org.thinkit.generator.entity.engine.content.EnvaliAnnotationPackageLoader;
+import org.thinkit.generator.entity.engine.content.EnvaliPackageLoader;
 import org.thinkit.generator.entity.engine.content.LombokPackageLoader;
 import org.thinkit.generator.entity.engine.dto.EntityCreator;
 import org.thinkit.generator.entity.engine.dto.EntityDefinition;
@@ -137,6 +138,12 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
             });
         });
 
+        if (entityMeta.isAppliedEnvali()) {
+            ContentInvoker.of(EnvaliPackageLoader.newInstance()).invoke().forEach(envaliPackage -> {
+                resource.add(this.createDependentPackage(envaliPackage.getPackageName()));
+            });
+        }
+
         ContentInvoker.of(LombokPackageLoader.newInstance()).invoke().forEach(lombokPackage -> {
             resource.add(this.createDependentPackage(lombokPackage.getPackageName()));
         });
@@ -174,6 +181,8 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
 
         final ClassBody classBody = factory.createClassBody(classDescription, className);
         this.addClassAnnotation(classBody);
+
+        classBody.add(factory.createInterface("Serializable"));
 
         entityDefinition.getEntityFields().forEach(entityField -> {
             classBody.add(this.createField(entityField));
