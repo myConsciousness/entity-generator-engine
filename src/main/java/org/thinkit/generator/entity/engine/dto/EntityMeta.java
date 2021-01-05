@@ -62,4 +62,10 @@ public final class EntityMeta implements ValidatableEntity, Serializable {
     @RequireNonNull
     @Builder.Default
     private List<String> dependentPackages = new ArrayList<>(0);
+
+    /**
+     * Envali適用可否
+     */
+    @Getter
+    private boolean appliedEnvali;
 }
