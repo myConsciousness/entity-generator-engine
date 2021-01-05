@@ -17,12 +17,14 @@ package org.thinkit.generator.entity.engine.formatter;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.thinkit.framework.content.ContentInvoker;
 import org.thinkit.framework.envali.Envali;
 import org.thinkit.generator.common.duke.catalog.AnnotationPattern;
 import org.thinkit.generator.common.duke.factory.Annotation;
 import org.thinkit.generator.common.duke.factory.ClassBody;
 import org.thinkit.generator.common.duke.factory.ClassDescription;
 import org.thinkit.generator.common.duke.factory.Copyright;
+import org.thinkit.generator.common.duke.factory.DependentPackage;
 import org.thinkit.generator.common.duke.factory.Description;
 import org.thinkit.generator.common.duke.factory.Field;
 import org.thinkit.generator.common.duke.factory.FieldDefinition;
@@ -30,10 +32,13 @@ import org.thinkit.generator.common.duke.factory.Package;
 import org.thinkit.generator.common.duke.factory.Resource;
 import org.thinkit.generator.common.duke.factory.ResourceFactory;
 import org.thinkit.generator.common.duke.formatter.JavaResourceFormatter;
+import org.thinkit.generator.entity.engine.content.EnvaliAnnotationPackageLoader;
+import org.thinkit.generator.entity.engine.content.LombokPackageLoader;
 import org.thinkit.generator.entity.engine.dto.EntityCreator;
 import org.thinkit.generator.entity.engine.dto.EntityDefinition;
 import org.thinkit.generator.entity.engine.dto.EntityField;
 import org.thinkit.generator.entity.engine.dto.EntityMatrix;
+import org.thinkit.generator.entity.engine.dto.EntityMeta;
 import org.thinkit.generator.entity.engine.dto.EntityResource;
 import org.thinkit.generator.entity.engine.dto.EntityResourceGroup;
 import org.thinkit.generator.entity.engine.factory.EntityResourceFactory;
@@ -102,9 +107,51 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
                     this.createCopyright(entityCreator), this.createPackage(entityDefinition),
                     this.createClassBody(className, entityCreator, entityDefinition, entityResourceGroup));
 
+            this.addDependentPackage(resource, entityDefinition.getEntityMeta(), entityDefinition.getEntityFields());
+
             entityResourceGroup.add(EntityResource.builder().packageName(entityDefinition.getPackageName())
                     .resourceName(className).resource(resource.createResource()).build());
         });
+    }
+
+    /**
+     * リソースへ依存パッケージを追加します。
+     *
+     * @param resource     エンティティリソース
+     * @param entityMeta   エンティティのメタデータ
+     * @param entityFields エンティティのフィールドデータ
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
+    private void addDependentPackage(@NonNull Resource resource, @NonNull EntityMeta entityMeta,
+            @NonNull List<EntityField> entityFields) {
+
+        entityMeta.getDependentPackages().forEach(dependentPackage -> {
+            resource.add(this.createDependentPackage(dependentPackage));
+        });
+
+        entityFields.forEach(entityField -> {
+            entityField.getEnvaliAnnotations().forEach(envaliAnnotation -> {
+                resource.add(this.createDependentPackage(ContentInvoker
+                        .of(EnvaliAnnotationPackageLoader.of(envaliAnnotation)).invoke().getPackageName()));
+            });
+        });
+
+        ContentInvoker.of(LombokPackageLoader.newInstance()).invoke().forEach(lombokPackage -> {
+            resource.add(this.createDependentPackage(lombokPackage.getPackageName()));
+        });
+    }
+
+    /**
+     * エンティティの依存パッケージを生成し返却します。
+     *
+     * @param dependentPackage 依存パッケージ
+     * @return エンティティの依存パッケージ
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
+    private DependentPackage createDependentPackage(@NonNull String dependentPackage) {
+        return EntityResourceFactory.getInstance().createDependentPackage(dependentPackage);
     }
 
     /**
@@ -215,6 +262,10 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
         if (!StringUtils.isEmpty(initalValue)) {
             field.add(factory.createAnnotation(AnnotationPattern.LOMBOK_BUILDER_DEFAULT));
         }
+
+        entityField.getEnvaliAnnotations().forEach(envaliAnnotation -> {
+            field.add(factory.createAnnotation(envaliAnnotation.getTag()));
+        });
 
         return field;
     }
