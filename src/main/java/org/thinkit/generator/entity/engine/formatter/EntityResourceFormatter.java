@@ -16,6 +16,8 @@ package org.thinkit.generator.entity.engine.formatter;
 
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+import org.thinkit.framework.envali.Envali;
 import org.thinkit.generator.common.duke.catalog.AnnotationPattern;
 import org.thinkit.generator.common.duke.factory.Annotation;
 import org.thinkit.generator.common.duke.factory.ClassBody;
@@ -72,6 +74,7 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
 
     @Override
     public EntityResourceGroup format(@NonNull EntityMatrix entityMatrix) {
+        Envali.validate(entityMatrix);
 
         final EntityResourceGroup entityResourceGroup = EntityResourceGroup.newInstance();
         this.createResourceRecursively(entityMatrix.getEntityCreator(), entityMatrix.getEntityDefinitions(),
@@ -80,6 +83,15 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
         return entityResourceGroup;
     }
 
+    /**
+     * エンティティリソースを再帰的に生成します。
+     *
+     * @param entityCreator       エンティティ作成者
+     * @param entityDefinitions   エンティティ定義リスト
+     * @param entityResourceGroup エンティティリソースグループ
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
     private void createResourceRecursively(@NonNull final EntityCreator entityCreator,
             @NonNull final List<EntityDefinition> entityDefinitions,
             @NonNull final EntityResourceGroup entityResourceGroup) {
@@ -95,6 +107,17 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
         });
     }
 
+    /**
+     * エンティティのクラスボディ部を生成し返却します。
+     *
+     * @param className           クラス名
+     * @param entityCreator       エンティティ作成者
+     * @param entityDefinition    エンティティ定義
+     * @param entityResourceGroup エンティティリソースグループ
+     * @return エンティティのクラスボディ部
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
     private ClassBody createClassBody(@NonNull final String className, @NonNull final EntityCreator entityCreator,
             @NonNull final EntityDefinition entityDefinition, @NonNull final EntityResourceGroup entityResourceGroup) {
 
@@ -118,33 +141,81 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
         return classBody;
     }
 
+    /**
+     * クラスボディにクラスアノテーションを追加します。
+     *
+     * @param classBody クラスボディ部
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
     private void addClassAnnotation(@NonNull ClassBody classBody) {
 
         final ResourceFactory factory = EntityResourceFactory.getInstance();
 
-        classBody.add(factory.createAnnotation(AnnotationPattern.LOMBOK_TO_STRING));
-        classBody.add(factory.createAnnotation(AnnotationPattern.LOMBOK_EQUALS_AND_HASH_CODE));
-
         final Annotation builderAnnotation = factory.createAnnotation(AnnotationPattern.LOMBOK_BUILDER)
                 .add(factory.createAnnotationParameter("toBuilder").add(true));
+        final Annotation noArgsConstructorAnnotation = factory
+                .createAnnotation(AnnotationPattern.LOMBOK_NO_ARGS_CONSTRUCTOR)
+                .add(factory.createAnnotationParameter("access").add("AccessLevel.PRIVATE"));
+        final Annotation allArgsConstructorAnnotation = factory
+                .createAnnotation(AnnotationPattern.LOMBOK_ALL_ARGS_CONSTRUCTOR)
+                .add(factory.createAnnotationParameter("access").add("AccessLevel.PRIVATE"));
+
+        classBody.add(factory.createAnnotation(AnnotationPattern.LOMBOK_TO_STRING));
+        classBody.add(factory.createAnnotation(AnnotationPattern.LOMBOK_EQUALS_AND_HASH_CODE));
         classBody.add(builderAnnotation);
+        classBody.add(noArgsConstructorAnnotation);
+        classBody.add(allArgsConstructorAnnotation);
     }
 
+    /**
+     * エンティティの著作権を生成し返却します。
+     *
+     * @param entityCreator エンティティ作成者
+     * @return エンティティの著作権
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
     private Copyright createCopyright(@NonNull EntityCreator entityCreator) {
         return EntityResourceFactory.getInstance().createCopyright(entityCreator.getCreator());
     }
 
+    /**
+     * エンティティのパッケージを生成し返却します。
+     *
+     * @param entityDefinition エンティティ定義
+     * @return エンティティのパッケージ
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
     private Package createPackage(@NonNull EntityDefinition entityDefinition) {
         return EntityResourceFactory.getInstance().createPackage(entityDefinition.getPackageName());
     }
 
+    /**
+     * エンティティのフィールドを生成し返却します。
+     *
+     * @param entityField エンティティフィールド定義
+     * @return エンティティのフィールド
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
     private Field createField(@NonNull EntityField entityField) {
 
         final ResourceFactory factory = EntityResourceFactory.getInstance();
+        final String initalValue = entityField.getInitialValue();
+
         final Description description = factory.createDescription(entityField.getDescription());
         final FieldDefinition fieldDefinition = factory.createFieldDefinition(entityField.getDataType(),
-                entityField.getVariableName(), entityField.getInitialValue());
+                entityField.getVariableName(), initalValue);
+        final Field field = factory.createField(fieldDefinition, description);
 
-        return factory.createField(fieldDefinition, description);
+        field.add(factory.createAnnotation(AnnotationPattern.LOMBOK_GETTER));
+
+        if (!StringUtils.isEmpty(initalValue)) {
+            field.add(factory.createAnnotation(AnnotationPattern.LOMBOK_BUILDER_DEFAULT));
+        }
+
+        return field;
     }
 }
