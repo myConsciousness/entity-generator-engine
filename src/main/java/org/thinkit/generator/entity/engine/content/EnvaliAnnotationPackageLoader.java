@@ -111,7 +111,7 @@ public final class EnvaliAnnotationPackageLoader implements Content<EnvaliAnnota
     public EnvaliAnnotationPackage execute() {
         final Map<String, String> content = this.loadContent(this).get(0);
         return EnvaliAnnotationPackage.builder()
-                .envaliAnnotationPackage(content.get(ContentAttribute.ENVALI_ANNOTATION_PACKAGE.getString())).build();
+                .packageName(content.get(ContentAttribute.ENVALI_ANNOTATION_PACKAGE.getString())).build();
     }
 
     @Override

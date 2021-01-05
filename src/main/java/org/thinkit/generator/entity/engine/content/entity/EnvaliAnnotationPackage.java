@@ -50,5 +50,5 @@ public final class EnvaliAnnotationPackage implements ContentEntity, Serializabl
      */
     @Getter
     @NonNull
-    private String envaliAnnotationPackage;
+    private String packageName;
 }
