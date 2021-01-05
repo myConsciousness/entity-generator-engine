@@ -1,0 +1,20 @@
+{
+    "metadata": {
+      "author": "Kato Shinya",
+      "since": "1.0.0",
+      "creationDate": "2021/1/5",
+      "encoding": "UTF-8",
+      "description": "Envalフレームワークのパッケージを管理するコンテンツです。"
+    },
+
+    "selectionNodes": [
+      {
+        "node": {
+          "conditionId": "",
+          "envaliPackage": "org.thinkit.framework.envali.entity.ValidatableEntity"
+        }
+      }
+    ],
+
+    "conditionNodes": []
+  }
