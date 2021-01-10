@@ -1,0 +1,55 @@
+{
+    "metadata": {
+      "author": "Kato Shinya",
+      "since": "1.0.0",
+      "creationDate": "2021/1/6",
+      "encoding": "UTF-8",
+      "description": "エンティティのインターフェースを管理するコンテンツです。"
+    },
+
+    "selectionNodes": [
+      {
+        "node": {
+          "conditionId": "0",
+          "interfaceName": "ValidatableEntity"
+        }
+      },
+
+      {
+        "node": {
+          "conditionId": "1",
+          "interfaceName": "Serializable"
+        }
+      }
+    ],
+
+    "conditionNodes": [
+      {
+        "node": {
+          "conditionId": "0",
+          "exclude": false,
+          "conditions": [
+            {
+              "keyName": "interfaceCode",
+              "operator": "=",
+              "operand": "0"
+            }
+          ]
+        }
+      },
+
+      {
+        "node": {
+          "conditionId": "1",
+          "exclude": false,
+          "conditions": [
+            {
+              "keyName": "interfaceCode",
+              "operator": "=",
+              "operand": "1"
+            }
+          ]
+        }
+      }
+    ]
+  }
