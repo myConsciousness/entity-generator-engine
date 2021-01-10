@@ -16,6 +16,7 @@ package org.thinkit.generator.entity.engine.content;
 
 import java.util.Map;
 import java.util.Set;
+import java.util.List;
 
 import org.thinkit.framework.content.Attribute;
 import org.thinkit.framework.content.Condition;
@@ -89,7 +90,7 @@ public final class LombokPackageLoader implements Content<LombokPackageGroup> {
     }
 
     @Override
-    public Map<Condition, String> getConditions() {
-        return Map.of();
+    public List<Map<Condition, String>> getConditions() {
+        return List.of();
     }
 }

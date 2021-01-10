@@ -14,16 +14,18 @@
 
 package org.thinkit.generator.entity.engine.content;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.List;
 
 import org.thinkit.framework.content.Attribute;
 import org.thinkit.framework.content.Condition;
 import org.thinkit.framework.content.Content;
 import org.thinkit.framework.content.annotation.ContentMapping;
-import org.thinkit.generator.entity.engine.catalog.EnvaliAnnotation;
-import org.thinkit.generator.entity.engine.content.entity.EnvaliAnnotationPackage;
+import org.thinkit.generator.entity.engine.catalog.EntityInterface;
+import org.thinkit.generator.entity.engine.content.entity.EntityInterfaceName;
+import org.thinkit.generator.entity.engine.content.entity.EntityInterfaceNameGroup;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -33,7 +35,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 /**
- * コンテンツ「EnvaliAnnotationPackage」をロードするクラスです。
+ * コンテンツ「EntityInterfaceName」をロードするクラスです。
  *
  * @author Kato Shinya
  * @since 1.0.0
@@ -42,13 +44,13 @@ import lombok.ToString;
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(staticName = "of")
-@ContentMapping(content = "org/thinkit/generator/catalog/entity/EnvaliAnnotationPackage")
-public final class EnvaliAnnotationPackageLoader implements Content<EnvaliAnnotationPackage> {
+@ContentMapping(content = "org/thinkit/generator/catalog/entity/EntityInterfaceName")
+public final class EntityInterfaceNameLoader implements Content<EntityInterfaceNameGroup> {
 
     /**
-     * Envaliアノテーション
+     * エンティティのインターフェース集合
      */
-    private EnvaliAnnotation envaliEnnotation;
+    private Set<EntityInterface> entityInterfaces;
 
     /**
      * コンテンツ要素定数
@@ -57,9 +59,9 @@ public final class EnvaliAnnotationPackageLoader implements Content<EnvaliAnnota
     private enum ContentAttribute implements Attribute {
 
         /**
-         * Envaliフレームワークのアノテーションパッケージ
+         * エンティティのインターフェース名
          */
-        ENVALI_ANNOTATION_PACKAGE(Key.envaliAnnotationPackage);
+        INTERFACE_NAME(Key.interfaceName);
 
         /**
          * 検索キー
@@ -75,7 +77,7 @@ public final class EnvaliAnnotationPackageLoader implements Content<EnvaliAnnota
          * キー要素
          */
         private enum Key {
-            envaliAnnotationPackage;
+            interfaceName;
         }
     }
 
@@ -86,9 +88,9 @@ public final class EnvaliAnnotationPackageLoader implements Content<EnvaliAnnota
     private enum ContentCondition implements Condition {
 
         /**
-         * Envaliフレームワークのアノテーションコード
+         * エンティティのインターフェースコード
          */
-        ENVALI_ANNOTATION_CODE(Key.envaliAnnotationCode);
+        INTERFACE_CODE(Key.interfaceCode);
 
         /**
          * 条件キー
@@ -104,24 +106,37 @@ public final class EnvaliAnnotationPackageLoader implements Content<EnvaliAnnota
          * キー要素
          */
         private enum Key {
-            envaliAnnotationCode;
+            interfaceCode;
         }
     }
 
     @Override
-    public EnvaliAnnotationPackage execute() {
-        final Map<String, String> content = this.loadContent(this).get(0);
-        return EnvaliAnnotationPackage.builder()
-                .packageName(content.get(ContentAttribute.ENVALI_ANNOTATION_PACKAGE.getString())).build();
+    public EntityInterfaceNameGroup execute() {
+
+        final EntityInterfaceNameGroup entityInterfaceNameGroup = EntityInterfaceNameGroup.newInstance();
+
+        this.loadContent(this).forEach(content -> {
+            entityInterfaceNameGroup.add(EntityInterfaceName.builder()
+                    .interfaceName(content.get(ContentAttribute.INTERFACE_NAME.getString())).build());
+        });
+
+        return entityInterfaceNameGroup;
     }
 
     @Override
     public Set<Attribute> getAttributes() {
-        return Set.of(ContentAttribute.ENVALI_ANNOTATION_PACKAGE);
+        return Set.of(ContentAttribute.INTERFACE_NAME);
     }
 
     @Override
     public List<Map<Condition, String>> getConditions() {
-        return List.of(Map.of(ContentCondition.ENVALI_ANNOTATION_CODE, String.valueOf(this.envaliEnnotation.getCode())));
+
+        final List<Map<Condition, String>> conditions = new ArrayList<>(0);
+
+        this.entityInterfaces.forEach(entityInterface -> {
+            conditions.add(Map.of(ContentCondition.INTERFACE_CODE, String.valueOf(entityInterface.getCode())));
+        });
+
+        return conditions;
     }
 }
