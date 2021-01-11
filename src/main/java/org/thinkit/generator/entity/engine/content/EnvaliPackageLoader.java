@@ -14,9 +14,9 @@
 
 package org.thinkit.generator.entity.engine.content;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.List;
 
 import org.thinkit.framework.content.Attribute;
 import org.thinkit.framework.content.Condition;
@@ -39,7 +39,7 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @NoArgsConstructor(staticName = "newInstance")
-@ContentMapping(content = "org/thinkit/generator/catalog/entity/EnvaliPackage")
+@ContentMapping(content = "org/thinkit/generator/entity/engine/EnvaliPackage")
 public class EnvaliPackageLoader implements Content<EnvaliPackageGroup> {
 
     /**

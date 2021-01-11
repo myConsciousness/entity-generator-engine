@@ -44,7 +44,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(staticName = "of")
-@ContentMapping(content = "org/thinkit/generator/catalog/entity/EntityInterfaceName")
+@ContentMapping(content = "org/thinkit/generator/entity/engine/EntityInterfaceName")
 public final class EntityInterfaceNameLoader implements Content<EntityInterfaceNameGroup> {
 
     /**

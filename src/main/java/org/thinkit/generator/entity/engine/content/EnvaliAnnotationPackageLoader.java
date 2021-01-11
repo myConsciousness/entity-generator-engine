@@ -14,9 +14,9 @@
 
 package org.thinkit.generator.entity.engine.content;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.List;
 
 import org.thinkit.framework.content.Attribute;
 import org.thinkit.framework.content.Condition;
@@ -42,7 +42,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(staticName = "of")
-@ContentMapping(content = "org/thinkit/generator/catalog/entity/EnvaliAnnotationPackage")
+@ContentMapping(content = "org/thinkit/generator/entity/engine/EnvaliAnnotationPackage")
 public final class EnvaliAnnotationPackageLoader implements Content<EnvaliAnnotationPackage> {
 
     /**
@@ -122,6 +122,7 @@ public final class EnvaliAnnotationPackageLoader implements Content<EnvaliAnnota
 
     @Override
     public List<Map<Condition, String>> getConditions() {
-        return List.of(Map.of(ContentCondition.ENVALI_ANNOTATION_CODE, String.valueOf(this.envaliEnnotation.getCode())));
+        return List
+                .of(Map.of(ContentCondition.ENVALI_ANNOTATION_CODE, String.valueOf(this.envaliEnnotation.getCode())));
     }
 }
