@@ -95,23 +95,16 @@ public final class EntityClassBody extends ClassBody {
      */
     private void createClassBody(@NonNull StringBuilder classBody) {
 
-        if (this.isAppliedLombok()) {
-            super.getAnnotations().forEach(annotation -> {
-                classBody.append(annotation.createResource());
-                classBody.append(RETURN);
-            });
-        }
+        super.getAnnotations().forEach(annotation -> {
+            classBody.append(annotation.createResource());
+            classBody.append(RETURN);
+        });
 
         classBody.append(String.format("public final class %s implements %s {", super.getResourceName(),
                 super.getInterfaces().get(0).createResource()));
         classBody.append(RETURN).append(RETURN);
 
         this.createField(classBody);
-
-        if (!this.isAppliedLombok()) {
-            this.createConstructor(classBody);
-            this.createMethod(classBody);
-        }
 
         classBody.append(Brace.END.getTag());
         classBody.append(RETURN);
@@ -125,40 +118,9 @@ public final class EntityClassBody extends ClassBody {
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
     private void createField(@NonNull StringBuilder classBody) {
+
         super.getFields().forEach(field -> {
             classBody.append(field.createResource());
-            classBody.append(RETURN).append(RETURN);
-        });
-
-        classBody.setLength(classBody.length() - RETURN.length());
-    }
-
-    /**
-     * コンストラクタを表現する文字列リソースを生成しエンティティのクラスボディへ追加します。
-     *
-     * @param classBody エンティティのクラスボディ
-     *
-     * @exception NullPointerException 引数として {@code null} が渡された場合
-     */
-    private void createConstructor(@NonNull StringBuilder classBody) {
-        super.getConstructors().forEach(constructor -> {
-            classBody.append(constructor.createResource());
-            classBody.append(RETURN).append(RETURN);
-        });
-
-        classBody.setLength(classBody.length() - RETURN.length());
-    }
-
-    /**
-     * メソッドを表現する文字列リソースを生成しエンティティのクラスボディへ追加します。
-     *
-     * @param classBody エンティティのクラスボディ
-     *
-     * @exception NullPointerException 引数として {@code null} が渡された場合
-     */
-    private void createMethod(@NonNull StringBuilder classBody) {
-        super.getMethods().forEach(method -> {
-            classBody.append(method.createResource());
             classBody.append(RETURN).append(RETURN);
         });
 

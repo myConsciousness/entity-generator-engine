@@ -67,5 +67,6 @@ public final class EntityMeta implements ValidatableEntity, Serializable {
      * Envali適用可否
      */
     @Getter
-    private boolean appliedEnvali;
+    @Builder.Default
+    private boolean appliedEnvali = false;
 }

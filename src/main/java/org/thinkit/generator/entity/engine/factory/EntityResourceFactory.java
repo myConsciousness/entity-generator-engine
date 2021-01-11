@@ -157,7 +157,7 @@ public final class EntityResourceFactory extends ResourceFactory {
     @Deprecated
     public FieldDefinition createFieldDefinition(@NonNull String dataType, @NonNull String variableName,
             @NonNull String initialValue) {
-        throw new UnsupportedOperationException(UNSUPPORTED_MESSAGE);
+        return EntityFieldDefinition.of(dataType, variableName, initialValue);
     }
 
     @Override

@@ -70,8 +70,9 @@ public final class EntityField implements ValidatableEntity, Serializable {
      * 初期値
      */
     @Getter
-    @RequireNonEmpty
-    private String initialValue;
+    @RequireNonNull
+    @Builder.Default
+    private String initialValue = "";
 
     /**
      * 説明
@@ -84,7 +85,7 @@ public final class EntityField implements ValidatableEntity, Serializable {
      * Envaliアノテーションセット
      */
     @Getter
-    @RequireNonEmpty
+    @RequireNonNull
     @Builder.Default
     private Set<EnvaliAnnotation> envaliAnnotations = EnumSet.noneOf(EnvaliAnnotation.class);
 

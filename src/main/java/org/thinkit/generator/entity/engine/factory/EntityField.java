@@ -14,7 +14,10 @@
 
 package org.thinkit.generator.entity.engine.factory;
 
+import java.util.List;
+
 import org.thinkit.common.catalog.Indentation;
+import org.thinkit.generator.common.duke.factory.Annotation;
 import org.thinkit.generator.common.duke.factory.Description;
 import org.thinkit.generator.common.duke.factory.Field;
 import org.thinkit.generator.common.duke.factory.FieldDefinition;
@@ -66,8 +69,10 @@ public final class EntityField extends Field {
 
         field.append(super.getDescription().createResource()).append(returnCode);
 
-        if (this.isAppliedLombok()) {
-            super.getAnnotations().forEach(annotation -> {
+        final List<Annotation> annotations = super.getAnnotations();
+
+        if (annotations != null) {
+            annotations.forEach(annotation -> {
                 field.append(annotation.createResource());
                 field.append(returnCode);
             });

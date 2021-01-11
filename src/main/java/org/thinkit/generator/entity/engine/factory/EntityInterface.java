@@ -85,7 +85,7 @@ public final class EntityInterface extends Interface {
         final StringBuilder _interface = new StringBuilder(super.getLiteral());
         final Generics generics = super.getGenerics();
 
-        if (!generics.isEmpty()) {
+        if (generics != null && !generics.isEmpty()) {
             _interface.append(generics.createResource());
         }
 

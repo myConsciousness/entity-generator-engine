@@ -32,6 +32,11 @@ import lombok.ToString;
 public final class EntityFieldDefinition extends FieldDefinition {
 
     /**
+     * シリアルバージョンUIDのフィールド名
+     */
+    private static final String SERIAL_VERSION_UID = "serialVersionUID";
+
+    /**
      * 引数として渡された情報を基に {@link EntityFieldDefinition} クラスの新しいインスタンスを生成します。
      *
      * @param dataType     データ型
@@ -87,6 +92,12 @@ public final class EntityFieldDefinition extends FieldDefinition {
 
     @Override
     public String createResource() {
+
+        if (SERIAL_VERSION_UID.equals(super.getVariableName())) {
+            return """
+                    private static final long serialVersionUID = 1L;
+                    """;
+        }
 
         final String initialValue = super.getInitialValue();
 

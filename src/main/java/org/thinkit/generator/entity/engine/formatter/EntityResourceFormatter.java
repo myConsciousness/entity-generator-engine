@@ -14,7 +14,9 @@
 
 package org.thinkit.generator.entity.engine.formatter;
 
+import java.util.EnumSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
 import org.thinkit.framework.content.ContentInvoker;
@@ -32,6 +34,8 @@ import org.thinkit.generator.common.duke.factory.Package;
 import org.thinkit.generator.common.duke.factory.Resource;
 import org.thinkit.generator.common.duke.factory.ResourceFactory;
 import org.thinkit.generator.common.duke.formatter.JavaResourceFormatter;
+import org.thinkit.generator.entity.engine.catalog.EntityInterface;
+import org.thinkit.generator.entity.engine.content.EntityInterfaceNameLoader;
 import org.thinkit.generator.entity.engine.content.EnvaliAnnotationPackageLoader;
 import org.thinkit.generator.entity.engine.content.EnvaliPackageLoader;
 import org.thinkit.generator.entity.engine.content.LombokPackageLoader;
@@ -44,6 +48,7 @@ import org.thinkit.generator.entity.engine.dto.EntityResource;
 import org.thinkit.generator.entity.engine.dto.EntityResourceGroup;
 import org.thinkit.generator.entity.engine.factory.EntityResourceFactory;
 
+import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -175,14 +180,21 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
     private ClassBody createClassBody(@NonNull final String className, @NonNull final EntityCreator entityCreator,
             @NonNull final EntityDefinition entityDefinition, @NonNull final EntityResourceGroup entityResourceGroup) {
 
+        final EntityMeta entityMeta = entityDefinition.getEntityMeta();
+
         final ResourceFactory factory = EntityResourceFactory.getInstance();
         final ClassDescription classDescription = factory.createClassDescription(entityCreator.getCreator(),
-                entityDefinition.getEntityMeta().getVersion());
+                entityMeta.getVersion());
 
         final ClassBody classBody = factory.createClassBody(classDescription, className);
         this.addClassAnnotation(classBody);
 
-        classBody.add(factory.createInterface("Serializable"));
+        ContentInvoker.of(EntityInterfaceNameLoader.of(this.getEntityInterface(entityMeta))).invoke()
+                .forEach(entityInterfaceName -> {
+                    classBody.add(factory.createInterface(entityInterfaceName.getInterfaceName()));
+                });
+
+        classBody.add(this.createFieldSerialVersionUID());
 
         entityDefinition.getEntityFields().forEach(entityField -> {
             classBody.add(this.createField(entityField));
@@ -212,16 +224,33 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
                 .add(factory.createAnnotationParameter("toBuilder").add(true));
         final Annotation noArgsConstructorAnnotation = factory
                 .createAnnotation(AnnotationPattern.LOMBOK_NO_ARGS_CONSTRUCTOR)
-                .add(factory.createAnnotationParameter("access").add("AccessLevel.PRIVATE"));
+                .add(factory.createAnnotationParameter("access").add(AccessLevel.PRIVATE));
         final Annotation allArgsConstructorAnnotation = factory
                 .createAnnotation(AnnotationPattern.LOMBOK_ALL_ARGS_CONSTRUCTOR)
-                .add(factory.createAnnotationParameter("access").add("AccessLevel.PRIVATE"));
+                .add(factory.createAnnotationParameter("access").add(AccessLevel.PRIVATE));
 
         classBody.add(factory.createAnnotation(AnnotationPattern.LOMBOK_TO_STRING));
         classBody.add(factory.createAnnotation(AnnotationPattern.LOMBOK_EQUALS_AND_HASH_CODE));
         classBody.add(builderAnnotation);
         classBody.add(noArgsConstructorAnnotation);
         classBody.add(allArgsConstructorAnnotation);
+    }
+
+    /**
+     * Envaliの適用可否に基づいてエンティティが実装するインターフェース名を返却します。
+     *
+     * @param entityMeta エンティティのメタデータ
+     * @return エンティティが実装するインターフェス名の集合
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
+    private Set<EntityInterface> getEntityInterface(@NonNull EntityMeta entityMeta) {
+
+        if (entityMeta.isAppliedEnvali()) {
+            return EnumSet.allOf(EntityInterface.class);
+        }
+
+        return EnumSet.of(EntityInterface.SERIALIZABLE);
     }
 
     /**
@@ -246,6 +275,21 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
      */
     private Package createPackage(@NonNull EntityDefinition entityDefinition) {
         return EntityResourceFactory.getInstance().createPackage(entityDefinition.getPackageName());
+    }
+
+    /**
+     * シリアルバージョンUIDを表現するフィールドを生成し返却します。
+     *
+     * @return シリアルバージョンUIDを表現するフィールド
+     */
+    private Field createFieldSerialVersionUID() {
+
+        final ResourceFactory factory = EntityResourceFactory.getInstance();
+
+        final Description description = factory.createDescription("The serial version UID");
+        final FieldDefinition fieldDefinition = factory.createFieldDefinition("", "serialVersionUID");
+
+        return factory.createField(fieldDefinition, description);
     }
 
     /**
