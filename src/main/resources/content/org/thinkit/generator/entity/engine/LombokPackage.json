@@ -1,62 +1,62 @@
 {
-    "metadata": {
-      "author": "Kato Shinya",
-      "since": "1.0.0",
-      "creationDate": "2021/01/05",
-      "encoding": "UTF-8",
-      "description": "Lombokパッケージを管理するコンテンツです。"
+  "metadata": {
+    "author": "Kato Shinya",
+    "since": "1.0.0",
+    "creationDate": "2021/01/05",
+    "encoding": "UTF-8",
+    "description": "Lombokパッケージを管理するコンテンツです。"
+  },
+
+  "selectionNodes": [
+    {
+      "node": {
+        "conditionId": "",
+        "lombokPackage": "lombok.AccessLevel"
+      }
     },
 
-    "selectionNodes": [
-      {
+    {
         "node": {
           "conditionId": "",
-          "lombokPackage": "lombok.AccessLevel"
+          "lombokPackage": "lombok.AllArgsConstructor"
         }
-      },
+    },
 
-      {
-          "node": {
-            "conditionId": "",
-            "lombokPackage": "lombok.AllArgsConstructor"
-          }
-      },
-
-      {
-        "node": {
-          "conditionId": "",
-          "lombokPackage": "lombok.Builder"
-        }
-      },
-
-      {
-          "node": {
-            "conditionId": "",
-            "lombokPackage": "lombok.EqualsAndHashCode"
-          }
-      },
-
-      {
-        "node": {
-          "conditionId": "",
-          "lombokPackage": "lombok.Getter"
-        }
-      },
-
-      {
-          "node": {
-            "conditionId": "",
-            "lombokPackage": "lombok.NoArgsConstructor"
-          }
-      },
-
-      {
-        "node": {
-          "conditionId": "",
-          "lombokPackage": "lombok.ToString"
-        }
+    {
+      "node": {
+        "conditionId": "",
+        "lombokPackage": "lombok.Builder"
       }
-    ],
+    },
 
-    "conditionNodes": []
-  }
+    {
+        "node": {
+          "conditionId": "",
+          "lombokPackage": "lombok.EqualsAndHashCode"
+        }
+    },
+
+    {
+      "node": {
+        "conditionId": "",
+        "lombokPackage": "lombok.Getter"
+      }
+    },
+
+    {
+        "node": {
+          "conditionId": "",
+          "lombokPackage": "lombok.NoArgsConstructor"
+        }
+    },
+
+    {
+      "node": {
+        "conditionId": "",
+        "lombokPackage": "lombok.ToString"
+      }
+    }
+  ],
+
+  "conditionNodes": []
+}

@@ -1,20 +1,41 @@
 {
-    "metadata": {
-      "author": "Kato Shinya",
-      "since": "1.0.0",
-      "creationDate": "2021/01/05",
-      "encoding": "UTF-8",
-      "description": "Envalフレームワークのパッケージを管理するコンテンツです。"
+  "metadata": {
+    "author": "Kato Shinya",
+    "since": "1.0.0",
+    "creationDate": "2021/01/05",
+    "encoding": "UTF-8",
+    "description": "エンティティが依存しているパッケージを管理するコンテンツです。"
+  },
+
+  "selectionNodes": [
+    {
+      "node": {
+        "conditionId": "",
+        "envaliPackage": "java.io.Serializable"
+      }
     },
 
-    "selectionNodes": [
-      {
-        "node": {
-          "conditionId": "",
-          "envaliPackage": "org.thinkit.framework.envali.entity.ValidatableEntity"
-        }
+    {
+      "node": {
+        "conditionId": "0",
+        "envaliPackage": "org.thinkit.framework.envali.entity.ValidatableEntity"
       }
-    ],
+    }
+  ],
 
-    "conditionNodes": []
-  }
+  "conditionNodes": [
+    {
+      "node": {
+        "conditionId": "0",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "packageCode",
+            "operator": "=",
+            "operand": "0"
+          }
+        ]
+      }
+    }
+  ]
+}
