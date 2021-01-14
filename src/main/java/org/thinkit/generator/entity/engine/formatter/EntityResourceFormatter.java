@@ -22,6 +22,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.thinkit.framework.content.ContentInvoker;
 import org.thinkit.framework.envali.Envali;
 import org.thinkit.generator.common.duke.catalog.AnnotationPattern;
+import org.thinkit.generator.common.duke.catalog.ParameterDataType;
 import org.thinkit.generator.common.duke.factory.Annotation;
 import org.thinkit.generator.common.duke.factory.ClassBody;
 import org.thinkit.generator.common.duke.factory.ClassDescription;
@@ -34,10 +35,11 @@ import org.thinkit.generator.common.duke.factory.Package;
 import org.thinkit.generator.common.duke.factory.Resource;
 import org.thinkit.generator.common.duke.factory.ResourceFactory;
 import org.thinkit.generator.common.duke.formatter.JavaResourceFormatter;
+import org.thinkit.generator.entity.engine.catalog.EntityDependentPackage;
 import org.thinkit.generator.entity.engine.catalog.EntityInterface;
 import org.thinkit.generator.entity.engine.content.EntityInterfaceNameLoader;
+import org.thinkit.generator.entity.engine.content.EntityPackageLoader;
 import org.thinkit.generator.entity.engine.content.EnvaliAnnotationPackageLoader;
-import org.thinkit.generator.entity.engine.content.EnvaliPackageLoader;
 import org.thinkit.generator.entity.engine.content.LombokPackageLoader;
 import org.thinkit.generator.entity.engine.dto.EntityCreator;
 import org.thinkit.generator.entity.engine.dto.EntityDefinition;
@@ -48,7 +50,6 @@ import org.thinkit.generator.entity.engine.dto.EntityResource;
 import org.thinkit.generator.entity.engine.dto.EntityResourceGroup;
 import org.thinkit.generator.entity.engine.factory.EntityResourceFactory;
 
-import lombok.AccessLevel;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -143,11 +144,10 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
             });
         });
 
-        if (entityMeta.isAppliedEnvali()) {
-            ContentInvoker.of(EnvaliPackageLoader.newInstance()).invoke().forEach(envaliPackage -> {
-                resource.add(this.createDependentPackage(envaliPackage.getPackageName()));
-            });
-        }
+        ContentInvoker.of(EntityPackageLoader.of(this.getEntityDependentPackages(entityMeta))).invoke()
+                .forEach(envaliPackage -> {
+                    resource.add(this.createDependentPackage(envaliPackage.getPackageName()));
+                });
 
         ContentInvoker.of(LombokPackageLoader.newInstance()).invoke().forEach(lombokPackage -> {
             resource.add(this.createDependentPackage(lombokPackage.getPackageName()));
@@ -189,7 +189,7 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
         final ClassBody classBody = factory.createClassBody(classDescription, className);
         this.addClassAnnotation(classBody);
 
-        ContentInvoker.of(EntityInterfaceNameLoader.of(this.getEntityInterface(entityMeta))).invoke()
+        ContentInvoker.of(EntityInterfaceNameLoader.of(this.getEntityInterfaces(entityMeta))).invoke()
                 .forEach(entityInterfaceName -> {
                     classBody.add(factory.createInterface(entityInterfaceName.getInterfaceName()));
                 });
@@ -221,19 +221,36 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
         final ResourceFactory factory = EntityResourceFactory.getInstance();
 
         final Annotation builderAnnotation = factory.createAnnotation(AnnotationPattern.LOMBOK_BUILDER)
-                .add(factory.createAnnotationParameter("toBuilder").add(true));
+                .add(factory.createAnnotationParameter("toBuilder").put(ParameterDataType.DEFAULT, true));
         final Annotation noArgsConstructorAnnotation = factory
                 .createAnnotation(AnnotationPattern.LOMBOK_NO_ARGS_CONSTRUCTOR)
-                .add(factory.createAnnotationParameter("access").add(AccessLevel.PRIVATE));
+                .add(factory.createAnnotationParameter("access").put(ParameterDataType.DEFAULT, "AccessLevel.PRIVATE"));
         final Annotation allArgsConstructorAnnotation = factory
                 .createAnnotation(AnnotationPattern.LOMBOK_ALL_ARGS_CONSTRUCTOR)
-                .add(factory.createAnnotationParameter("access").add(AccessLevel.PRIVATE));
+                .add(factory.createAnnotationParameter("access").put(ParameterDataType.DEFAULT, "AccessLevel.PRIVATE"));
 
         classBody.add(factory.createAnnotation(AnnotationPattern.LOMBOK_TO_STRING));
         classBody.add(factory.createAnnotation(AnnotationPattern.LOMBOK_EQUALS_AND_HASH_CODE));
         classBody.add(builderAnnotation);
         classBody.add(noArgsConstructorAnnotation);
         classBody.add(allArgsConstructorAnnotation);
+    }
+
+    /**
+     * Envaliの適用可否に基づいてエンティティが依存するパッケージ名を返却します。
+     *
+     * @param entityMeta エンティティのメタデータ
+     * @return エンティティが依存するパッケージ名の集合
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
+    private Set<EntityDependentPackage> getEntityDependentPackages(@NonNull EntityMeta entityMeta) {
+
+        if (entityMeta.isAppliedEnvali()) {
+            return EnumSet.allOf(EntityDependentPackage.class);
+        }
+
+        return EnumSet.of(EntityDependentPackage.SERIALIZABLE);
     }
 
     /**
@@ -244,7 +261,7 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
      *
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    private Set<EntityInterface> getEntityInterface(@NonNull EntityMeta entityMeta) {
+    private Set<EntityInterface> getEntityInterfaces(@NonNull EntityMeta entityMeta) {
 
         if (entityMeta.isAppliedEnvali()) {
             return EnumSet.allOf(EntityInterface.class);
