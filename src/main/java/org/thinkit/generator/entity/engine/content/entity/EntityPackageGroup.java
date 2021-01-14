@@ -30,7 +30,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode(callSuper = false)
-public final class EnvaliPackageGroup extends ArrayList<EnvaliPackage> implements ContentEntity {
+public final class EntityPackageGroup extends ArrayList<EntityPackage> implements ContentEntity {
 
     /**
      * シリアルバージョンUID
@@ -40,7 +40,7 @@ public final class EnvaliPackageGroup extends ArrayList<EnvaliPackage> implement
     /**
      * 初期容量10の空のリストを作成します。
      */
-    private EnvaliPackageGroup() {
+    private EntityPackageGroup() {
         super();
     }
 
@@ -51,7 +51,7 @@ public final class EnvaliPackageGroup extends ArrayList<EnvaliPackage> implement
      *
      * @exception IllegalArgumentException 初期容量が負数の場合
      */
-    private EnvaliPackageGroup(int initialCapacity) {
+    private EntityPackageGroup(int initialCapacity) {
         super(initialCapacity);
     }
 
@@ -62,40 +62,40 @@ public final class EnvaliPackageGroup extends ArrayList<EnvaliPackage> implement
      *
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    private EnvaliPackageGroup(Collection<? extends EnvaliPackage> collection) {
+    private EntityPackageGroup(Collection<? extends EntityPackage> collection) {
         super(collection);
     }
 
     /**
-     * 初期容量10の空の {@link EnvaliPackageGroup} を作成します。
+     * 初期容量10の空の {@link EntityPackageGroup} を作成します。
      *
-     * @return 初期容量10を持つ空の {@link EnvaliPackageGroup}
+     * @return 初期容量10を持つ空の {@link EntityPackageGroup}
      */
-    public static EnvaliPackageGroup newInstance() {
-        return new EnvaliPackageGroup();
+    public static EntityPackageGroup newInstance() {
+        return new EntityPackageGroup();
     }
 
     /**
-     * 指定された初期容量で空の {@link EnvaliPackageGroup} を作成します。
+     * 指定された初期容量で空の {@link EntityPackageGroup} を作成します。
      *
      * @param initialCapacity 初期容量
-     * @return 指定された初期容量を持つ空の {@link EnvaliPackageGroup}
+     * @return 指定された初期容量を持つ空の {@link EntityPackageGroup}
      *
      * @exception IllegalArgumentException 初期容量が負数の場合
      */
-    public static EnvaliPackageGroup of(int initialCapacity) {
-        return new EnvaliPackageGroup(initialCapacity);
+    public static EntityPackageGroup of(int initialCapacity) {
+        return new EntityPackageGroup(initialCapacity);
     }
 
     /**
-     * 指定したコレクションの要素を含む {@link EnvaliPackageGroup} を、コレクションのイテレータによって返された順に作成します。
+     * 指定したコレクションの要素を含む {@link EntityPackageGroup} を、コレクションのイテレータによって返された順に作成します。
      *
      * @param collection 複製元のコレクション
-     * @return 指定したコレクションの要素を含む {@link EnvaliPackageGroup}
+     * @return 指定したコレクションの要素を含む {@link EntityPackageGroup}
      *
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    public static EnvaliPackageGroup of(Collection<? extends EnvaliPackage> collection) {
-        return new EnvaliPackageGroup(collection);
+    public static EntityPackageGroup of(Collection<? extends EntityPackage> collection) {
+        return new EntityPackageGroup(collection);
     }
 }

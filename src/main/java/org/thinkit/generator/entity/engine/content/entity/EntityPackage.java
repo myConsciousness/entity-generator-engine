@@ -36,7 +36,7 @@ import lombok.ToString;
 @Builder(toBuilder = true)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
-public final class EnvaliPackage implements Serializable {
+public final class EntityPackage implements Serializable {
 
     /**
      * シリアルバージョンUID

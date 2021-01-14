@@ -14,6 +14,7 @@
 
 package org.thinkit.generator.entity.engine.content;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -22,25 +23,34 @@ import org.thinkit.framework.content.Attribute;
 import org.thinkit.framework.content.Condition;
 import org.thinkit.framework.content.Content;
 import org.thinkit.framework.content.annotation.ContentMapping;
-import org.thinkit.generator.entity.engine.content.entity.EnvaliPackage;
-import org.thinkit.generator.entity.engine.content.entity.EnvaliPackageGroup;
+import org.thinkit.generator.entity.engine.catalog.EntityDependentPackage;
+import org.thinkit.generator.entity.engine.content.entity.EntityPackage;
+import org.thinkit.generator.entity.engine.content.entity.EntityPackageGroup;
 
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 /**
- * コンテンツ「EnvaliPackage」をロードするクラスです。
+ * コンテンツ「EntityPackage」をロードするクラスです。
  *
  * @author Kato Shinya
  * @since 1.0.0
  */
 @ToString
 @EqualsAndHashCode
-@NoArgsConstructor(staticName = "newInstance")
-@ContentMapping(content = "org/thinkit/generator/entity/engine/EnvaliPackage")
-public class EnvaliPackageLoader implements Content<EnvaliPackageGroup> {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@AllArgsConstructor(staticName = "of")
+@ContentMapping(content = "org/thinkit/generator/entity/engine/EntityPackage")
+public class EntityPackageLoader implements Content<EntityPackageGroup> {
+
+    /**
+     * エンティティが依存するパッケージ定数の集合
+     */
+    private Set<EntityDependentPackage> entityDependentPackages;
 
     /**
      * コンテンツ要素定数
@@ -49,9 +59,9 @@ public class EnvaliPackageLoader implements Content<EnvaliPackageGroup> {
     private enum ContentAttribute implements Attribute {
 
         /**
-         * カタログパッケージ
+         * エンティティパッケージ
          */
-        ENVALI_PACKAGE(Key.envaliPackage);
+        ENTITY_PACKAGE(Key.entityPackage);
 
         /**
          * 検索キー
@@ -67,30 +77,66 @@ public class EnvaliPackageLoader implements Content<EnvaliPackageGroup> {
          * キー要素
          */
         private enum Key {
-            envaliPackage;
+            entityPackage;
+        }
+    }
+
+    /**
+     * コンテンツ条件定数
+     */
+    @RequiredArgsConstructor
+    private enum ContentCondition implements Condition {
+
+        /**
+         * エンティティが依存するパッケージコード
+         */
+        PACKAGE_CODE(Key.packageCode);
+
+        /**
+         * 条件キー
+         */
+        private final Key key;
+
+        @Override
+        public String getString() {
+            return this.key.name();
+        }
+
+        /**
+         * キー要素
+         */
+        private enum Key {
+            packageCode;
         }
     }
 
     @Override
-    public EnvaliPackageGroup execute() {
+    public EntityPackageGroup execute() {
 
-        final EnvaliPackageGroup envaliPackageGroup = EnvaliPackageGroup.of(0);
+        final EntityPackageGroup entityPackageGroup = EntityPackageGroup.of(0);
 
         this.loadContent(this).forEach(content -> {
-            envaliPackageGroup.add(EnvaliPackage.builder()
-                    .packageName(content.get(ContentAttribute.ENVALI_PACKAGE.getString())).build());
+            entityPackageGroup.add(EntityPackage.builder()
+                    .packageName(content.get(ContentAttribute.ENTITY_PACKAGE.getString())).build());
         });
 
-        return envaliPackageGroup;
+        return entityPackageGroup;
     }
 
     @Override
     public Set<Attribute> getAttributes() {
-        return Set.of(ContentAttribute.ENVALI_PACKAGE);
+        return Set.of(ContentAttribute.ENTITY_PACKAGE);
     }
 
     @Override
     public List<Map<Condition, String>> getConditions() {
-        return List.of();
+
+        final List<Map<Condition, String>> conditions = new ArrayList<>(0);
+
+        this.entityDependentPackages.forEach(entityDependentPackage -> {
+            conditions.add(Map.of(ContentCondition.PACKAGE_CODE, String.valueOf(entityDependentPackage.getCode())));
+        });
+
+        return conditions;
     }
 }
