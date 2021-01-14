@@ -11,14 +11,14 @@
     {
       "node": {
         "conditionId": "",
-        "envaliPackage": "java.io.Serializable"
+        "entityPackage": "java.io.Serializable"
       }
     },
 
     {
       "node": {
         "conditionId": "0",
-        "envaliPackage": "org.thinkit.framework.envali.entity.ValidatableEntity"
+        "entityPackage": "org.thinkit.framework.envali.entity.ValidatableEntity"
       }
     }
   ],
