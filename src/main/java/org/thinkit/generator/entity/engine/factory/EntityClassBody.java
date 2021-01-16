@@ -15,6 +15,7 @@
 package org.thinkit.generator.entity.engine.factory;
 
 import org.thinkit.common.catalog.Brace;
+import org.thinkit.common.catalog.Delimiter;
 import org.thinkit.common.catalog.Indentation;
 import org.thinkit.generator.common.duke.factory.ClassBody;
 import org.thinkit.generator.common.duke.factory.ClassDescription;
@@ -101,13 +102,33 @@ public final class EntityClassBody extends ClassBody {
         });
 
         classBody.append(String.format("public final class %s implements %s {", super.getResourceName(),
-                super.getInterfaces().get(0).createResource()));
+                this.createInterface()));
         classBody.append(RETURN).append(RETURN);
 
         this.createField(classBody);
 
         classBody.append(Brace.END.getTag());
         classBody.append(RETURN);
+    }
+
+    /**
+     * 設定されたインターフェース定義からインターフェースを表現する文字列を生成し返却します。複数のインターフェースが存在する場合はカンマ区切りで返却します。
+     *
+     * @return インターフェースを表現する文字列
+     */
+    private String createInterface() {
+
+        final StringBuilder __interface = new StringBuilder();
+        final String delimiter = Delimiter.COMMA.getTag();
+
+        super.getInterfaces().forEach(_interface -> {
+            __interface.append(_interface.createResource());
+            __interface.append(delimiter);
+        });
+
+        __interface.setLength(__interface.length() - delimiter.length());
+
+        return __interface.toString();
     }
 
     /**

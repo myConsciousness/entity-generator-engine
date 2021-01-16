@@ -10,15 +10,15 @@
   "selectionNodes": [
     {
       "node": {
-        "conditionId": "",
-        "entityPackage": "java.io.Serializable"
+        "conditionId": "0",
+        "entityPackage": "org.thinkit.framework.envali.entity.ValidatableEntity"
       }
     },
 
     {
       "node": {
-        "conditionId": "0",
-        "entityPackage": "org.thinkit.framework.envali.entity.ValidatableEntity"
+        "conditionId": "",
+        "entityPackage": "java.io.Serializable"
       }
     }
   ],
@@ -32,7 +32,7 @@
           {
             "keyName": "packageCode",
             "operator": "=",
-            "operand": "0"
+            "operand": "1"
           }
         ]
       }
