@@ -18,12 +18,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 import java.util.List;
-import java.util.Set;
 
 import org.junit.jupiter.api.Test;
 import org.thinkit.generator.entity.engine.catalog.EnvaliAnnotation;
 import org.thinkit.generator.entity.engine.dto.EntityCreator;
 import org.thinkit.generator.entity.engine.dto.EntityDefinition;
+import org.thinkit.generator.entity.engine.dto.EntityEnvaliDefinition;
 import org.thinkit.generator.entity.engine.dto.EntityField;
 import org.thinkit.generator.entity.engine.dto.EntityMatrix;
 import org.thinkit.generator.entity.engine.dto.EntityMeta;
@@ -91,13 +91,18 @@ public final class EntityResourceFormatterTest {
 
                 final EntityField entityField1 = EntityField.builder().description("This is the test field.")
                                 .dataType("String").variableName("test").initialValue("test")
-                                .envaliAnnotations(Set.of(EnvaliAnnotation.REQUIRE_NON_NULL,
-                                                EnvaliAnnotation.REQUIRE_NON_EMPTY))
+                                .entityEnvaliDefinitions(List.of(EntityEnvaliDefinition.builder()
+                                                .envaliAnnotation(EnvaliAnnotation.REQUIRE_NON_NULL).build(),
+                                                EntityEnvaliDefinition.builder()
+                                                                .envaliAnnotation(EnvaliAnnotation.REQUIRE_NON_EMPTY)
+                                                                .build()))
                                 .build();
 
                 final EntityField entityField2 = EntityField.builder().description("This is the test field2.")
                                 .dataType("int").variableName("test2").initialValue("0")
-                                .envaliAnnotations(Set.of(EnvaliAnnotation.REQUIRE_POSITIVE)).build();
+                                .entityEnvaliDefinitions(List.of(EntityEnvaliDefinition.builder()
+                                                .envaliAnnotation(EnvaliAnnotation.REQUIRE_POSITIVE).build()))
+                                .build();
 
                 final EntityDefinition entityDefinition = EntityDefinition.builder().entityMeta(entityMeta)
                                 .packageName("org.thinkit.test.generator.entity").className("TestEntity")

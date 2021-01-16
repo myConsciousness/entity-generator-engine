@@ -138,9 +138,10 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
         });
 
         entityFields.forEach(entityField -> {
-            entityField.getEnvaliAnnotations().forEach(envaliAnnotation -> {
+            entityField.getEntityEnvaliDefinitions().forEach(entityEnvaliDefinition -> {
                 resource.add(this.createDependentPackage(ContentInvoker
-                        .of(EnvaliAnnotationPackageLoader.of(envaliAnnotation)).invoke().getPackageName()));
+                        .of(EnvaliAnnotationPackageLoader.of(entityEnvaliDefinition.getEnvaliAnnotation())).invoke()
+                        .getPackageName()));
             });
         });
 
@@ -334,8 +335,8 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
             field.add(factory.createAnnotation(AnnotationPattern.LOMBOK_BUILDER_DEFAULT));
         }
 
-        entityField.getEnvaliAnnotations().forEach(envaliAnnotation -> {
-            field.add(factory.createAnnotation(envaliAnnotation.getTag()));
+        entityField.getEntityEnvaliDefinitions().forEach(entityEnvaliDefinition -> {
+            field.add(factory.createAnnotation(entityEnvaliDefinition.getEnvaliAnnotation().getTag()));
         });
 
         return field;

@@ -16,15 +16,12 @@ package org.thinkit.generator.entity.engine.dto;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.EnumSet;
 import java.util.List;
-import java.util.Set;
 
 import org.thinkit.framework.envali.annotation.NestedEntity;
 import org.thinkit.framework.envali.annotation.RequireNonEmpty;
 import org.thinkit.framework.envali.annotation.RequireNonNull;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
-import org.thinkit.generator.entity.engine.catalog.EnvaliAnnotation;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -82,12 +79,12 @@ public final class EntityField implements ValidatableEntity, Serializable {
     private String description;
 
     /**
-     * Envaliアノテーションセット
+     * Envaliアノテーション定義リスト
      */
     @Getter
     @RequireNonNull
     @Builder.Default
-    private Set<EnvaliAnnotation> envaliAnnotations = EnumSet.noneOf(EnvaliAnnotation.class);
+    private List<EntityEnvaliDefinition> entityEnvaliDefinitions = new ArrayList<>(0);
 
     /**
      * エンティティ定義リスト
