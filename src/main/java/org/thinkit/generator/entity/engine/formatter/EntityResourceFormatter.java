@@ -320,16 +320,17 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
     private Field createField(@NonNull EntityField entityField) {
 
         final ResourceFactory factory = EntityResourceFactory.getInstance();
-        final String initalValue = entityField.getInitialValue();
+        final String initialValue = entityField.getInitialValue();
 
         final Description description = factory.createDescription(entityField.getDescription());
-        final FieldDefinition fieldDefinition = factory.createFieldDefinition(entityField.getDataType(),
-                entityField.getVariableName(), initalValue);
-        final Field field = factory.createField(fieldDefinition, description);
+        final Field field = factory.createField(StringUtils.isEmpty(initialValue)
+                ? factory.createFieldDefinition(entityField.getDataType(), entityField.getVariableName())
+                : factory.createFieldDefinition(entityField.getDataType(), entityField.getVariableName(), initialValue),
+                description);
 
         field.add(factory.createAnnotation(AnnotationPattern.LOMBOK_GETTER));
 
-        if (!StringUtils.isEmpty(initalValue)) {
+        if (!StringUtils.isEmpty(initialValue)) {
             field.add(factory.createAnnotation(AnnotationPattern.LOMBOK_BUILDER_DEFAULT));
         }
 

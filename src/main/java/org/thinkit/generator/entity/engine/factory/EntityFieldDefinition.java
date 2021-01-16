@@ -109,22 +109,6 @@ public final class EntityFieldDefinition extends FieldDefinition {
 
         return """
                 private %s %s = %s;
-                """.formatted(super.getDataType(), super.getVariableName(), this.appendQuotesOrDefault(initialValue));
-    }
-
-    /**
-     * データ型が文字列型または文字型の場合はそれぞれ対応するクォーテーションを初期値に付与し返却します。
-     *
-     * @param initialValue クォーテーション付与対象の初期値
-     * @return データ型が文字列型または文字型の場合はそれぞれ対応するクォーテーションを付与された初期値
-     *
-     * @exception NullPointerException 引数として {@code null} が渡された場合
-     */
-    private String appendQuotesOrDefault(@NonNull String initialValue) {
-        return switch (super.getDataType()) {
-            case "String" -> String.format("\"%s\"", initialValue);
-            case "char", "Character" -> String.format("'%s'", initialValue);
-            default -> initialValue;
-        };
+                """.formatted(super.getDataType(), super.getVariableName(), initialValue);
     }
 }
