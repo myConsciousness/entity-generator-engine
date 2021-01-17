@@ -65,4 +65,10 @@ public final class EnvaliMeta implements ValidatableEntity, Serializable {
      */
     @Getter
     private EnvaliNumericMeta envaliNumericMeta;
+
+    /**
+     * Envaliの正規表現メタデータ
+     */
+    @Getter
+    private EnvaliRegexMeta envaliRegexMeta;
 }
