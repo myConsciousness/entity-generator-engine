@@ -76,3 +76,6 @@ jobs:
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
+      env:
+        GITHUB_USER: myConsciousness
+        GITHUB_DOWNLOAD_PACKAGE_TOKEN: ${{ secrets.ACCESS_TOKEN }}  
