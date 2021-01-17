@@ -245,6 +245,44 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
+<section class="serialized-class-details" id="org.thinkit.generator.entity.engine.dto.EntityEnvaliDefinition">
+<h3>Class <a href="org/thinkit/generator/entity/engine/dto/EntityEnvaliDefinition.html" title="org.thinkit.generator.entity.engine.dto内のクラス">org.thinkit.generator.entity.engine.dto.EntityEnvaliDefinition</a> extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a> implements Serializable</h3>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>4279830525658504915L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>直列化されたフィールド</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>envaliAnnotation</h5>
+<pre><a href="org/thinkit/generator/entity/engine/catalog/EnvaliAnnotation.html" title="org.thinkit.generator.entity.engine.catalog内の列挙型">EnvaliAnnotation</a> envaliAnnotation</pre>
+<div class="block">Envaliアノテーション</div>
+</li>
+<li class="block-list">
+<h5>envaliErrorType</h5>
+<pre><a href="org/thinkit/generator/entity/engine/catalog/EnvaliErrorType.html" title="org.thinkit.generator.entity.engine.catalog内の列挙型">EnvaliErrorType</a> envaliErrorType</pre>
+<div class="block">Envaliエラー種別</div>
+</li>
+<li class="block-list">
+<h5>envaliMeta</h5>
+<pre><a href="org/thinkit/generator/entity/engine/dto/EnvaliMeta.html" title="org.thinkit.generator.entity.engine.dto内のクラス">EnvaliMeta</a> envaliMeta</pre>
+<div class="block">Envaliのメタデータ</div>
+</li>
+<li class="block-list">
+<h5>message</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a> message</pre>
+<div class="block">エラー文言</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
 <section class="serialized-class-details" id="org.thinkit.generator.entity.engine.dto.EntityField">
 <h3>Class <a href="org/thinkit/generator/entity/engine/dto/EntityField.html" title="org.thinkit.generator.entity.engine.dto内のクラス">org.thinkit.generator.entity.engine.dto.EntityField</a> extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a> implements Serializable</h3>
 <dl class="name-value">
@@ -272,9 +310,9 @@ loadScripts(document, 'script');</script>
 <div class="block">説明</div>
 </li>
 <li class="block-list">
-<h5>envaliAnnotations</h5>
-<pre><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/Set.html" title="java.util内のクラスまたはインタフェース" class="external-link">Set</a>&lt;<a href="org/thinkit/generator/entity/engine/catalog/EnvaliAnnotation.html" title="org.thinkit.generator.entity.engine.catalog内の列挙型">EnvaliAnnotation</a>&gt; envaliAnnotations</pre>
-<div class="block">Envaliアノテーションセット</div>
+<h5>entityEnvaliDefinitions</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/util/List.html" title="java.util内のクラスまたはインタフェース" class="external-link">List</a>&lt;<a href="org/thinkit/generator/entity/engine/dto/EntityEnvaliDefinition.html" title="org.thinkit.generator.entity.engine.dto内のクラス">EntityEnvaliDefinition</a>&gt; entityEnvaliDefinitions</pre>
+<div class="block">Envaliアノテーション定義リスト</div>
 </li>
 <li class="block-list">
 <h5>initialValue</h5>
@@ -393,6 +431,150 @@ loadScripts(document, 'script');</script>
 <dt>serialVersionUID:</dt>
 <dd>6678075433686071344L</dd>
 </dl>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="org.thinkit.generator.entity.engine.dto.EnvaliLiteralMeta">
+<h3>Class <a href="org/thinkit/generator/entity/engine/dto/EnvaliLiteralMeta.html" title="org.thinkit.generator.entity.engine.dto内のクラス">org.thinkit.generator.entity.engine.dto.EnvaliLiteralMeta</a> extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a> implements Serializable</h3>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>-8486776554542382097L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>直列化されたフィールド</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>prefix</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a> prefix</pre>
+<div class="block">接頭語</div>
+</li>
+<li class="block-list">
+<h5>suffix</h5>
+<pre><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a> suffix</pre>
+<div class="block">接尾語</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="org.thinkit.generator.entity.engine.dto.EnvaliMeta">
+<h3>Class <a href="org/thinkit/generator/entity/engine/dto/EnvaliMeta.html" title="org.thinkit.generator.entity.engine.dto内のクラス">org.thinkit.generator.entity.engine.dto.EnvaliMeta</a> extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a> implements Serializable</h3>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>4279830525658504915L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>直列化されたフィールド</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>envaliLiteralMeta</h5>
+<pre><a href="org/thinkit/generator/entity/engine/dto/EnvaliLiteralMeta.html" title="org.thinkit.generator.entity.engine.dto内のクラス">EnvaliLiteralMeta</a> envaliLiteralMeta</pre>
+<div class="block">Envaliのリテラルメタデータ</div>
+</li>
+<li class="block-list">
+<h5>envaliMetaType</h5>
+<pre><a href="org/thinkit/generator/entity/engine/catalog/EnvaliMetaType.html" title="org.thinkit.generator.entity.engine.catalog内の列挙型">EnvaliMetaType</a> envaliMetaType</pre>
+<div class="block">Envaliのメタ種別</div>
+</li>
+<li class="block-list">
+<h5>envaliNumericMeta</h5>
+<pre><a href="org/thinkit/generator/entity/engine/dto/EnvaliNumericMeta.html" title="org.thinkit.generator.entity.engine.dto内のクラス">EnvaliNumericMeta</a> envaliNumericMeta</pre>
+<div class="block">Envaliの数値メタデータ</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
+</section>
+</li>
+<li>
+<section class="serialized-class-details" id="org.thinkit.generator.entity.engine.dto.EnvaliNumericMeta">
+<h3>Class <a href="org/thinkit/generator/entity/engine/dto/EnvaliNumericMeta.html" title="org.thinkit.generator.entity.engine.dto内のクラス">org.thinkit.generator.entity.engine.dto.EnvaliNumericMeta</a> extends <a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/Object.html" title="java.lang内のクラスまたはインタフェース" class="external-link">Object</a> implements Serializable</h3>
+<dl class="name-value">
+<dt>serialVersionUID:</dt>
+<dd>-3189701314070991047L</dd>
+</dl>
+<ul class="block-list">
+<li>
+<section class="detail">
+<h4>直列化されたフィールド</h4>
+<ul class="block-list">
+<li class="block-list">
+<h5>byteFrom</h5>
+<pre>byte byteFrom</pre>
+<div class="block">開始範囲（byte）</div>
+</li>
+<li class="block-list">
+<h5>byteTo</h5>
+<pre>byte byteTo</pre>
+<div class="block">終了範囲（byte）</div>
+</li>
+<li class="block-list">
+<h5>doubleFrom</h5>
+<pre>double doubleFrom</pre>
+<div class="block">開始範囲（double）</div>
+</li>
+<li class="block-list">
+<h5>doubleTo</h5>
+<pre>double doubleTo</pre>
+<div class="block">終了範囲（double）</div>
+</li>
+<li class="block-list">
+<h5>envaliNumericDataType</h5>
+<pre><a href="org/thinkit/generator/entity/engine/catalog/EnvaliNumericDataType.html" title="org.thinkit.generator.entity.engine.catalog内の列挙型">EnvaliNumericDataType</a> envaliNumericDataType</pre>
+<div class="block">基準となる数値データ型</div>
+</li>
+<li class="block-list">
+<h5>floatFrom</h5>
+<pre>float floatFrom</pre>
+<div class="block">開始範囲（float）</div>
+</li>
+<li class="block-list">
+<h5>floatTo</h5>
+<pre>float floatTo</pre>
+<div class="block">終了範囲（float）</div>
+</li>
+<li class="block-list">
+<h5>intFrom</h5>
+<pre>int intFrom</pre>
+<div class="block">開始範囲（int）</div>
+</li>
+<li class="block-list">
+<h5>intTo</h5>
+<pre>int intTo</pre>
+<div class="block">終了範囲（int）</div>
+</li>
+<li class="block-list">
+<h5>longFrom</h5>
+<pre>long longFrom</pre>
+<div class="block">開始範囲（long）</div>
+</li>
+<li class="block-list">
+<h5>longTo</h5>
+<pre>long longTo</pre>
+<div class="block">終了範囲（long）</div>
+</li>
+<li class="block-list">
+<h5>shortFrom</h5>
+<pre>short shortFrom</pre>
+<div class="block">開始範囲（short）</div>
+</li>
+<li class="block-list">
+<h5>shortTo</h5>
+<pre>short shortTo</pre>
+<div class="block">終了範囲（short）</div>
+</li>
+</ul>
+</section>
+</li>
+</ul>
 </section>
 </li>
 </ul>
