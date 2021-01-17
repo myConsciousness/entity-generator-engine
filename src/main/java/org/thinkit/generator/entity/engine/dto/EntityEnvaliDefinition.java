@@ -30,7 +30,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 /**
- * エンティティの定義データを管理するデータクラスです。
+ * エンティティのEnvali定義データを管理するデータクラスです。
  *
  * @author Kato Shinya
  * @since 1.0.0
@@ -67,4 +67,10 @@ public final class EntityEnvaliDefinition implements ValidatableEntity, Serializ
     @Getter
     @RequireNonNull
     private String message;
+
+    /**
+     * Envaliのメタデータ
+     */
+    @Getter
+    private EnvaliMeta envaliMeta;
 }
