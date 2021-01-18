@@ -1,0 +1,659 @@
+{
+    "metadata": {
+        "author": "Kato Shinya",
+        "since": "1.0.0",
+        "creationDate": "2021/01/18",
+        "encoding": "UTF-8",
+        "description": "Envaliフレームワークの正規表現プリセット名を管理するコンテンツです。"
+    },
+    "selectionNodes": [
+        {
+            "node": {
+                "conditionId": "0",
+                "regexPresetName": "RegexPreset.EMAIL_ADDRESS"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "1",
+                "regexPresetName": "RegexPreset.DOMAIN_NAME"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "2",
+                "regexPresetName": "RegexPreset.WEB_URL"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "3",
+                "regexPresetName": "RegexPreset.USER_ID"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "4",
+                "regexPresetName": "RegexPreset.FIXED_LINE_PHONE_JP"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "5",
+                "regexPresetName": "RegexPreset.FIXED_LINE_PHONE_WITH_HYPHEN_JP"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "6",
+                "regexPresetName": "RegexPreset.CELL_PHONE_JP"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "7",
+                "regexPresetName": "RegexPreset.CELL_PHONE_WITH_HYPHEN_JP"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "8",
+                "regexPresetName": "RegexPreset.PASSWORD"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "9",
+                "regexPresetName": "RegexPreset.DATE"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "10",
+                "regexPresetName": "RegexPreset.DATE_WITH_HYPHEN"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "11",
+                "regexPresetName": "RegexPreset.DATE_WITH_SLASH"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "12",
+                "regexPresetName": "RegexPreset.POST_CODE_JP"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "13",
+                "regexPresetName": "RegexPreset.XML_FILE"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "14",
+                "regexPresetName": "RegexPreset.IP_ADDRESS"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "15",
+                "regexPresetName": "RegexPreset.IP_ADDRESS_WITH_PORT"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "16",
+                "regexPresetName": "RegexPreset.NUMERIC"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "17",
+                "regexPresetName": "RegexPreset.ALPHANUMERIC"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "18",
+                "regexPresetName": "RegexPreset.ALPHABET"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "19",
+                "regexPresetName": "RegexPreset.ALPHABET_UPPER_CASE"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "20",
+                "regexPresetName": "RegexPreset.ALPHABET_LOWER_CASE"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "21",
+                "regexPresetName": "RegexPreset.FTP_URL"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "22",
+                "regexPresetName": "RegexPreset.JAVA_FILE"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "23",
+                "regexPresetName": "RegexPreset.TEXT_FILE"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "24",
+                "regexPresetName": "RegexPreset.JSON_FILE"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "25",
+                "regexPresetName": "RegexPreset.JAPANESE_KANJI"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "26",
+                "regexPresetName": "RegexPreset.HIRAGANA"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "27",
+                "regexPresetName": "RegexPreset.HIRAGANA_UPPER_CASE"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "28",
+                "regexPresetName": "RegexPreset.HIRAGANA_LOWER_CASE"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "29",
+                "regexPresetName": "RegexPreset.KATAKANA"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "30",
+                "regexPresetName": "RegexPreset.KATAKANA_UPPER_CASE"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "31",
+                "regexPresetName": "RegexPreset.KATAKANA_LOWER_CASE"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "32",
+                "regexPresetName": "RegexPreset.JAPANESE_ALPHABET"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "33",
+                "regexPresetName": "RegexPreset.JAPANESE_ALPHANUMERIC"
+            }
+        }
+    ],
+    "conditionNodes": [
+        {
+            "node": {
+                "conditionId": "0",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "1"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "1",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "2"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "2",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "3"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "3",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "4"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "4",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "5"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "5",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "6"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "6",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "7"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "7",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "8"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "8",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "9"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "9",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "10"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "10",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "11"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "11",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "12"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "12",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "13"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "13",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "14"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "14",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "15"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "15",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "16"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "16",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "17"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "17",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "18"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "18",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "19"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "19",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "20"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "20",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "21"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "21",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "22"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "22",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "23"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "23",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "24"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "24",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "25"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "25",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "26"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "26",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "27"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "27",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "28"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "28",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "29"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "29",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "30"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "30",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "31"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "31",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "32"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "32",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "33"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "33",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexPresetCode",
+                        "operator": "=",
+                        "operand": "34"
+                    }
+                ]
+            }
+        }
+    ]
+}
