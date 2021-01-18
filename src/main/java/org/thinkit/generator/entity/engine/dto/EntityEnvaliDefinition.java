@@ -16,6 +16,7 @@ package org.thinkit.generator.entity.engine.dto;
 
 import java.io.Serializable;
 
+import org.thinkit.framework.envali.annotation.NestedEntity;
 import org.thinkit.framework.envali.annotation.RequireNonNull;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.generator.entity.engine.catalog.EnvaliAnnotation;
@@ -72,5 +73,6 @@ public final class EntityEnvaliDefinition implements ValidatableEntity, Serializ
      * Envaliのメタデータ
      */
     @Getter
+    @NestedEntity
     private EnvaliMeta envaliMeta;
 }
