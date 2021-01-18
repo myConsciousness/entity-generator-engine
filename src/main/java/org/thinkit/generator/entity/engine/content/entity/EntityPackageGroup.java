@@ -23,7 +23,7 @@ import lombok.EqualsAndHashCode;
 import lombok.ToString;
 
 /**
- * コンテンツ「LombokPackage」の集合情報を管理するリストです。
+ * コンテンツ「EntityPackage」の集合情報を管理するリストです。
  *
  * @author Kato Shinya
  * @since 1.0.0
