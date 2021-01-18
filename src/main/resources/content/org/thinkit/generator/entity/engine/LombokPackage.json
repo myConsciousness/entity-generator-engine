@@ -6,7 +6,6 @@
     "encoding": "UTF-8",
     "description": "Lombokパッケージを管理するコンテンツです。"
   },
-
   "selectionNodes": [
     {
       "node": {
@@ -14,42 +13,36 @@
         "lombokPackage": "lombok.AccessLevel"
       }
     },
-
     {
-        "node": {
-          "conditionId": "",
-          "lombokPackage": "lombok.AllArgsConstructor"
-        }
+      "node": {
+        "conditionId": "",
+        "lombokPackage": "lombok.AllArgsConstructor"
+      }
     },
-
     {
       "node": {
         "conditionId": "",
         "lombokPackage": "lombok.Builder"
       }
     },
-
     {
-        "node": {
-          "conditionId": "",
-          "lombokPackage": "lombok.EqualsAndHashCode"
-        }
+      "node": {
+        "conditionId": "",
+        "lombokPackage": "lombok.EqualsAndHashCode"
+      }
     },
-
     {
       "node": {
         "conditionId": "",
         "lombokPackage": "lombok.Getter"
       }
     },
-
     {
-        "node": {
-          "conditionId": "",
-          "lombokPackage": "lombok.NoArgsConstructor"
-        }
+      "node": {
+        "conditionId": "",
+        "lombokPackage": "lombok.NoArgsConstructor"
+      }
     },
-
     {
       "node": {
         "conditionId": "",
@@ -57,6 +50,5 @@
       }
     }
   ],
-
   "conditionNodes": []
 }

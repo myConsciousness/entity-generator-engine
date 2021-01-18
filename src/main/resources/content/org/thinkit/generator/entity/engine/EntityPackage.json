@@ -6,7 +6,6 @@
     "encoding": "UTF-8",
     "description": "エンティティが依存しているパッケージを管理するコンテンツです。"
   },
-
   "selectionNodes": [
     {
       "node": {
@@ -14,7 +13,6 @@
         "entityPackage": "org.thinkit.framework.envali.entity.ValidatableEntity"
       }
     },
-
     {
       "node": {
         "conditionId": "",
@@ -22,7 +20,6 @@
       }
     }
   ],
-
   "conditionNodes": [
     {
       "node": {
