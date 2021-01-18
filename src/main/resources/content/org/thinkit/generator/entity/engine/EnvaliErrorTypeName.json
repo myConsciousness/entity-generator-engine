@@ -1,0 +1,76 @@
+{
+    "metadata": {
+      "author": "Kato Shinya",
+      "since": "1.0.0",
+      "creationDate": "2021/01/18",
+      "encoding": "UTF-8",
+      "description": "Envaliフレームワークのエラー種別名を管理するコンテンツです。"
+    },
+
+    "selectionNodes": [
+      {
+        "node": {
+          "conditionId": "0",
+          "errorTypeName": "ErrorType.RECOVERABLE"
+        }
+      },
+
+      {
+        "node": {
+          "conditionId": "1",
+          "errorTypeName": "ErrorType.UNRECOVERABLE"
+        }
+      },
+
+      {
+        "node": {
+          "conditionId": "2",
+          "errorTypeName": "ErrorType.RUNTIME"
+        }
+      }
+    ],
+
+    "conditionNodes": [
+      {
+        "node": {
+          "conditionId": "0",
+          "exclude": false,
+          "conditions": [
+            {
+              "keyName": "errorTypeCode",
+              "operator": "=",
+              "operand": "0"
+            }
+          ]
+        }
+      },
+
+      {
+        "node": {
+          "conditionId": "1",
+          "exclude": false,
+          "conditions": [
+            {
+              "keyName": "errorTypeCode",
+              "operator": "=",
+              "operand": "1"
+            }
+          ]
+        }
+      },
+
+      {
+        "node": {
+          "conditionId": "2",
+          "exclude": false,
+          "conditions": [
+            {
+              "keyName": "errorTypeCode",
+              "operator": "=",
+              "operand": "2"
+            }
+          ]
+        }
+      }
+    ]
+  }
