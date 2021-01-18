@@ -1,0 +1,70 @@
+{
+    "metadata": {
+        "author": "Kato Shinya",
+        "since": "1.0.0",
+        "creationDate": "2021/01/18",
+        "encoding": "UTF-8",
+        "description": "Envaliフレームワークの正規表現解析メソッド名を管理するコンテンツです。"
+    },
+    "selectionNodes": [
+        {
+            "node": {
+                "conditionId": "0",
+                "regexMethodName": "RegexMethod.FIND"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "1",
+                "regexMethodName": "RegexMethod.LOOKING_AT"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "2",
+                "regexMethodName": "RegexMethod.MATCH"
+            }
+        }
+    ],
+    "conditionNodes": [
+        {
+            "node": {
+                "conditionId": "0",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexMethodCode",
+                        "operator": "=",
+                        "operand": "0"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "1",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexMethodCode",
+                        "operator": "=",
+                        "operand": "1"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "2",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexMethodCode",
+                        "operator": "=",
+                        "operand": "2"
+                    }
+                ]
+            }
+        }
+    ]
+}

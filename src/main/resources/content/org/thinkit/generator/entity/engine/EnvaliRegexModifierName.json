@@ -1,0 +1,184 @@
+{
+    "metadata": {
+        "author": "Kato Shinya",
+        "since": "1.0.0",
+        "creationDate": "2021/01/18",
+        "encoding": "UTF-8",
+        "description": "Envaliフレームワークの正規表現解析フラグ名を管理するコンテンツです。"
+    },
+    "selectionNodes": [
+        {
+            "node": {
+                "conditionId": "0",
+                "regexModifierName": "RegexModifier.UNIX_LINES"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "1",
+                "regexModifierName": "RegexModifier.CASE_INSENSITIVE"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "2",
+                "regexModifierName": "RegexModifier.COMMENTS"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "3",
+                "regexModifierName": "RegexModifier.MULTILINE"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "4",
+                "regexModifierName": "RegexModifier.LITERAL"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "5",
+                "regexModifierName": "RegexModifier.DOTALL"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "6",
+                "regexModifierName": "RegexModifier.UNICODE_CASE"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "7",
+                "regexModifierName": "RegexModifier.CANON_EQ"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "8",
+                "regexModifierName": "RegexModifier.UNICODE_CHARACTER_CLASS"
+            }
+        }
+    ],
+    "conditionNodes": [
+        {
+            "node": {
+                "conditionId": "0",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexModifierCode",
+                        "operator": "=",
+                        "operand": "0"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "1",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexModifierCode",
+                        "operator": "=",
+                        "operand": "1"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "2",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexModifierCode",
+                        "operator": "=",
+                        "operand": "2"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "3",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexModifierCode",
+                        "operator": "=",
+                        "operand": "3"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "4",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexModifierCode",
+                        "operator": "=",
+                        "operand": "4"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "5",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexModifierCode",
+                        "operator": "=",
+                        "operand": "5"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "6",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexModifierCode",
+                        "operator": "=",
+                        "operand": "6"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "7",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexModifierCode",
+                        "operator": "=",
+                        "operand": "7"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "8",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "regexModifierCode",
+                        "operator": "=",
+                        "operand": "8"
+                    }
+                ]
+            }
+        }
+    ]
+}
