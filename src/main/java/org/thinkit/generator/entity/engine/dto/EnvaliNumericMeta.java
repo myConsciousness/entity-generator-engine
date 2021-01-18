@@ -16,9 +16,9 @@ package org.thinkit.generator.entity.engine.dto;
 
 import java.io.Serializable;
 
-import org.thinkit.framework.envali.annotation.RequireNonNull;
 import org.thinkit.framework.envali.entity.ValidatableEntity;
 import org.thinkit.generator.entity.engine.catalog.EnvaliNumericDataType;
+import org.thinkit.generator.entity.engine.catalog.EnvaliNumericRangeType;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -26,6 +26,7 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.ToString;
 
 /**
@@ -50,8 +51,15 @@ public class EnvaliNumericMeta implements ValidatableEntity, Serializable {
      * 基準となる数値データ型
      */
     @Getter
-    @RequireNonNull
+    @NonNull
     private EnvaliNumericDataType envaliNumericDataType;
+
+    /**
+     * 基準となる範囲種別
+     */
+    @Getter
+    @NonNull
+    private EnvaliNumericRangeType envaliNumericRangeType;
 
     /**
      * 開始範囲（int）
