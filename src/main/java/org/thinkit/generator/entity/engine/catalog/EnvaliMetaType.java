@@ -29,24 +29,19 @@ import lombok.RequiredArgsConstructor;
 public enum EnvaliMetaType implements Catalog<EnvaliMetaType> {
 
     /**
-     * デフォルト
-     */
-    DEFAULT(0),
-
-    /**
      * リテラル
      */
-    LITERAL(1),
+    LITERAL(0),
 
     /**
      * 数値
      */
-    NUMERIC(2),
+    NUMERIC(1),
 
     /**
      * 正規表現
      */
-    REGEX(3);
+    REGEX(2);
 
     /**
      * コード値

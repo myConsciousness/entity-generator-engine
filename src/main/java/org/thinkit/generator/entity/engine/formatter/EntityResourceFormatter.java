@@ -37,17 +37,25 @@ import org.thinkit.generator.common.duke.factory.ResourceFactory;
 import org.thinkit.generator.common.duke.formatter.JavaResourceFormatter;
 import org.thinkit.generator.entity.engine.catalog.EntityDependentPackage;
 import org.thinkit.generator.entity.engine.catalog.EntityInterface;
+import org.thinkit.generator.entity.engine.catalog.EnvaliErrorType;
 import org.thinkit.generator.entity.engine.content.EntityInterfaceNameLoader;
 import org.thinkit.generator.entity.engine.content.EntityPackageLoader;
 import org.thinkit.generator.entity.engine.content.EnvaliAnnotationPackageLoader;
+import org.thinkit.generator.entity.engine.content.EnvaliErrorTypeNameLoader;
 import org.thinkit.generator.entity.engine.content.LombokPackageLoader;
+import org.thinkit.generator.entity.engine.content.entity.EnvaliErrorTypeName;
 import org.thinkit.generator.entity.engine.dto.EntityCreator;
 import org.thinkit.generator.entity.engine.dto.EntityDefinition;
+import org.thinkit.generator.entity.engine.dto.EntityEnvaliDefinition;
 import org.thinkit.generator.entity.engine.dto.EntityField;
 import org.thinkit.generator.entity.engine.dto.EntityMatrix;
 import org.thinkit.generator.entity.engine.dto.EntityMeta;
 import org.thinkit.generator.entity.engine.dto.EntityResource;
 import org.thinkit.generator.entity.engine.dto.EntityResourceGroup;
+import org.thinkit.generator.entity.engine.dto.EnvaliLiteralMeta;
+import org.thinkit.generator.entity.engine.dto.EnvaliMeta;
+import org.thinkit.generator.entity.engine.dto.EnvaliNumericMeta;
+import org.thinkit.generator.entity.engine.dto.EnvaliRegexMeta;
 import org.thinkit.generator.entity.engine.factory.EntityResourceFactory;
 
 import lombok.EqualsAndHashCode;
@@ -335,10 +343,172 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
             field.add(factory.createAnnotation(AnnotationPattern.LOMBOK_BUILDER_DEFAULT));
         }
 
-        entityField.getEntityEnvaliDefinitions().forEach(entityEnvaliDefinition -> {
-            field.add(factory.createAnnotation(entityEnvaliDefinition.getEnvaliAnnotation().getTag()));
-        });
+        this.addEnvaliAnnotations(field, entityField);
 
         return field;
+    }
+
+    private void addEnvaliAnnotations(@NonNull Field field, @NonNull EntityField entityField) {
+
+        entityField.getEntityEnvaliDefinitions().forEach(entityEnvaliDefinition -> {
+
+            final Annotation annotation = this.createEnvaliAnnotation(entityEnvaliDefinition);
+            final EnvaliMeta envaliMeta = entityEnvaliDefinition.getEnvaliMeta();
+
+            if (envaliMeta != null) {
+                switch (envaliMeta.getEnvaliMetaType()) {
+                    case LITERAL -> this.addEnvaliLiteralParameter(annotation, entityEnvaliDefinition,
+                            envaliMeta.getEnvaliLiteralMeta());
+                    case NUMERIC -> this.addEnvaliNumericParameter(annotation, entityEnvaliDefinition,
+                            envaliMeta.getEnvaliNumericMeta());
+                    case REGEX -> this.addEnvaliRegexParameter(annotation, entityEnvaliDefinition,
+                            envaliMeta.getEnvaliRegexMeta());
+                }
+            }
+
+            field.add(annotation);
+        });
+    }
+
+    private Annotation createEnvaliAnnotation(@NonNull EntityEnvaliDefinition entityEnvaliDefinition) {
+
+        final ResourceFactory factory = EntityResourceFactory.getInstance();
+
+        final Annotation annotation = factory.createAnnotation(entityEnvaliDefinition.getEnvaliAnnotation().getTag());
+        final EnvaliErrorType envaliErrorType = entityEnvaliDefinition.getEnvaliErrorType();
+        final String message = entityEnvaliDefinition.getMessage();
+
+        if (envaliErrorType != EnvaliErrorType.RUNTIME) {
+            final EnvaliErrorTypeName envaliErrorTypeName = ContentInvoker
+                    .of(EnvaliErrorTypeNameLoader.of(envaliErrorType)).invoke();
+            annotation.add(factory.createAnnotationParameter("errorType").put(ParameterDataType.DEFAULT,
+                    envaliErrorTypeName.getErrorTypeName()));
+        }
+
+        if (!StringUtils.isEmpty(message)) {
+            annotation.add(factory.createAnnotationParameter("message").put(ParameterDataType.STRING,
+                    entityEnvaliDefinition.getMessage()));
+        }
+
+        return annotation;
+    }
+
+    private void addEnvaliLiteralParameter(@NonNull Annotation annotation,
+            @NonNull EntityEnvaliDefinition entityEnvaliDefinition, @NonNull EnvaliLiteralMeta envaliLiteralMeta) {
+
+        final ResourceFactory factory = EntityResourceFactory.getInstance();
+
+        final String prefix = envaliLiteralMeta.getPrefix();
+        final String suffix = envaliLiteralMeta.getSuffix();
+
+        if (!StringUtils.isEmpty(prefix) && !StringUtils.isEmpty(suffix)) {
+            annotation.add(factory.createAnnotationParameter("prefix").put(ParameterDataType.STRING, prefix))
+                    .add(factory.createAnnotationParameter("suffix").put(ParameterDataType.STRING, suffix));
+        } else if (!StringUtils.isEmpty(prefix)) {
+            annotation.add(factory.createAnnotationParameter("prefix").put(ParameterDataType.STRING, prefix));
+        } else if (!StringUtils.isEmpty(suffix)) {
+            annotation.add(factory.createAnnotationParameter("suffix").put(ParameterDataType.STRING, suffix));
+        } else {
+            throw new IllegalStateException(
+                    "Detected the literal meta object for Envali, but no parameters have been set.");
+        }
+    }
+
+    private void addEnvaliNumericParameter(@NonNull Annotation annotation,
+            @NonNull EntityEnvaliDefinition entityEnvaliDefinition, @NonNull EnvaliNumericMeta envaliNumericMeta) {
+
+        final ResourceFactory factory = EntityResourceFactory.getInstance();
+
+        switch (envaliNumericMeta.getEnvaliNumericDataType()) {
+            case INT -> {
+                switch (envaliNumericMeta.getEnvaliNumericRangeType()) {
+                    case FROM -> annotation.add(factory.createAnnotationParameter("intFrom")
+                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getIntFrom()));
+                    case TO -> annotation.add(factory.createAnnotationParameter("intTo").put(ParameterDataType.DEFAULT,
+                            envaliNumericMeta.getIntTo()));
+                    case FROM_TO -> annotation
+                            .add(factory.createAnnotationParameter("intFrom").put(ParameterDataType.DEFAULT,
+                                    envaliNumericMeta.getIntFrom()))
+                            .add(factory.createAnnotationParameter("intTo").put(ParameterDataType.DEFAULT,
+                                    envaliNumericMeta.getIntTo()));
+                }
+            }
+
+            case LONG -> {
+                switch (envaliNumericMeta.getEnvaliNumericRangeType()) {
+                    case FROM -> annotation.add(factory.createAnnotationParameter("longFrom")
+                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getLongFrom()));
+                    case TO -> annotation.add(factory.createAnnotationParameter("longTo").put(ParameterDataType.DEFAULT,
+                            envaliNumericMeta.getLongTo()));
+                    case FROM_TO -> annotation
+                            .add(factory.createAnnotationParameter("longFrom").put(ParameterDataType.DEFAULT,
+                                    envaliNumericMeta.getLongFrom()))
+                            .add(factory.createAnnotationParameter("longTo").put(ParameterDataType.DEFAULT,
+                                    envaliNumericMeta.getLongTo()));
+                }
+            }
+
+            case FLOAT -> {
+                switch (envaliNumericMeta.getEnvaliNumericRangeType()) {
+                    case FROM -> annotation.add(factory.createAnnotationParameter("floatFrom")
+                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getFloatFrom()));
+                    case TO -> annotation.add(factory.createAnnotationParameter("floatTo")
+                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getFloatTo()));
+                    case FROM_TO -> annotation
+                            .add(factory.createAnnotationParameter("floatFrom").put(ParameterDataType.DEFAULT,
+                                    envaliNumericMeta.getFloatFrom()))
+                            .add(factory.createAnnotationParameter("floatTo").put(ParameterDataType.DEFAULT,
+                                    envaliNumericMeta.getFloatTo()));
+                }
+            }
+
+            case DOUBLE -> {
+                switch (envaliNumericMeta.getEnvaliNumericRangeType()) {
+                    case FROM -> annotation.add(factory.createAnnotationParameter("doubleFrom")
+                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getDoubleFrom()));
+                    case TO -> annotation.add(factory.createAnnotationParameter("doubleTo")
+                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getDoubleTo()));
+                    case FROM_TO -> annotation
+                            .add(factory.createAnnotationParameter("doubleFrom").put(ParameterDataType.DEFAULT,
+                                    envaliNumericMeta.getDoubleFrom()))
+                            .add(factory.createAnnotationParameter("doubleTo").put(ParameterDataType.DEFAULT,
+                                    envaliNumericMeta.getDoubleTo()));
+                }
+            }
+
+            case SHORT -> {
+                switch (envaliNumericMeta.getEnvaliNumericRangeType()) {
+                    case FROM -> annotation.add(factory.createAnnotationParameter("shortFrom")
+                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getShortFrom()));
+                    case TO -> annotation.add(factory.createAnnotationParameter("shortTo")
+                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getShortTo()));
+                    case FROM_TO -> annotation
+                            .add(factory.createAnnotationParameter("shortFrom").put(ParameterDataType.DEFAULT,
+                                    envaliNumericMeta.getShortFrom()))
+                            .add(factory.createAnnotationParameter("shortTo").put(ParameterDataType.DEFAULT,
+                                    envaliNumericMeta.getShortTo()));
+                }
+            }
+
+            case BYTE -> {
+                switch (envaliNumericMeta.getEnvaliNumericRangeType()) {
+                    case FROM -> annotation.add(factory.createAnnotationParameter("byteFrom")
+                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getByteFrom()));
+                    case TO -> annotation.add(factory.createAnnotationParameter("byteTo").put(ParameterDataType.DEFAULT,
+                            envaliNumericMeta.getByteTo()));
+                    case FROM_TO -> annotation
+                            .add(factory.createAnnotationParameter("byteFrom").put(ParameterDataType.DEFAULT,
+                                    envaliNumericMeta.getByteFrom()))
+                            .add(factory.createAnnotationParameter("byteTo").put(ParameterDataType.DEFAULT,
+                                    envaliNumericMeta.getByteTo()));
+                }
+            }
+        }
+    }
+
+    private void addEnvaliRegexParameter(@NonNull Annotation annotation,
+            @NonNull EntityEnvaliDefinition entityEnvaliDefinition, @NonNull EnvaliRegexMeta envaliRegexMeta) {
+
+        final ResourceFactory factory = EntityResourceFactory.getInstance();
     }
 }
