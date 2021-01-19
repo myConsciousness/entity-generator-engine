@@ -30,7 +30,7 @@ import lombok.ToString;
  */
 @ToString
 @EqualsAndHashCode(callSuper = false)
-public final class EnvaliRegexModifierGroup extends ArrayList<EnvaliRegexModifierName> implements ContentEntity {
+public final class EnvaliRegexModifierNameGroup extends ArrayList<EnvaliRegexModifierName> implements ContentEntity {
 
     /**
      * シリアルバージョンUID
@@ -40,7 +40,7 @@ public final class EnvaliRegexModifierGroup extends ArrayList<EnvaliRegexModifie
     /**
      * 初期容量10の空のリストを作成します。
      */
-    private EnvaliRegexModifierGroup() {
+    private EnvaliRegexModifierNameGroup() {
         super();
     }
 
@@ -51,7 +51,7 @@ public final class EnvaliRegexModifierGroup extends ArrayList<EnvaliRegexModifie
      *
      * @exception IllegalArgumentException 初期容量が負数の場合
      */
-    private EnvaliRegexModifierGroup(int initialCapacity) {
+    private EnvaliRegexModifierNameGroup(int initialCapacity) {
         super(initialCapacity);
     }
 
@@ -62,41 +62,41 @@ public final class EnvaliRegexModifierGroup extends ArrayList<EnvaliRegexModifie
      *
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    private EnvaliRegexModifierGroup(Collection<? extends EnvaliRegexModifierName> collection) {
+    private EnvaliRegexModifierNameGroup(Collection<? extends EnvaliRegexModifierName> collection) {
         super(collection);
     }
 
     /**
-     * 初期容量10の空の {@link EnvaliRegexModifierGroup} を作成します。
+     * 初期容量10の空の {@link EnvaliRegexModifierNameGroup} を作成します。
      *
-     * @return 初期容量10を持つ空の {@link EnvaliRegexModifierGroup}
+     * @return 初期容量10を持つ空の {@link EnvaliRegexModifierNameGroup}
      */
-    public static EnvaliRegexModifierGroup newInstance() {
-        return new EnvaliRegexModifierGroup();
+    public static EnvaliRegexModifierNameGroup newInstance() {
+        return new EnvaliRegexModifierNameGroup();
     }
 
     /**
-     * 指定された初期容量で空の {@link EnvaliRegexModifierGroup} を作成します。
+     * 指定された初期容量で空の {@link EnvaliRegexModifierNameGroup} を作成します。
      *
      * @param initialCapacity 初期容量
-     * @return 指定された初期容量を持つ空の {@link EnvaliRegexModifierGroup}
+     * @return 指定された初期容量を持つ空の {@link EnvaliRegexModifierNameGroup}
      *
      * @exception IllegalArgumentException 初期容量が負数の場合
      */
-    public static EnvaliRegexModifierGroup of(int initialCapacity) {
-        return new EnvaliRegexModifierGroup(initialCapacity);
+    public static EnvaliRegexModifierNameGroup of(int initialCapacity) {
+        return new EnvaliRegexModifierNameGroup(initialCapacity);
     }
 
     /**
-     * 指定したコレクションの要素を含む {@link EnvaliRegexModifierGroup}
+     * 指定したコレクションの要素を含む {@link EnvaliRegexModifierNameGroup}
      * を、コレクションのイテレータによって返された順に作成します。
      *
      * @param collection 複製元のコレクション
-     * @return 指定したコレクションの要素を含む {@link EnvaliRegexModifierGroup}
+     * @return 指定したコレクションの要素を含む {@link EnvaliRegexModifierNameGroup}
      *
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    public static EnvaliRegexModifierGroup of(Collection<? extends EnvaliRegexModifierName> collection) {
-        return new EnvaliRegexModifierGroup(collection);
+    public static EnvaliRegexModifierNameGroup of(Collection<? extends EnvaliRegexModifierName> collection) {
+        return new EnvaliRegexModifierNameGroup(collection);
     }
 }
