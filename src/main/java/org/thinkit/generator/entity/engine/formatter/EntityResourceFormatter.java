@@ -24,6 +24,7 @@ import org.thinkit.framework.envali.Envali;
 import org.thinkit.generator.common.duke.catalog.AnnotationPattern;
 import org.thinkit.generator.common.duke.catalog.ParameterDataType;
 import org.thinkit.generator.common.duke.factory.Annotation;
+import org.thinkit.generator.common.duke.factory.AnnotationParameter;
 import org.thinkit.generator.common.duke.factory.ClassBody;
 import org.thinkit.generator.common.duke.factory.ClassDescription;
 import org.thinkit.generator.common.duke.factory.Copyright;
@@ -38,10 +39,15 @@ import org.thinkit.generator.common.duke.formatter.JavaResourceFormatter;
 import org.thinkit.generator.entity.engine.catalog.EntityDependentPackage;
 import org.thinkit.generator.entity.engine.catalog.EntityInterface;
 import org.thinkit.generator.entity.engine.catalog.EnvaliErrorType;
+import org.thinkit.generator.entity.engine.catalog.EnvaliRegexModifier;
+import org.thinkit.generator.entity.engine.catalog.EnvaliRegexPreset;
 import org.thinkit.generator.entity.engine.content.EntityInterfaceNameLoader;
 import org.thinkit.generator.entity.engine.content.EntityPackageLoader;
 import org.thinkit.generator.entity.engine.content.EnvaliAnnotationPackageLoader;
 import org.thinkit.generator.entity.engine.content.EnvaliErrorTypeNameLoader;
+import org.thinkit.generator.entity.engine.content.EnvaliRegexMethodNameLoader;
+import org.thinkit.generator.entity.engine.content.EnvaliRegexModifierNameLoader;
+import org.thinkit.generator.entity.engine.content.EnvaliRegexPresetNameLoader;
 import org.thinkit.generator.entity.engine.content.LombokPackageLoader;
 import org.thinkit.generator.entity.engine.content.entity.EnvaliErrorTypeName;
 import org.thinkit.generator.entity.engine.dto.EntityCreator;
@@ -508,7 +514,53 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
 
     private void addEnvaliRegexParameter(@NonNull Annotation annotation,
             @NonNull EntityEnvaliDefinition entityEnvaliDefinition, @NonNull EnvaliRegexMeta envaliRegexMeta) {
+        this.addEnvaliRegexExpression(annotation, envaliRegexMeta);
+        this.addEnvaliRegexModifiers(annotation, envaliRegexMeta);
+        this.addEnvaliRegexMethod(annotation, envaliRegexMeta);
+    }
+
+    private void addEnvaliRegexExpression(@NonNull Annotation annotation, @NonNull EnvaliRegexMeta envaliRegexMeta) {
+
+        final String expression = envaliRegexMeta.getExpression();
+        final EnvaliRegexPreset envaliRegexPreset = envaliRegexMeta.getEnvaliRegexPreset();
+
+        if (envaliRegexPreset != EnvaliRegexPreset.NONE) {
+            final String regexPresetName = ContentInvoker.of(EnvaliRegexPresetNameLoader.of(envaliRegexPreset)).invoke()
+                    .getRegexPresetName();
+            annotation.add(EntityResourceFactory.getInstance().createAnnotationParameter("presetExpression")
+                    .put(ParameterDataType.DEFAULT, regexPresetName));
+        } else if (!StringUtils.isEmpty(expression)) {
+            annotation.add(EntityResourceFactory.getInstance().createAnnotationParameter("presetExpression")
+                    .put(ParameterDataType.STRING, expression));
+        } else {
+            throw new IllegalStateException("Detected the Envali's Regex annotation but no valid value was set.");
+        }
+    }
+
+    private void addEnvaliRegexModifiers(@NonNull Annotation annotation, @NonNull EnvaliRegexMeta envaliRegexMeta) {
+
+        final Set<EnvaliRegexModifier> envaliRegexModifiers = envaliRegexMeta.getEnvaliRegexModifiers();
+
+        if (envaliRegexModifiers.isEmpty()) {
+            return;
+        }
 
         final ResourceFactory factory = EntityResourceFactory.getInstance();
+        final AnnotationParameter annotationParameter = factory.createAnnotationParameter("modifiers").toArray();
+
+        ContentInvoker.of(EnvaliRegexModifierNameLoader.of(envaliRegexModifiers)).invoke()
+                .forEach(envaliRegexModifierName -> {
+                    annotationParameter.put(ParameterDataType.DEFAULT, envaliRegexModifierName.getRegexModifierName());
+                });
+
+        annotation.add(annotationParameter);
+    }
+
+    private void addEnvaliRegexMethod(@NonNull Annotation annotation, @NonNull EnvaliRegexMeta envaliRegexMeta) {
+        final String regexMethodName = ContentInvoker
+                .of(EnvaliRegexMethodNameLoader.of(envaliRegexMeta.getEnvaliRegexMethod())).invoke()
+                .getRegexMethodName();
+        annotation.add(EntityResourceFactory.getInstance().createAnnotationParameter("method")
+                .put(ParameterDataType.DEFAULT, regexMethodName));
     }
 }
