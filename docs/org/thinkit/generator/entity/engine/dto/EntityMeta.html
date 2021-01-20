@@ -15,7 +15,7 @@
 <script type="text/javascript" src="../../../../../../script-dir/jquery-ui.min.js"></script>
 </head>
 <body class="class-declaration-page">
-<script type="text/javascript">var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10};
+<script type="text/javascript">var data = {"i0":9,"i1":10,"i2":10,"i3":10,"i4":10,"i5":10,"i6":10,"i7":10,"i8":10,"i9":10,"i10":10,"i11":10};
 var tabs = {65535:["t0","\u3059\u3079\u3066\u306E\u30E1\u30BD\u30C3\u30C9"],1:["t1","static\u30E1\u30BD\u30C3\u30C9"],2:["t2","\u30A4\u30F3\u30B9\u30BF\u30F3\u30B9\u30FB\u30E1\u30BD\u30C3\u30C9"],8:["t4","concrete\u30E1\u30BD\u30C3\u30C9"]};
 var altColor = "alt-color";
 var rowColor = "row-color";
@@ -175,11 +175,39 @@ implements org.thinkit.framework.envali.entity.ValidatableEntity, <a href="https
 </td>
 </tr>
 <tr class="alt-color" id="i6">
+<td class="col-first"><code>boolean</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#isAppliedEnvaliErrorType()">isAppliedEnvaliErrorType</a></span>()</code></th>
+<td class="col-last">
+<div class="block">Envaliエラー種別適用可否</div>
+</td>
+</tr>
+<tr class="row-color" id="i7">
+<td class="col-first"><code>boolean</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#isAppliedEnvaliRegexMethod()">isAppliedEnvaliRegexMethod</a></span>()</code></th>
+<td class="col-last">
+<div class="block">Envali正規表現メソッド適用可否</div>
+</td>
+</tr>
+<tr class="alt-color" id="i8">
+<td class="col-first"><code>boolean</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#isAppliedEnvaliRegexModifier()">isAppliedEnvaliRegexModifier</a></span>()</code></th>
+<td class="col-last">
+<div class="block">Envali正規表現フラグ適用可否</div>
+</td>
+</tr>
+<tr class="row-color" id="i9">
+<td class="col-first"><code>boolean</code></td>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#isAppliedEnvaliRegexPreset()">isAppliedEnvaliRegexPreset</a></span>()</code></th>
+<td class="col-last">
+<div class="block">Envali正規表現プリセット適用可否</div>
+</td>
+</tr>
+<tr class="alt-color" id="i10">
 <td class="col-first"><code><a href="EntityMeta.EntityMetaBuilder.html" title="org.thinkit.generator.entity.engine.dto内のクラス">EntityMeta.EntityMetaBuilder</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#toBuilder()">toBuilder</a></span>()</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
-<tr class="row-color" id="i7">
+<tr class="row-color" id="i11">
 <td class="col-first"><code><a href="https://docs.oracle.com/en/java/javase/13/docs/api/java.base/java/lang/String.html" title="java.lang内のクラスまたはインタフェース" class="external-link">String</a></code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#toString()">toString</a></span>()</code></th>
 <td class="col-last">&nbsp;</td>
@@ -266,6 +294,34 @@ implements org.thinkit.framework.envali.entity.ValidatableEntity, <a href="https
 <h3>isAppliedEnvali</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="member-name">isAppliedEnvali</span>()</div>
 <div class="block">Envali適用可否</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isAppliedEnvaliErrorType()">
+<h3>isAppliedEnvaliErrorType</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="member-name">isAppliedEnvaliErrorType</span>()</div>
+<div class="block">Envaliエラー種別適用可否</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isAppliedEnvaliRegexPreset()">
+<h3>isAppliedEnvaliRegexPreset</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="member-name">isAppliedEnvaliRegexPreset</span>()</div>
+<div class="block">Envali正規表現プリセット適用可否</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isAppliedEnvaliRegexModifier()">
+<h3>isAppliedEnvaliRegexModifier</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="member-name">isAppliedEnvaliRegexModifier</span>()</div>
+<div class="block">Envali正規表現フラグ適用可否</div>
+</section>
+</li>
+<li>
+<section class="detail" id="isAppliedEnvaliRegexMethod()">
+<h3>isAppliedEnvaliRegexMethod</h3>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="member-name">isAppliedEnvaliRegexMethod</span>()</div>
+<div class="block">Envali正規表現メソッド適用可否</div>
 </section>
 </li>
 </ul>
