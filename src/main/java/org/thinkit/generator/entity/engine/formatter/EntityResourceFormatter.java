@@ -166,6 +166,7 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
      */
     private void addEnvaliDependentPackage(@NonNull Resource resource, @NonNull EntityMeta entityMeta,
             @NonNull List<EntityField> entityFields) {
+
         entityFields.forEach(entityField -> {
             entityField.getEntityEnvaliDefinitions().forEach(entityEnvaliDefinition -> {
                 resource.add(this.createDependentPackage(ContentInvoker

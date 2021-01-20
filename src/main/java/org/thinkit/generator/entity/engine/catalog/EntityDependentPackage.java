@@ -36,7 +36,27 @@ public enum EntityDependentPackage implements Catalog<EntityDependentPackage> {
     /**
      * Validatable Entity
      */
-    VALIDATBLE_ENTITY(1);
+    ENVALI_VALIDATBLE_ENTITY(1),
+
+    /**
+     * Error Type
+     */
+    ENVALI_ERROR_TYPE(2),
+
+    /**
+     * RegexPreset
+     */
+    ENVALI_REGEX_PRESET(3),
+
+    /**
+     * Regex Modifier
+     */
+    ENVALI_REGEX_MODIFIER(4),
+
+    /**
+     * Regex Method
+     */
+    ENVALI_REGEX_METHOD(5);
 
     /**
      * コード値

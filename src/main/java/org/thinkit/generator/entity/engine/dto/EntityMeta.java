@@ -69,4 +69,32 @@ public final class EntityMeta implements ValidatableEntity, Serializable {
     @Getter
     @Builder.Default
     private boolean appliedEnvali = false;
+
+    /**
+     * Envaliエラー種別適用可否
+     */
+    @Getter
+    @Builder.Default
+    private boolean appliedEnvaliErrorType = false;
+
+    /**
+     * Envali正規表現プリセット適用可否
+     */
+    @Getter
+    @Builder.Default
+    private boolean appliedEnvaliRegexPreset = false;
+
+    /**
+     * Envali正規表現フラグ適用可否
+     */
+    @Getter
+    @Builder.Default
+    private boolean appliedEnvaliRegexModifier = false;
+
+    /**
+     * Envali正規表現メソッド適用可否
+     */
+    @Getter
+    @Builder.Default
+    private boolean appliedEnvaliRegexMethod = false;
 }
