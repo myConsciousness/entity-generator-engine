@@ -151,6 +151,21 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
             resource.add(this.createDependentPackage(dependentPackage));
         });
 
+        this.addEnvaliDependentPackage(resource, entityMeta, entityFields);
+        this.addLombokDependentPackage(resource);
+    }
+
+    /**
+     * Envaliフレームワークに関する依存パッケージをエンティティリソースへ追加します。
+     *
+     * @param resource     エンティティリソース
+     * @param entityMeta   エンティティのメタデータ
+     * @param entityFields エンティティのフィールドデータ
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
+    private void addEnvaliDependentPackage(@NonNull Resource resource, @NonNull EntityMeta entityMeta,
+            @NonNull List<EntityField> entityFields) {
         entityFields.forEach(entityField -> {
             entityField.getEntityEnvaliDefinitions().forEach(entityEnvaliDefinition -> {
                 resource.add(this.createDependentPackage(ContentInvoker
@@ -163,7 +178,16 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
                 .forEach(envaliPackage -> {
                     resource.add(this.createDependentPackage(envaliPackage.getPackageName()));
                 });
+    }
 
+    /**
+     * Envaliフレームワークに関する依存パッケージをエンティティリソースへ追加します。
+     *
+     * @param resource エンティティリソース
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
+    private void addLombokDependentPackage(@NonNull Resource resource) {
         ContentInvoker.of(LombokPackageLoader.newInstance()).invoke().forEach(lombokPackage -> {
             resource.add(this.createDependentPackage(lombokPackage.getPackageName()));
         });
