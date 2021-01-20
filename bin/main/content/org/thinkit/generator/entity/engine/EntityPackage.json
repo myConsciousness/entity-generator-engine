@@ -15,6 +15,30 @@
     },
     {
       "node": {
+        "conditionId": "1",
+        "entityPackage": "org.thinkit.framework.envali.catalog.ErrorType"
+      }
+    },
+    {
+      "node": {
+        "conditionId": "2",
+        "entityPackage": "org.thinkit.framework.envali.catalog.RegexPreset"
+      }
+    },
+    {
+      "node": {
+        "conditionId": "3",
+        "entityPackage": "org.thinkit.framework.envali.catalog.RegexModifier"
+      }
+    },
+    {
+      "node": {
+        "conditionId": "4",
+        "entityPackage": "org.thinkit.framework.envali.catalog.RegexMethod"
+      }
+    },
+    {
+      "node": {
         "conditionId": "",
         "entityPackage": "java.io.Serializable"
       }
@@ -30,6 +54,58 @@
             "keyName": "packageCode",
             "operator": "=",
             "operand": "1"
+          }
+        ]
+      }
+    },
+    {
+      "node": {
+        "conditionId": "1",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "packageCode",
+            "operator": "=",
+            "operand": "2"
+          }
+        ]
+      }
+    },
+    {
+      "node": {
+        "conditionId": "2",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "packageCode",
+            "operator": "=",
+            "operand": "3"
+          }
+        ]
+      }
+    },
+    {
+      "node": {
+        "conditionId": "3",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "packageCode",
+            "operator": "=",
+            "operand": "4"
+          }
+        ]
+      }
+    },
+    {
+      "node": {
+        "conditionId": "4",
+        "exclude": false,
+        "conditions": [
+          {
+            "keyName": "packageCode",
+            "operator": "=",
+            "operand": "5"
           }
         ]
       }

@@ -15,6 +15,7 @@
 package org.thinkit.generator.entity.engine.formatter;
 
 import java.util.EnumSet;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -286,11 +287,44 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
      */
     private Set<EntityDependentPackage> getEntityDependentPackages(@NonNull EntityMeta entityMeta) {
 
+        final Set<EntityDependentPackage> dependentPackages = new HashSet<>();
+        dependentPackages.add(EntityDependentPackage.SERIALIZABLE);
+
         if (entityMeta.isAppliedEnvali()) {
-            return EnumSet.allOf(EntityDependentPackage.class);
+            this.addEnvaliOptionDependentPackage(entityMeta, dependentPackages);
         }
 
-        return EnumSet.of(EntityDependentPackage.SERIALIZABLE);
+        return dependentPackages;
+    }
+
+    /**
+     * Envaliアノテーションのオプションに関する依存パッケージを依存パッケージ集合へ追加します。
+     *
+     * @param entityMeta        エンティティのメタデータ
+     * @param dependentPackages 依存パッケージ集合
+     *
+     * @exception NullPointerException 引数として {@code null} が渡された場合
+     */
+    private void addEnvaliOptionDependentPackage(@NonNull EntityMeta entityMeta,
+            @NonNull Set<EntityDependentPackage> dependentPackages) {
+
+        dependentPackages.add(EntityDependentPackage.ENVALI_VALIDATBLE_ENTITY);
+
+        if (entityMeta.isAppliedEnvaliErrorType()) {
+            dependentPackages.add(EntityDependentPackage.ENVALI_ERROR_TYPE);
+        }
+
+        if (entityMeta.isAppliedEnvaliRegexPreset()) {
+            dependentPackages.add(EntityDependentPackage.ENVALI_REGEX_PRESET);
+        }
+
+        if (entityMeta.isAppliedEnvaliRegexModifier()) {
+            dependentPackages.add(EntityDependentPackage.ENVALI_REGEX_MODIFIER);
+        }
+
+        if (entityMeta.isAppliedEnvaliErrorType()) {
+            dependentPackages.add(EntityDependentPackage.ENVALI_REGEX_METHOD);
+        }
     }
 
     /**
