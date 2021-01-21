@@ -642,7 +642,7 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
             annotation.add(EntityResourceFactory.getInstance().createAnnotationParameter("presetExpression")
                     .put(ParameterDataType.DEFAULT, regexPresetName));
         } else if (!StringUtils.isEmpty(expression)) {
-            annotation.add(EntityResourceFactory.getInstance().createAnnotationParameter("presetExpression")
+            annotation.add(EntityResourceFactory.getInstance().createAnnotationParameter("expression")
                     .put(ParameterDataType.STRING, expression));
         } else {
             throw new IllegalStateException("Detected the Envali's Regex annotation but no valid value was set.");
