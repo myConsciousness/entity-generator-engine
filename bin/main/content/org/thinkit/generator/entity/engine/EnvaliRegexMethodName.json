@@ -22,7 +22,7 @@
         {
             "node": {
                 "conditionId": "2",
-                "regexMethodName": "RegexMethod.MATCH"
+                "regexMethodName": "RegexMethod.MATCHES"
             }
         }
     ],
