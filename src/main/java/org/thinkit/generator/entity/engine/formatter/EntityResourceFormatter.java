@@ -39,6 +39,7 @@ import org.thinkit.generator.common.duke.factory.ResourceFactory;
 import org.thinkit.generator.common.duke.formatter.JavaResourceFormatter;
 import org.thinkit.generator.entity.engine.catalog.EntityDependentPackage;
 import org.thinkit.generator.entity.engine.catalog.EntityInterface;
+import org.thinkit.generator.entity.engine.catalog.EnvaliAnnotation;
 import org.thinkit.generator.entity.engine.catalog.EnvaliErrorType;
 import org.thinkit.generator.entity.engine.catalog.EnvaliRegexModifier;
 import org.thinkit.generator.entity.engine.catalog.EnvaliRegexPreset;
@@ -168,11 +169,18 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
     private void addEnvaliDependentPackage(@NonNull Resource resource, @NonNull EntityMeta entityMeta,
             @NonNull List<EntityField> entityFields) {
 
+        final Set<EnvaliAnnotation> envaliAnnotations = EnumSet.noneOf(EnvaliAnnotation.class);
+
         entityFields.forEach(entityField -> {
             entityField.getEntityEnvaliDefinitions().forEach(entityEnvaliDefinition -> {
-                resource.add(this.createDependentPackage(ContentInvoker
-                        .of(EnvaliAnnotationPackageLoader.of(entityEnvaliDefinition.getEnvaliAnnotation())).invoke()
-                        .getPackageName()));
+                final EnvaliAnnotation envaliAnnotation = entityEnvaliDefinition.getEnvaliAnnotation();
+
+                if (!envaliAnnotations.contains(envaliAnnotation)) {
+                    envaliAnnotations.add(envaliAnnotation);
+                    resource.add(this.createDependentPackage(ContentInvoker
+                            .of(EnvaliAnnotationPackageLoader.of(entityEnvaliDefinition.getEnvaliAnnotation())).invoke()
+                            .getPackageName()));
+                }
             });
         });
 

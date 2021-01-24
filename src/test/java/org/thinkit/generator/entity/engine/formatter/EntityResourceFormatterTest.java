@@ -350,7 +350,7 @@ public final class EntityResourceFormatterTest {
                         @Builder(toBuilder = true)
                         @NoArgsConstructor(access = AccessLevel.PRIVATE)
                         @AllArgsConstructor(access = AccessLevel.PRIVATE)
-                        public final class TestEntity implements Serializable, ValidatableEntity {
+                        public final class TestEntity implements ValidatableEntity, Serializable {
 
                             /** The serial version UID */
                             private static final long serialVersionUID = 1L;
@@ -387,7 +387,6 @@ public final class EntityResourceFormatterTest {
                         import org.thinkit.framework.envali.annotation.RequireNonEmpty;
                         import org.thinkit.framework.envali.annotation.RequirePositive;
                         import org.thinkit.framework.envali.annotation.RequireMatch;
-                        import org.thinkit.framework.envali.annotation.RequireMatch;
                         import org.thinkit.framework.envali.entity.ValidatableEntity;
                         import org.thinkit.framework.envali.catalog.ErrorType;
                         import org.thinkit.framework.envali.catalog.RegexPreset;
@@ -413,7 +412,7 @@ public final class EntityResourceFormatterTest {
                         @Builder(toBuilder = true)
                         @NoArgsConstructor(access = AccessLevel.PRIVATE)
                         @AllArgsConstructor(access = AccessLevel.PRIVATE)
-                        public final class TestEntity implements Serializable, ValidatableEntity {
+                        public final class TestEntity implements ValidatableEntity, Serializable {
 
                             /** The serial version UID */
                             private static final long serialVersionUID = 1L;

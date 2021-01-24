@@ -10,13 +10,13 @@
     {
       "node": {
         "conditionId": "0",
-        "interfaceName": "Serializable"
+        "interfaceName": "ValidatableEntity"
       }
     },
     {
       "node": {
         "conditionId": "1",
-        "interfaceName": "ValidatableEntity"
+        "interfaceName": "Serializable"
       }
     }
   ],

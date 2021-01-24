@@ -29,14 +29,14 @@ import lombok.RequiredArgsConstructor;
 public enum EntityInterface implements Catalog<EntityInterface> {
 
     /**
-     * Serializable
-     */
-    SERIALIZABLE(0),
-
-    /**
      * Validatable Entity
      */
-    VALIDATBLE_ENTITY(1);
+    VALIDATBLE_ENTITY(0),
+
+    /**
+     * Serializable
+     */
+    SERIALIZABLE(1);
 
     /**
      * コード値
