@@ -52,6 +52,21 @@ loadScripts(document, 'script');</script>
 <div class="header">
 <h1 title="パッケージ" class="title">パッケージ&nbsp;org.thinkit.generator.entity.engine.formatter</h1>
 </div>
+<section class="package-description" id="package.description">
+<div class="block">エンティティ定義クラスに格納されたリソース情報を基にエンティティリソースを生成する処理を定義したクラスを管理するパッケージです。
+
+ <pre>
+ 操作例:
+ <code>
+ EntityResourceFormatter.newInstance().format(entityMatrix).foreach(entityResource -> {
+      * // do something like
+      entityResource.getPackageName();
+      entityResource.getClassName();
+      entityResource.getResource();
+ });
+ </code>
+ </pre></div>
+</section>
 <section class="summary">
 <ul class="summary-list">
 <li>
