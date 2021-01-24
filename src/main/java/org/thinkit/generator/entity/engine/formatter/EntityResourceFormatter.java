@@ -15,7 +15,6 @@
 package org.thinkit.generator.entity.engine.formatter;
 
 import java.util.EnumSet;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -295,7 +294,7 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
      */
     private Set<EntityDependentPackage> getEntityDependentPackages(@NonNull EntityMeta entityMeta) {
 
-        final Set<EntityDependentPackage> dependentPackages = new HashSet<>();
+        final Set<EntityDependentPackage> dependentPackages = EnumSet.noneOf(EntityDependentPackage.class);
         dependentPackages.add(EntityDependentPackage.SERIALIZABLE);
 
         if (entityMeta.isAppliedEnvali()) {
