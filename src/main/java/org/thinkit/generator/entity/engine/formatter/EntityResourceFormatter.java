@@ -46,11 +46,13 @@ import org.thinkit.generator.entity.engine.content.EntityInterfaceNameLoader;
 import org.thinkit.generator.entity.engine.content.EntityPackageLoader;
 import org.thinkit.generator.entity.engine.content.EnvaliAnnotationPackageLoader;
 import org.thinkit.generator.entity.engine.content.EnvaliErrorTypeNameLoader;
+import org.thinkit.generator.entity.engine.content.EnvaliNumericRangeOptionLoader;
 import org.thinkit.generator.entity.engine.content.EnvaliRegexMethodNameLoader;
 import org.thinkit.generator.entity.engine.content.EnvaliRegexModifierNameLoader;
 import org.thinkit.generator.entity.engine.content.EnvaliRegexPresetNameLoader;
 import org.thinkit.generator.entity.engine.content.LombokPackageLoader;
 import org.thinkit.generator.entity.engine.content.entity.EnvaliErrorTypeName;
+import org.thinkit.generator.entity.engine.content.entity.EnvaliNumericRangeOption;
 import org.thinkit.generator.entity.engine.dto.EntityCreator;
 import org.thinkit.generator.entity.engine.dto.EntityDefinition;
 import org.thinkit.generator.entity.engine.dto.EntityEnvaliDefinition;
@@ -329,7 +331,7 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
             dependentPackages.add(EntityDependentPackage.ENVALI_REGEX_MODIFIER);
         }
 
-        if (entityMeta.isAppliedEnvaliErrorType()) {
+        if (entityMeta.isAppliedEnvaliRegexMethod()) {
             dependentPackages.add(EntityDependentPackage.ENVALI_REGEX_METHOD);
         }
     }
@@ -525,91 +527,19 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
             @NonNull EntityEnvaliDefinition entityEnvaliDefinition, @NonNull EnvaliNumericMeta envaliNumericMeta) {
 
         final ResourceFactory factory = EntityResourceFactory.getInstance();
+        final EnvaliNumericRangeOption numericRangeOption = ContentInvoker
+                .of(EnvaliNumericRangeOptionLoader.of(envaliNumericMeta.getEnvaliNumericDataType())).invoke();
 
-        switch (envaliNumericMeta.getEnvaliNumericDataType()) {
-            case INT -> {
-                switch (envaliNumericMeta.getEnvaliNumericRangeType()) {
-                    case FROM -> annotation.add(factory.createAnnotationParameter("intFrom")
-                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getIntFrom()));
-                    case TO -> annotation.add(factory.createAnnotationParameter("intTo").put(ParameterDataType.DEFAULT,
-                            envaliNumericMeta.getIntTo()));
-                    case FROM_TO -> annotation
-                            .add(factory.createAnnotationParameter("intFrom").put(ParameterDataType.DEFAULT,
-                                    envaliNumericMeta.getIntFrom()))
-                            .add(factory.createAnnotationParameter("intTo").put(ParameterDataType.DEFAULT,
-                                    envaliNumericMeta.getIntTo()));
-                }
-            }
-
-            case LONG -> {
-                switch (envaliNumericMeta.getEnvaliNumericRangeType()) {
-                    case FROM -> annotation.add(factory.createAnnotationParameter("longFrom")
-                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getLongFrom()));
-                    case TO -> annotation.add(factory.createAnnotationParameter("longTo").put(ParameterDataType.DEFAULT,
-                            envaliNumericMeta.getLongTo()));
-                    case FROM_TO -> annotation
-                            .add(factory.createAnnotationParameter("longFrom").put(ParameterDataType.DEFAULT,
-                                    envaliNumericMeta.getLongFrom()))
-                            .add(factory.createAnnotationParameter("longTo").put(ParameterDataType.DEFAULT,
-                                    envaliNumericMeta.getLongTo()));
-                }
-            }
-
-            case FLOAT -> {
-                switch (envaliNumericMeta.getEnvaliNumericRangeType()) {
-                    case FROM -> annotation.add(factory.createAnnotationParameter("floatFrom")
-                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getFloatFrom()));
-                    case TO -> annotation.add(factory.createAnnotationParameter("floatTo")
-                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getFloatTo()));
-                    case FROM_TO -> annotation
-                            .add(factory.createAnnotationParameter("floatFrom").put(ParameterDataType.DEFAULT,
-                                    envaliNumericMeta.getFloatFrom()))
-                            .add(factory.createAnnotationParameter("floatTo").put(ParameterDataType.DEFAULT,
-                                    envaliNumericMeta.getFloatTo()));
-                }
-            }
-
-            case DOUBLE -> {
-                switch (envaliNumericMeta.getEnvaliNumericRangeType()) {
-                    case FROM -> annotation.add(factory.createAnnotationParameter("doubleFrom")
-                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getDoubleFrom()));
-                    case TO -> annotation.add(factory.createAnnotationParameter("doubleTo")
-                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getDoubleTo()));
-                    case FROM_TO -> annotation
-                            .add(factory.createAnnotationParameter("doubleFrom").put(ParameterDataType.DEFAULT,
-                                    envaliNumericMeta.getDoubleFrom()))
-                            .add(factory.createAnnotationParameter("doubleTo").put(ParameterDataType.DEFAULT,
-                                    envaliNumericMeta.getDoubleTo()));
-                }
-            }
-
-            case SHORT -> {
-                switch (envaliNumericMeta.getEnvaliNumericRangeType()) {
-                    case FROM -> annotation.add(factory.createAnnotationParameter("shortFrom")
-                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getShortFrom()));
-                    case TO -> annotation.add(factory.createAnnotationParameter("shortTo")
-                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getShortTo()));
-                    case FROM_TO -> annotation
-                            .add(factory.createAnnotationParameter("shortFrom").put(ParameterDataType.DEFAULT,
-                                    envaliNumericMeta.getShortFrom()))
-                            .add(factory.createAnnotationParameter("shortTo").put(ParameterDataType.DEFAULT,
-                                    envaliNumericMeta.getShortTo()));
-                }
-            }
-
-            case BYTE -> {
-                switch (envaliNumericMeta.getEnvaliNumericRangeType()) {
-                    case FROM -> annotation.add(factory.createAnnotationParameter("byteFrom")
-                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getByteFrom()));
-                    case TO -> annotation.add(factory.createAnnotationParameter("byteTo").put(ParameterDataType.DEFAULT,
-                            envaliNumericMeta.getByteTo()));
-                    case FROM_TO -> annotation
-                            .add(factory.createAnnotationParameter("byteFrom").put(ParameterDataType.DEFAULT,
-                                    envaliNumericMeta.getByteFrom()))
-                            .add(factory.createAnnotationParameter("byteTo").put(ParameterDataType.DEFAULT,
-                                    envaliNumericMeta.getByteTo()));
-                }
-            }
+        switch (envaliNumericMeta.getEnvaliNumericRangeType()) {
+            case FROM -> annotation.add(factory.createAnnotationParameter(numericRangeOption.getFromOption())
+                    .put(ParameterDataType.DEFAULT, envaliNumericMeta.getFrom()));
+            case TO -> annotation.add(factory.createAnnotationParameter(numericRangeOption.getToOption())
+                    .put(ParameterDataType.DEFAULT, envaliNumericMeta.getTo()));
+            case FROM_TO -> annotation
+                    .add(factory.createAnnotationParameter(numericRangeOption.getFromOption())
+                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getFrom()))
+                    .add(factory.createAnnotationParameter(numericRangeOption.getToOption())
+                            .put(ParameterDataType.DEFAULT, envaliNumericMeta.getTo()));
         }
     }
 

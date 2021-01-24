@@ -12,13 +12,11 @@
  * the License.
  */
 
-package org.thinkit.generator.entity.engine.dto;
+package org.thinkit.generator.entity.engine.content.entity;
 
 import java.io.Serializable;
 
-import org.thinkit.framework.envali.entity.ValidatableEntity;
-import org.thinkit.generator.entity.engine.catalog.EnvaliNumericDataType;
-import org.thinkit.generator.entity.engine.catalog.EnvaliNumericRangeType;
+import org.thinkit.framework.content.entity.ContentEntity;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -26,11 +24,10 @@ import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.NonNull;
 import lombok.ToString;
 
 /**
- * Envaliの数値メタデータを管理するデータクラスです。
+ * コンテンツ「EnvaliNumericRangeOption」の情報を管理するデータクラスです。
  *
  * @author Kato Shinya
  * @since 1.0.0
@@ -38,38 +35,24 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 @Builder(toBuilder = true)
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
-public class EnvaliNumericMeta implements ValidatableEntity, Serializable {
+@NoArgsConstructor(access = AccessLevel.PRIVATE, force = true)
+public final class EnvaliNumericRangeOption implements ContentEntity, Serializable {
 
     /**
      * シリアルバージョンUID
      */
-    private static final long serialVersionUID = -3189701314070991047L;
+    private static final long serialVersionUID = -7270322055483209406L;
 
     /**
-     * 基準となる数値データ型
+     * 開始オプション
      */
     @Getter
-    @NonNull
-    private EnvaliNumericDataType envaliNumericDataType;
+    private String fromOption;
 
     /**
-     * 基準となる範囲種別
+     * 終了オプション
      */
     @Getter
-    @NonNull
-    private EnvaliNumericRangeType envaliNumericRangeType;
-
-    /**
-     * 開始範囲
-     */
-    @Getter
-    private String from;
-
-    /**
-     * 終了範囲
-     */
-    @Getter
-    private String to;
+    private String toOption;
 }
