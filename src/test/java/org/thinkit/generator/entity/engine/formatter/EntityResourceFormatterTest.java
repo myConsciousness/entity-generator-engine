@@ -17,6 +17,7 @@ package org.thinkit.generator.entity.engine.formatter;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -209,7 +210,7 @@ public final class EntityResourceFormatterTest {
          */
         private static final String EXPECTED_ENTITY_DEFAULT = """
                         /*
-                         * Copyright 2021 Kato Shinya.
+                         * Copyright %s Kato Shinya.
                          *
                          * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
                          * in compliance with the License. You may obtain a copy of the License at
@@ -254,14 +255,15 @@ public final class EntityResourceFormatterTest {
                             /** This is the test field. */
                             @Getter private String test;
                         }
-                        """;
+                        """
+                        .formatted(String.valueOf(LocalDate.now().getYear()));
 
         /**
          * フィールドが初期値を保つ場合のエンティティの期待値
          */
         private static final String EXPECTED_ENTITY_WHEN_FIELD_HAS_INITIAL_VALUE = """
                         /*
-                         * Copyright 2021 Kato Shinya.
+                         * Copyright %s Kato Shinya.
                          *
                          * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
                          * in compliance with the License. You may obtain a copy of the License at
@@ -304,14 +306,15 @@ public final class EntityResourceFormatterTest {
                             /** This is the test field. */
                             @Getter @Builder.Default private String test = "test";
                         }
-                        """;
+                        """
+                        .formatted(String.valueOf(LocalDate.now().getYear()));
 
         /**
          * フィールドがEnvaliアノテーションを保つ場合のエンティティの期待値
          */
         private static final String EXPECTED_ENTITY_WHEN_FIELD_HAS_ENVALI_ANNOTATION = """
                         /*
-                         * Copyright 2021 Kato Shinya.
+                         * Copyright %s Kato Shinya.
                          *
                          * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
                          * in compliance with the License. You may obtain a copy of the License at
@@ -361,14 +364,15 @@ public final class EntityResourceFormatterTest {
                             /** This is the test field2. */
                             @Getter @Builder.Default @RequirePositive private int test2 = 0;
                         }
-                        """;
+                        """
+                        .formatted(String.valueOf(LocalDate.now().getYear()));
 
         /**
          * フィールドがオプション付きEnvaliアノテーションを保つ場合のエンティティの期待値
          */
         private static final String EXPECTED_ENTITY_WHEN_FIELD_HAS_ENVALI_ANNOTATION_WITH_OPTIONS = """
                         /*
-                         * Copyright 2021 Kato Shinya.
+                         * Copyright %s Kato Shinya.
                          *
                          * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
                          * in compliance with the License. You may obtain a copy of the License at
@@ -447,5 +451,6 @@ public final class EntityResourceFormatterTest {
                                     method = RegexMethod.FIND)
                             private String test4 = "testRegex2";
                         }
-                        """;
+                        """
+                        .formatted(String.valueOf(LocalDate.now().getYear()));
 }
