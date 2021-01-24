@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
-import org.thinkit.common.catalog.Extension;
 import org.thinkit.framework.content.ContentInvoker;
 import org.thinkit.framework.envali.Envali;
 import org.thinkit.generator.common.duke.catalog.AnnotationPattern;
@@ -38,6 +37,7 @@ import org.thinkit.generator.common.duke.factory.Resource;
 import org.thinkit.generator.common.duke.factory.ResourceFactory;
 import org.thinkit.generator.common.duke.formatter.JavaResourceFormatter;
 import org.thinkit.generator.entity.engine.catalog.EntityDependentPackage;
+import org.thinkit.generator.entity.engine.catalog.EntityExtension;
 import org.thinkit.generator.entity.engine.catalog.EntityInterface;
 import org.thinkit.generator.entity.engine.catalog.EnvaliAnnotation;
 import org.thinkit.generator.entity.engine.catalog.EnvaliErrorType;
@@ -137,7 +137,7 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
 
             entityResourceGroup
                     .add(EntityResource.builder().packageName(entityDefinition.getPackageName()).resourceName(className)
-                            .extension(Extension.JAVA.getTag()).resource(resource.createResource()).build());
+                            .extension(EntityExtension.JAVA.getTag()).resource(resource.createResource()).build());
         });
     }
 
