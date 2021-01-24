@@ -40,7 +40,7 @@ import org.thinkit.generator.entity.engine.catalog.EntityDependentPackage;
 import org.thinkit.generator.entity.engine.catalog.EntityInterface;
 import org.thinkit.generator.entity.engine.catalog.EnvaliAnnotation;
 import org.thinkit.generator.entity.engine.catalog.EnvaliErrorType;
-import org.thinkit.generator.entity.engine.catalog.EnvaliRegexModifier;
+import org.thinkit.generator.entity.engine.catalog.EnvaliRegexMethod;
 import org.thinkit.generator.entity.engine.catalog.EnvaliRegexPreset;
 import org.thinkit.generator.entity.engine.content.EntityInterfaceNameLoader;
 import org.thinkit.generator.entity.engine.content.EntityPackageLoader;
@@ -66,6 +66,7 @@ import org.thinkit.generator.entity.engine.dto.EnvaliMeta;
 import org.thinkit.generator.entity.engine.dto.EnvaliNumericMeta;
 import org.thinkit.generator.entity.engine.dto.EnvaliRegexMeta;
 import org.thinkit.generator.entity.engine.factory.EntityResourceFactory;
+import org.thinkit.generator.entity.engine.helper.EnvaliAnnotationAnalyzer;
 
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -185,7 +186,7 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
             });
         });
 
-        ContentInvoker.of(EntityPackageLoader.of(this.getEntityDependentPackages(entityMeta))).invoke()
+        ContentInvoker.of(EntityPackageLoader.of(this.getEntityDependentPackages(entityMeta, entityFields))).invoke()
                 .forEach(envaliPackage -> {
                     resource.add(this.createDependentPackage(envaliPackage.getPackageName()));
                 });
@@ -289,18 +290,20 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
     /**
      * Envaliの適用可否に基づいてエンティティが依存するパッケージ名を返却します。
      *
-     * @param entityMeta エンティティのメタデータ
+     * @param entityMeta   エンティティのメタデータ
+     * @param entityFields エンティティのフィールド定義
      * @return エンティティが依存するパッケージ名の集合
      *
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    private Set<EntityDependentPackage> getEntityDependentPackages(@NonNull EntityMeta entityMeta) {
+    private Set<EntityDependentPackage> getEntityDependentPackages(@NonNull EntityMeta entityMeta,
+            @NonNull List<EntityField> entityFields) {
 
         final Set<EntityDependentPackage> dependentPackages = EnumSet.noneOf(EntityDependentPackage.class);
         dependentPackages.add(EntityDependentPackage.SERIALIZABLE);
 
         if (entityMeta.isAppliedEnvali()) {
-            this.addEnvaliOptionDependentPackage(entityMeta, dependentPackages);
+            this.addEnvaliOptionDependentPackage(entityFields, dependentPackages);
         }
 
         return dependentPackages;
@@ -309,29 +312,31 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
     /**
      * Envaliアノテーションのオプションに関する依存パッケージを依存パッケージ集合へ追加します。
      *
-     * @param entityMeta        エンティティのメタデータ
+     * @param entityFields      エンティティのフィールド定義
      * @param dependentPackages 依存パッケージ集合
      *
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
-    private void addEnvaliOptionDependentPackage(@NonNull EntityMeta entityMeta,
+    private void addEnvaliOptionDependentPackage(@NonNull List<EntityField> entityFields,
             @NonNull Set<EntityDependentPackage> dependentPackages) {
 
         dependentPackages.add(EntityDependentPackage.ENVALI_VALIDATBLE_ENTITY);
 
-        if (entityMeta.isAppliedEnvaliErrorType()) {
+        final EnvaliAnnotationAnalyzer envaliAnnotationAnalyzer = EnvaliAnnotationAnalyzer.forField(entityFields);
+
+        if (envaliAnnotationAnalyzer.isAppliedEnvaliErrorType()) {
             dependentPackages.add(EntityDependentPackage.ENVALI_ERROR_TYPE);
         }
 
-        if (entityMeta.isAppliedEnvaliRegexPreset()) {
+        if (envaliAnnotationAnalyzer.isAppliedEnvaliRegexPreset()) {
             dependentPackages.add(EntityDependentPackage.ENVALI_REGEX_PRESET);
         }
 
-        if (entityMeta.isAppliedEnvaliRegexModifier()) {
+        if (envaliAnnotationAnalyzer.isAppliedEnvaliRegexModifier()) {
             dependentPackages.add(EntityDependentPackage.ENVALI_REGEX_MODIFIER);
         }
 
-        if (entityMeta.isAppliedEnvaliRegexMethod()) {
+        if (envaliAnnotationAnalyzer.isAppliedEnvaliRegexMethod()) {
             dependentPackages.add(EntityDependentPackage.ENVALI_REGEX_METHOD);
         }
     }
@@ -465,12 +470,11 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
         final ResourceFactory factory = EntityResourceFactory.getInstance();
 
         final Annotation annotation = factory.createAnnotation(entityEnvaliDefinition.getEnvaliAnnotation().getTag());
-        final EnvaliErrorType envaliErrorType = entityEnvaliDefinition.getEnvaliErrorType();
         final String message = entityEnvaliDefinition.getMessage();
 
-        if (envaliErrorType != EnvaliErrorType.RUNTIME) {
+        if (entityEnvaliDefinition.getEnvaliErrorType() != EnvaliErrorType.RUNTIME) {
             final EnvaliErrorTypeName envaliErrorTypeName = ContentInvoker
-                    .of(EnvaliErrorTypeNameLoader.of(envaliErrorType)).invoke();
+                    .of(EnvaliErrorTypeNameLoader.of(entityEnvaliDefinition.getEnvaliErrorType())).invoke();
             annotation.add(factory.createAnnotationParameter("errorType").put(ParameterDataType.DEFAULT,
                     envaliErrorTypeName.getErrorTypeName()));
         }
@@ -596,16 +600,14 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
      */
     private void addEnvaliRegexModifiers(@NonNull Annotation annotation, @NonNull EnvaliRegexMeta envaliRegexMeta) {
 
-        final Set<EnvaliRegexModifier> envaliRegexModifiers = envaliRegexMeta.getEnvaliRegexModifiers();
-
-        if (envaliRegexModifiers.isEmpty()) {
+        if (envaliRegexMeta.getEnvaliRegexModifiers().isEmpty()) {
             return;
         }
 
         final ResourceFactory factory = EntityResourceFactory.getInstance();
         final AnnotationParameter annotationParameter = factory.createAnnotationParameter("modifiers").toArray();
 
-        ContentInvoker.of(EnvaliRegexModifierNameLoader.of(envaliRegexModifiers)).invoke()
+        ContentInvoker.of(EnvaliRegexModifierNameLoader.of(envaliRegexMeta.getEnvaliRegexModifiers())).invoke()
                 .forEach(envaliRegexModifierName -> {
                     annotationParameter.put(ParameterDataType.DEFAULT, envaliRegexModifierName.getRegexModifierName());
                 });
@@ -622,6 +624,11 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
      * @exception NullPointerException 引数として {@code null} が渡された場合
      */
     private void addEnvaliRegexMethod(@NonNull Annotation annotation, @NonNull EnvaliRegexMeta envaliRegexMeta) {
+
+        if (envaliRegexMeta.getEnvaliRegexMethod() == EnvaliRegexMethod.FIND) {
+            return;
+        }
+
         final String regexMethodName = ContentInvoker
                 .of(EnvaliRegexMethodNameLoader.of(envaliRegexMeta.getEnvaliRegexMethod())).invoke()
                 .getRegexMethodName();

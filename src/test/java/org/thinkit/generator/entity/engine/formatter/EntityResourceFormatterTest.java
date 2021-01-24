@@ -130,9 +130,7 @@ public final class EntityResourceFormatterTest {
     @Test
     void testWhenFieldHasEnvaliAnnotationWithOptions() {
 
-        final EntityMeta entityMeta = EntityMeta.builder().version("1.0.0").appliedEnvali(true)
-                .appliedEnvaliErrorType(true).appliedEnvaliRegexPreset(true).appliedEnvaliRegexModifier(true)
-                .appliedEnvaliRegexMethod(true).build();
+        final EntityMeta entityMeta = EntityMeta.builder().version("1.0.0").appliedEnvali(true).build();
 
         final EntityField entityField1 = EntityField.builder().description("This is the test field.").dataType("String")
                 .variableName("test").initialValue("test")
@@ -192,8 +190,7 @@ public final class EntityResourceFormatterTest {
     @Test
     void testWhenFieldHasLiteralEnvaliAnnotationWithOptions() {
 
-        final EntityMeta entityMeta = EntityMeta.builder().version("1.0.0").appliedEnvali(true)
-                .appliedEnvaliErrorType(true).build();
+        final EntityMeta entityMeta = EntityMeta.builder().version("1.0.0").appliedEnvali(true).build();
 
         final EntityField entityField1 = EntityField.builder().description("This is the test field.").dataType("String")
                 .variableName("test").initialValue("test")
@@ -264,8 +261,7 @@ public final class EntityResourceFormatterTest {
     @Test
     void testWhenFieldHasNumericEnvaliAnnotationWithOptions() {
 
-        final EntityMeta entityMeta = EntityMeta.builder().version("1.0.0").appliedEnvali(true)
-                .appliedEnvaliErrorType(true).build();
+        final EntityMeta entityMeta = EntityMeta.builder().version("1.0.0").appliedEnvali(true).build();
 
         final EntityField entityField1 = EntityField.builder().description("This is the test field.").dataType("String")
                 .variableName("test").initialValue("test")
@@ -575,8 +571,7 @@ public final class EntityResourceFormatterTest {
                         errorType = ErrorType.UNRECOVERABLE,
                         message = "message",
                         presetExpression = RegexPreset.WEB_URL,
-                        modifiers = {RegexModifier.DOTALL},
-                        method = RegexMethod.FIND)
+                        modifiers = {RegexModifier.DOTALL})
                 private String test4 = "testRegex2";
             }
             """.formatted(String.valueOf(LocalDate.now().getYear()));
