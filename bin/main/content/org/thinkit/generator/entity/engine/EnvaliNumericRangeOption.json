@@ -1,0 +1,133 @@
+{
+    "metadata": {
+        "author": "Kato Shinya",
+        "since": "1.0.0",
+        "creationDate": "2021/01/24",
+        "encoding": "UTF-8",
+        "description": "数値を扱うEnvaliアノテーションの範囲オプションを管理するコンテンツです。"
+    },
+    "selectionNodes": [
+        {
+            "node": {
+                "conditionId": "0",
+                "fromOption": "intFrom",
+                "toOption": "intTo"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "1",
+                "fromOption": "longFrom",
+                "toOption": "longTo"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "2",
+                "fromOption": "floatFrom",
+                "toOption": "floatTo"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "3",
+                "fromOption": "doubleFrom",
+                "toOption": "doubleTo"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "4",
+                "fromOption": "shortFrom",
+                "toOption": "shortTo"
+            }
+        },
+        {
+            "node": {
+                "conditionId": "5",
+                "fromOption": "byteFrom",
+                "toOption": "byteTo"
+            }
+        }
+    ],
+    "conditionNodes": [
+        {
+            "node": {
+                "conditionId": "0",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "numericDataTypeCode",
+                        "operator": "=",
+                        "operand": "0"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "1",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "numericDataTypeCode",
+                        "operator": "=",
+                        "operand": "1"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "2",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "numericDataTypeCode",
+                        "operator": "=",
+                        "operand": "2"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "3",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "numericDataTypeCode",
+                        "operator": "=",
+                        "operand": "3"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "4",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "numericDataTypeCode",
+                        "operator": "=",
+                        "operand": "4"
+                    }
+                ]
+            }
+        },
+        {
+            "node": {
+                "conditionId": "5",
+                "exclude": false,
+                "conditions": [
+                    {
+                        "keyName": "numericDataTypeCode",
+                        "operator": "=",
+                        "operand": "5"
+                    }
+                ]
+            }
+        }
+    ]
+}
