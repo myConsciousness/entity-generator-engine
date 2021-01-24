@@ -4,3 +4,4 @@ org.thinkit.generator.entity.engine.content.entity
 org.thinkit.generator.entity.engine.dto
 org.thinkit.generator.entity.engine.factory
 org.thinkit.generator.entity.engine.formatter
+org.thinkit.generator.entity.engine.helper

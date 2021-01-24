@@ -75,22 +75,6 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Envali適用可否</div>
 </dd>
-<dt><span class="member-name-link"><a href="org/thinkit/generator/entity/engine/dto/EntityMeta.EntityMetaBuilder.html#appliedEnvaliErrorType(boolean)">appliedEnvaliErrorType(boolean)</a></span> - クラス のメソッドorg.thinkit.generator.entity.engine.dto.<a href="org/thinkit/generator/entity/engine/dto/EntityMeta.EntityMetaBuilder.html" title="org.thinkit.generator.entity.engine.dto内のクラス">EntityMeta.EntityMetaBuilder</a></dt>
-<dd>
-<div class="block">Envaliエラー種別適用可否</div>
-</dd>
-<dt><span class="member-name-link"><a href="org/thinkit/generator/entity/engine/dto/EntityMeta.EntityMetaBuilder.html#appliedEnvaliRegexMethod(boolean)">appliedEnvaliRegexMethod(boolean)</a></span> - クラス のメソッドorg.thinkit.generator.entity.engine.dto.<a href="org/thinkit/generator/entity/engine/dto/EntityMeta.EntityMetaBuilder.html" title="org.thinkit.generator.entity.engine.dto内のクラス">EntityMeta.EntityMetaBuilder</a></dt>
-<dd>
-<div class="block">Envali正規表現メソッド適用可否</div>
-</dd>
-<dt><span class="member-name-link"><a href="org/thinkit/generator/entity/engine/dto/EntityMeta.EntityMetaBuilder.html#appliedEnvaliRegexModifier(boolean)">appliedEnvaliRegexModifier(boolean)</a></span> - クラス のメソッドorg.thinkit.generator.entity.engine.dto.<a href="org/thinkit/generator/entity/engine/dto/EntityMeta.EntityMetaBuilder.html" title="org.thinkit.generator.entity.engine.dto内のクラス">EntityMeta.EntityMetaBuilder</a></dt>
-<dd>
-<div class="block">Envali正規表現フラグ適用可否</div>
-</dd>
-<dt><span class="member-name-link"><a href="org/thinkit/generator/entity/engine/dto/EntityMeta.EntityMetaBuilder.html#appliedEnvaliRegexPreset(boolean)">appliedEnvaliRegexPreset(boolean)</a></span> - クラス のメソッドorg.thinkit.generator.entity.engine.dto.<a href="org/thinkit/generator/entity/engine/dto/EntityMeta.EntityMetaBuilder.html" title="org.thinkit.generator.entity.engine.dto内のクラス">EntityMeta.EntityMetaBuilder</a></dt>
-<dd>
-<div class="block">Envali正規表現プリセット適用可否</div>
-</dd>
 </dl>
 <h2 class="title" id="I:B">B</h2>
 <dl class="index">
@@ -593,6 +577,10 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Envaliフレームワークのアノテーションを管理するカタログです。</div>
 </dd>
+<dt><a href="org/thinkit/generator/entity/engine/helper/EnvaliAnnotationAnalyzer.html" title="org.thinkit.generator.entity.engine.helper内のクラス"><span class="type-name-link">EnvaliAnnotationAnalyzer</span></a> - <a href="org/thinkit/generator/entity/engine/helper/package-summary.html">org.thinkit.generator.entity.engine.helper</a>のクラス</dt>
+<dd>
+<div class="block">Envaliアノテーションで付加するパラメータの適用可否を解析するクラスです。</div>
+</dd>
 <dt><a href="org/thinkit/generator/entity/engine/content/entity/EnvaliAnnotationPackage.html" title="org.thinkit.generator.entity.engine.content.entity内のクラス"><span class="type-name-link">EnvaliAnnotationPackage</span></a> - <a href="org/thinkit/generator/entity/engine/content/entity/package-summary.html">org.thinkit.generator.entity.engine.content.entity</a>のクラス</dt>
 <dd>
 <div class="block">コンテンツ「EnvaliAnnotationPackage」の情報を管理するデータクラスです。</div>
@@ -911,6 +899,11 @@ loadScripts(document, 'script');</script>
 <dt><span class="member-name-link"><a href="org/thinkit/generator/entity/engine/catalog/EnvaliNumericDataType.html#FLOAT">FLOAT</a></span> - org.thinkit.generator.entity.engine.catalog.<a href="org/thinkit/generator/entity/engine/catalog/EnvaliNumericDataType.html" title="org.thinkit.generator.entity.engine.catalog内の列挙型">EnvaliNumericDataType</a></dt>
 <dd>
 <div class="block">float</div>
+</dd>
+<dt><span class="member-name-link"><a href="org/thinkit/generator/entity/engine/helper/EnvaliAnnotationAnalyzer.html#forField(java.util.List)">forField(List&lt;EntityField&gt;)</a></span> - クラス のstaticメソッドorg.thinkit.generator.entity.engine.helper.<a href="org/thinkit/generator/entity/engine/helper/EnvaliAnnotationAnalyzer.html" title="org.thinkit.generator.entity.engine.helper内のクラス">EnvaliAnnotationAnalyzer</a></dt>
+<dd>
+<div class="block"><a href="org/thinkit/generator/entity/engine/helper/EnvaliAnnotationAnalyzer.html" title="org.thinkit.generator.entity.engine.helper内のクラス"><code>EnvaliAnnotationAnalyzer</code></a> の新しいインスタンスを生成する際に引数として渡された
+ <code>entityFields</code> を解析し、Envaliアノテーションの各適用可否を導出します。</div>
 </dd>
 <dt><span class="member-name-link"><a href="org/thinkit/generator/entity/engine/formatter/EntityResourceFormatter.html#format(org.thinkit.generator.entity.engine.dto.EntityMatrix)">format(EntityMatrix)</a></span> - クラス のメソッドorg.thinkit.generator.entity.engine.formatter.<a href="org/thinkit/generator/entity/engine/formatter/EntityResourceFormatter.html" title="org.thinkit.generator.entity.engine.formatter内のクラス">EntityResourceFormatter</a></dt>
 <dd>&nbsp;</dd>
@@ -1361,21 +1354,21 @@ loadScripts(document, 'script');</script>
 <dd>
 <div class="block">Envali適用可否</div>
 </dd>
-<dt><span class="member-name-link"><a href="org/thinkit/generator/entity/engine/dto/EntityMeta.html#isAppliedEnvaliErrorType()">isAppliedEnvaliErrorType()</a></span> - クラス のメソッドorg.thinkit.generator.entity.engine.dto.<a href="org/thinkit/generator/entity/engine/dto/EntityMeta.html" title="org.thinkit.generator.entity.engine.dto内のクラス">EntityMeta</a></dt>
+<dt><span class="member-name-link"><a href="org/thinkit/generator/entity/engine/helper/EnvaliAnnotationAnalyzer.html#isAppliedEnvaliErrorType()">isAppliedEnvaliErrorType()</a></span> - クラス のメソッドorg.thinkit.generator.entity.engine.helper.<a href="org/thinkit/generator/entity/engine/helper/EnvaliAnnotationAnalyzer.html" title="org.thinkit.generator.entity.engine.helper内のクラス">EnvaliAnnotationAnalyzer</a></dt>
 <dd>
-<div class="block">Envaliエラー種別適用可否</div>
+<div class="block">Envaliエラー種別の適用可否</div>
 </dd>
-<dt><span class="member-name-link"><a href="org/thinkit/generator/entity/engine/dto/EntityMeta.html#isAppliedEnvaliRegexMethod()">isAppliedEnvaliRegexMethod()</a></span> - クラス のメソッドorg.thinkit.generator.entity.engine.dto.<a href="org/thinkit/generator/entity/engine/dto/EntityMeta.html" title="org.thinkit.generator.entity.engine.dto内のクラス">EntityMeta</a></dt>
+<dt><span class="member-name-link"><a href="org/thinkit/generator/entity/engine/helper/EnvaliAnnotationAnalyzer.html#isAppliedEnvaliRegexMethod()">isAppliedEnvaliRegexMethod()</a></span> - クラス のメソッドorg.thinkit.generator.entity.engine.helper.<a href="org/thinkit/generator/entity/engine/helper/EnvaliAnnotationAnalyzer.html" title="org.thinkit.generator.entity.engine.helper内のクラス">EnvaliAnnotationAnalyzer</a></dt>
 <dd>
-<div class="block">Envali正規表現メソッド適用可否</div>
+<div class="block">Envali正規表現解析メソッドの適用可否</div>
 </dd>
-<dt><span class="member-name-link"><a href="org/thinkit/generator/entity/engine/dto/EntityMeta.html#isAppliedEnvaliRegexModifier()">isAppliedEnvaliRegexModifier()</a></span> - クラス のメソッドorg.thinkit.generator.entity.engine.dto.<a href="org/thinkit/generator/entity/engine/dto/EntityMeta.html" title="org.thinkit.generator.entity.engine.dto内のクラス">EntityMeta</a></dt>
+<dt><span class="member-name-link"><a href="org/thinkit/generator/entity/engine/helper/EnvaliAnnotationAnalyzer.html#isAppliedEnvaliRegexModifier()">isAppliedEnvaliRegexModifier()</a></span> - クラス のメソッドorg.thinkit.generator.entity.engine.helper.<a href="org/thinkit/generator/entity/engine/helper/EnvaliAnnotationAnalyzer.html" title="org.thinkit.generator.entity.engine.helper内のクラス">EnvaliAnnotationAnalyzer</a></dt>
 <dd>
-<div class="block">Envali正規表現フラグ適用可否</div>
+<div class="block">Envali正規表現解析フラグの適用可否</div>
 </dd>
-<dt><span class="member-name-link"><a href="org/thinkit/generator/entity/engine/dto/EntityMeta.html#isAppliedEnvaliRegexPreset()">isAppliedEnvaliRegexPreset()</a></span> - クラス のメソッドorg.thinkit.generator.entity.engine.dto.<a href="org/thinkit/generator/entity/engine/dto/EntityMeta.html" title="org.thinkit.generator.entity.engine.dto内のクラス">EntityMeta</a></dt>
+<dt><span class="member-name-link"><a href="org/thinkit/generator/entity/engine/helper/EnvaliAnnotationAnalyzer.html#isAppliedEnvaliRegexPreset()">isAppliedEnvaliRegexPreset()</a></span> - クラス のメソッドorg.thinkit.generator.entity.engine.helper.<a href="org/thinkit/generator/entity/engine/helper/EnvaliAnnotationAnalyzer.html" title="org.thinkit.generator.entity.engine.helper内のクラス">EnvaliAnnotationAnalyzer</a></dt>
 <dd>
-<div class="block">Envali正規表現プリセット適用可否</div>
+<div class="block">Envali正規表現プリセットの適用可否</div>
 </dd>
 </dl>
 <h2 class="title" id="I:J">J</h2>
@@ -1584,6 +1577,8 @@ loadScripts(document, 'script');</script>
 <dt><a href="org/thinkit/generator/entity/engine/factory/package-summary.html">org.thinkit.generator.entity.engine.factory</a> - パッケージ org.thinkit.generator.entity.engine.factory</dt>
 <dd>&nbsp;</dd>
 <dt><a href="org/thinkit/generator/entity/engine/formatter/package-summary.html">org.thinkit.generator.entity.engine.formatter</a> - パッケージ org.thinkit.generator.entity.engine.formatter</dt>
+<dd>&nbsp;</dd>
+<dt><a href="org/thinkit/generator/entity/engine/helper/package-summary.html">org.thinkit.generator.entity.engine.helper</a> - パッケージ org.thinkit.generator.entity.engine.helper</dt>
 <dd>&nbsp;</dd>
 </dl>
 <h2 class="title" id="I:P">P</h2>
