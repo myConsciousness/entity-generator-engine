@@ -58,6 +58,13 @@ public final class EntityResource implements Serializable {
     private String resourceName;
 
     /**
+     * 拡張子
+     */
+    @Getter
+    @NonNull
+    private String extension;
+
+    /**
      * リソース
      */
     @Getter

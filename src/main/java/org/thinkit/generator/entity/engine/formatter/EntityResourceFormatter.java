@@ -19,6 +19,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.apache.commons.lang3.StringUtils;
+import org.thinkit.common.catalog.Extension;
 import org.thinkit.framework.content.ContentInvoker;
 import org.thinkit.framework.envali.Envali;
 import org.thinkit.generator.common.duke.catalog.AnnotationPattern;
@@ -134,8 +135,9 @@ public final class EntityResourceFormatter implements JavaResourceFormatter<Enti
 
             this.addDependentPackage(resource, entityDefinition.getEntityMeta(), entityDefinition.getEntityFields());
 
-            entityResourceGroup.add(EntityResource.builder().packageName(entityDefinition.getPackageName())
-                    .resourceName(className).resource(resource.createResource()).build());
+            entityResourceGroup
+                    .add(EntityResource.builder().packageName(entityDefinition.getPackageName()).resourceName(className)
+                            .extension(Extension.JAVA.getTag()).resource(resource.createResource()).build());
         });
     }
 
