@@ -37,6 +37,7 @@ import org.thinkit.generator.entity.engine.dto.EntityField;
 import org.thinkit.generator.entity.engine.dto.EntityMatrix;
 import org.thinkit.generator.entity.engine.dto.EntityMeta;
 import org.thinkit.generator.entity.engine.dto.EntityResourceGroup;
+import org.thinkit.generator.entity.engine.dto.EnvaliLiteralMeta;
 import org.thinkit.generator.entity.engine.dto.EnvaliMeta;
 import org.thinkit.generator.entity.engine.dto.EnvaliNumericMeta;
 import org.thinkit.generator.entity.engine.dto.EnvaliRegexMeta;
@@ -185,6 +186,78 @@ public final class EntityResourceFormatterTest {
 
         assertNotNull(entityResourceGroup);
         assertEquals(EXPECTED_ENTITY_WHEN_FIELD_HAS_ENVALI_ANNOTATION_WITH_OPTIONS,
+                entityResourceGroup.get(0).getResource());
+    }
+
+    @Test
+    void testWhenFieldHasLiteralEnvaliAnnotationWithOptions() {
+
+        final EntityMeta entityMeta = EntityMeta.builder().version("1.0.0").appliedEnvali(true)
+                .appliedEnvaliErrorType(true).build();
+
+        final EntityField entityField1 = EntityField.builder().description("This is the test field.").dataType("String")
+                .variableName("test").initialValue("test")
+                .entityEnvaliDefinitions(List.of(
+                        EntityEnvaliDefinition.builder().envaliAnnotation(EnvaliAnnotation.REQUIRE_NON_NULL)
+                                .envaliErrorType(EnvaliErrorType.RECOVERABLE).message("testMessage").build(),
+                        EntityEnvaliDefinition.builder().envaliAnnotation(EnvaliAnnotation.REQUIRE_NON_EMPTY).build()))
+                .build();
+
+        final EntityField entityField2 = EntityField.builder().description("This is the test field2.").dataType("int")
+                .variableName("test2").initialValue("0")
+                .entityEnvaliDefinitions(List.of(
+                        EntityEnvaliDefinition.builder().envaliAnnotation(EnvaliAnnotation.REQUIRE_POSITIVE).build()))
+                .build();
+
+        final EntityField entityField3 = EntityField.builder().description("This is the test field3.")
+                .dataType("String").variableName("test3")
+                .entityEnvaliDefinitions(List.of(EntityEnvaliDefinition.builder()
+                        .envaliAnnotation(EnvaliAnnotation.REQUIRE_START_WITH)
+                        .envaliErrorType(EnvaliErrorType.RECOVERABLE).message("message for start with annotation")
+                        .envaliMeta(EnvaliMeta.builder().envaliMetaType(EnvaliMetaType.LITERAL)
+                                .envaliLiteralMeta(EnvaliLiteralMeta.builder().prefix("start with something").build())
+                                .build())
+                        .build()))
+                .build();
+
+        final EntityField entityField4 = EntityField.builder().description("This is the test field4.")
+                .dataType("String").variableName("test4")
+                .entityEnvaliDefinitions(List.of(EntityEnvaliDefinition.builder()
+                        .envaliAnnotation(EnvaliAnnotation.REQUIRE_END_WITH)
+                        .envaliMeta(EnvaliMeta.builder().envaliMetaType(EnvaliMetaType.LITERAL)
+                                .envaliLiteralMeta(EnvaliLiteralMeta.builder().suffix("end with something").build())
+                                .build())
+                        .build()))
+                .build();
+
+        final EntityField entityField5 = EntityField.builder().description("This is the test field5.")
+                .dataType("String").variableName("test5")
+                .entityEnvaliDefinitions(List.of(EntityEnvaliDefinition.builder()
+                        .envaliAnnotation(EnvaliAnnotation.REQUIRE_START_WITH)
+                        .envaliMeta(EnvaliMeta.builder().envaliMetaType(EnvaliMetaType.LITERAL)
+                                .envaliLiteralMeta(EnvaliLiteralMeta.builder().prefix("start with something").build())
+                                .build())
+                        .build(),
+                        EntityEnvaliDefinition.builder().envaliAnnotation(EnvaliAnnotation.REQUIRE_END_WITH)
+                                .envaliMeta(EnvaliMeta.builder().envaliMetaType(EnvaliMetaType.LITERAL)
+                                        .envaliLiteralMeta(
+                                                EnvaliLiteralMeta.builder().suffix("end with something").build())
+                                        .build())
+                                .build()))
+                .build();
+
+        final EntityDefinition entityDefinition = EntityDefinition.builder().entityMeta(entityMeta)
+                .packageName("org.thinkit.test.generator.entity").className("TestEntity")
+                .entityFields(List.of(entityField1, entityField2, entityField3, entityField4, entityField5)).build();
+
+        final EntityMatrix entityMatrix = EntityMatrix.builder()
+                .entityCreator(EntityCreator.builder().creator("Kato Shinya").build())
+                .entityDefinitions(List.of(entityDefinition)).build();
+
+        final EntityResourceGroup entityResourceGroup = EntityResourceFormatter.newInstance().format(entityMatrix);
+
+        assertNotNull(entityResourceGroup);
+        assertEquals(EXPECTED_ENTITY_WHEN_FIELD_HAS_LITERAL_ENVALI_ANNOTATION_WITH_OPTIONS,
                 entityResourceGroup.get(0).getResource());
     }
 
@@ -513,7 +586,7 @@ public final class EntityResourceFormatterTest {
      */
     private static final String EXPECTED_ENTITY_WHEN_FIELD_HAS_NUMERIC_ENVALI_ANNOTATION_WITH_OPTIONS = """
             /*
-             * Copyright 2021 Kato Shinya.
+             * Copyright %s Kato Shinya.
              *
              * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
              * in compliance with the License. You may obtain a copy of the License at
@@ -585,6 +658,89 @@ public final class EntityResourceFormatterTest {
                 @Getter
                 @RequireRangeTo(message = "message for byte", byteTo = 1)
                 private byte test5;
+            }
+            """.formatted(String.valueOf(LocalDate.now().getYear()));
+
+    /**
+     * フィールドが文字列を扱うオプション付きEnvaliアノテーションを保つ場合のエンティティの期待値
+     */
+    private static final String EXPECTED_ENTITY_WHEN_FIELD_HAS_LITERAL_ENVALI_ANNOTATION_WITH_OPTIONS = """
+            /*
+             * Copyright %s Kato Shinya.
+             *
+             * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+             * in compliance with the License. You may obtain a copy of the License at
+             *
+             *     http://www.apache.org/licenses/LICENSE-2.0
+             *
+             * Unless required by applicable law or agreed to in writing, software distributed under the License
+             * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+             * or implied. See the License for the specific language governing permissions and limitations under
+             * the License.
+             */
+
+            package org.thinkit.test.generator.entity;
+
+            import org.thinkit.framework.envali.annotation.RequireNonNull;
+            import org.thinkit.framework.envali.annotation.RequireNonEmpty;
+            import org.thinkit.framework.envali.annotation.RequirePositive;
+            import org.thinkit.framework.envali.annotation.RequireStartWith;
+            import org.thinkit.framework.envali.annotation.RequireEndWith;
+            import org.thinkit.framework.envali.entity.ValidatableEntity;
+            import org.thinkit.framework.envali.catalog.ErrorType;
+            import java.io.Serializable;
+            import lombok.AccessLevel;
+            import lombok.AllArgsConstructor;
+            import lombok.Builder;
+            import lombok.EqualsAndHashCode;
+            import lombok.Getter;
+            import lombok.NoArgsConstructor;
+            import lombok.ToString;
+
+            /**
+             * This entity class was created by Entity Generator.
+             *
+             * @author Kato Shinya
+             * @since 1.0.0
+             */
+            @ToString
+            @EqualsAndHashCode
+            @Builder(toBuilder = true)
+            @NoArgsConstructor(access = AccessLevel.PRIVATE)
+            @AllArgsConstructor(access = AccessLevel.PRIVATE)
+            public final class TestEntity implements ValidatableEntity, Serializable {
+
+                /** The serial version UID */
+                private static final long serialVersionUID = 1L;
+
+                /** This is the test field. */
+                @Getter
+                @Builder.Default
+                @RequireNonNull(errorType = ErrorType.RECOVERABLE, message = "testMessage")
+                @RequireNonEmpty
+                private String test = "test";
+
+                /** This is the test field2. */
+                @Getter @Builder.Default @RequirePositive private int test2 = 0;
+
+                /** This is the test field3. */
+                @Getter
+                @RequireStartWith(
+                        errorType = ErrorType.RECOVERABLE,
+                        message = "message for start with annotation",
+                        prefix = "start with something")
+                private String test3;
+
+                /** This is the test field4. */
+                @Getter
+                @RequireEndWith(suffix = "end with something")
+                private String test4;
+
+                /** This is the test field5. */
+                @Getter
+                @RequireStartWith(prefix = "start with something")
+                @RequireEndWith(suffix = "end with something")
+                private String test5;
             }
             """.formatted(String.valueOf(LocalDate.now().getYear()));
 }
