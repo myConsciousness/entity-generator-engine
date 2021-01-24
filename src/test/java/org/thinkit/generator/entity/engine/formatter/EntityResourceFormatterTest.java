@@ -54,41 +54,28 @@ public final class EntityResourceFormatterTest {
 	@Test
 	void testBaseCase() {
 
-		final EntityMeta entityMeta = EntityMeta.builder().version("1.0.0")
-				.dependentPackages(List.of("java.util.ArrayList", "java.util.List")).build();
-
-		final EntityField entityField = EntityField.builder().description("This is the test field.").dataType("String")
-				.variableName("test").build();
-
-		final EntityDefinition entityDefinition = EntityDefinition.builder().entityMeta(entityMeta)
-				.packageName("org.thinkit.test.generator.entity").className("TestEntity")
-				.entityFields(List.of(entityField)).build();
-
 		final EntityMatrix entityMatrix = EntityMatrix.builder()
 				.entityCreator(EntityCreator.builder().creator("Kato Shinya").build())
-				.entityDefinitions(List.of(entityDefinition)).build();
+				.entityDefinitions(List.of(this.getEntityDefinitionOfBaseCase())).build();
 
 		final EntityResourceGroup entityResourceGroup = EntityResourceFormatter.newInstance().format(entityMatrix);
 
 		assertNotNull(entityResourceGroup);
-		assertEquals(EXPECTED_ENTITY_DEFAULT, entityResourceGroup.get(0).getResource());
+
+		final EntityResource entityResource = entityResourceGroup.get(0);
+
+		assertEquals("org.thinkit.test.generator.entity", entityResource.getPackageName());
+		assertEquals("TestEntity", entityResource.getResourceName());
+		assertEquals("java", entityResource.getExtension());
+		assertEquals(EXPECTED_ENTITY_DEFAULT, entityResource.getResource());
 	}
 
 	@Test
 	void testWhenFieldHasDefaultValue() {
 
-		final EntityMeta entityMeta = EntityMeta.builder().version("1.0.0").build();
-
-		final EntityField entityField = EntityField.builder().description("This is the test field.").dataType("String")
-				.variableName("test").initialValue("test").build();
-
-		final EntityDefinition entityDefinition = EntityDefinition.builder().entityMeta(entityMeta)
-				.packageName("org.thinkit.test.generator.entity").className("TestEntity")
-				.entityFields(List.of(entityField)).build();
-
 		final EntityMatrix entityMatrix = EntityMatrix.builder()
 				.entityCreator(EntityCreator.builder().creator("Kato Shinya").build())
-				.entityDefinitions(List.of(entityDefinition)).build();
+				.entityDefinitions(List.of(this.getEntityDefinitionWhenFieldHasDefaultValue())).build();
 
 		final EntityResourceGroup entityResourceGroup = EntityResourceFormatter.newInstance().format(entityMatrix);
 
@@ -104,6 +91,146 @@ public final class EntityResourceFormatterTest {
 
 	@Test
 	void testWhenFieldHasEnvaliAnnotation() {
+
+		final EntityMatrix entityMatrix = EntityMatrix.builder()
+				.entityCreator(EntityCreator.builder().creator("Kato Shinya").build())
+				.entityDefinitions(List.of(this.getEntityDefinitionWhenFieldHasEnvaliAnnotation())).build();
+
+		final EntityResourceGroup entityResourceGroup = EntityResourceFormatter.newInstance().format(entityMatrix);
+
+		assertNotNull(entityResourceGroup);
+
+		final EntityResource entityResource = entityResourceGroup.get(0);
+
+		assertEquals("org.thinkit.test.generator.entity", entityResource.getPackageName());
+		assertEquals("TestEntity", entityResource.getResourceName());
+		assertEquals("java", entityResource.getExtension());
+		assertEquals(EXPECTED_ENTITY_WHEN_FIELD_HAS_ENVALI_ANNOTATION, entityResource.getResource());
+	}
+
+	@Test
+	void testWhenFieldHasEnvaliAnnotationWithOptions() {
+
+		final EntityMatrix entityMatrix = EntityMatrix.builder()
+				.entityCreator(EntityCreator.builder().creator("Kato Shinya").build())
+				.entityDefinitions(List.of(this.getEntityDefinitionWhenFieldHasEnvaliAnnotationWithOptions())).build();
+
+		final EntityResourceGroup entityResourceGroup = EntityResourceFormatter.newInstance().format(entityMatrix);
+
+		assertNotNull(entityResourceGroup);
+
+		final EntityResource entityResource = entityResourceGroup.get(0);
+
+		assertEquals("org.thinkit.test.generator.entity", entityResource.getPackageName());
+		assertEquals("TestEntity", entityResource.getResourceName());
+		assertEquals("java", entityResource.getExtension());
+		assertEquals(EXPECTED_ENTITY_WHEN_FIELD_HAS_ENVALI_ANNOTATION_WITH_OPTIONS, entityResource.getResource());
+	}
+
+	@Test
+	void testWhenFieldHasLiteralEnvaliAnnotationWithOptions() {
+
+		final EntityMatrix entityMatrix = EntityMatrix.builder()
+				.entityCreator(EntityCreator.builder().creator("Kato Shinya").build())
+				.entityDefinitions(List.of(this.getEntityDefinitionWhenFieldHasLiteralEnvaliAnnotationWithOptions()))
+				.build();
+
+		final EntityResourceGroup entityResourceGroup = EntityResourceFormatter.newInstance().format(entityMatrix);
+
+		assertNotNull(entityResourceGroup);
+
+		final EntityResource entityResource = entityResourceGroup.get(0);
+
+		assertEquals("org.thinkit.test.generator.entity", entityResource.getPackageName());
+		assertEquals("TestEntity", entityResource.getResourceName());
+		assertEquals("java", entityResource.getExtension());
+		assertEquals(EXPECTED_ENTITY_WHEN_FIELD_HAS_LITERAL_ENVALI_ANNOTATION_WITH_OPTIONS,
+				entityResource.getResource());
+	}
+
+	@Test
+	void testWhenFieldHasNumericEnvaliAnnotationWithOptions() {
+
+		final EntityMatrix entityMatrix = EntityMatrix.builder()
+				.entityCreator(EntityCreator.builder().creator("Kato Shinya").build())
+				.entityDefinitions(List.of(this.getEntityDefinitionWhenFieldHasNumericEnvaliAnnotationWithOptions()))
+				.build();
+
+		final EntityResourceGroup entityResourceGroup = EntityResourceFormatter.newInstance().format(entityMatrix);
+
+		assertNotNull(entityResourceGroup);
+
+		final EntityResource entityResource = entityResourceGroup.get(0);
+
+		assertEquals("org.thinkit.test.generator.entity", entityResource.getPackageName());
+		assertEquals("TestEntity", entityResource.getResourceName());
+		assertEquals("java", entityResource.getExtension());
+		assertEquals(EXPECTED_ENTITY_WHEN_FIELD_HAS_NUMERIC_ENVALI_ANNOTATION_WITH_OPTIONS,
+				entityResource.getResource());
+	}
+
+	@Test
+	void testWhenMultiplePattern() {
+
+		final EntityMatrix entityMatrix = EntityMatrix.builder()
+				.entityCreator(EntityCreator.builder().creator("Kato Shinya").build())
+				.entityDefinitions(List.of(this.getEntityDefinitionOfBaseCase(),
+						this.getEntityDefinitionWhenFieldHasDefaultValue(),
+						this.getEntityDefinitionWhenFieldHasEnvaliAnnotation(),
+						this.getEntityDefinitionWhenFieldHasEnvaliAnnotationWithOptions(),
+						this.getEntityDefinitionWhenFieldHasLiteralEnvaliAnnotationWithOptions(),
+						this.getEntityDefinitionWhenFieldHasNumericEnvaliAnnotationWithOptions()))
+				.build();
+
+		final EntityResourceGroup entityResourceGroup = EntityResourceFormatter.newInstance().format(entityMatrix);
+
+		assertNotNull(entityResourceGroup);
+
+		final List<String> expectedTemplates = List.of(EXPECTED_ENTITY_DEFAULT,
+				EXPECTED_ENTITY_WHEN_FIELD_HAS_INITIAL_VALUE, EXPECTED_ENTITY_WHEN_FIELD_HAS_ENVALI_ANNOTATION,
+				EXPECTED_ENTITY_WHEN_FIELD_HAS_ENVALI_ANNOTATION_WITH_OPTIONS,
+				EXPECTED_ENTITY_WHEN_FIELD_HAS_LITERAL_ENVALI_ANNOTATION_WITH_OPTIONS,
+				EXPECTED_ENTITY_WHEN_FIELD_HAS_NUMERIC_ENVALI_ANNOTATION_WITH_OPTIONS);
+
+		for (int i = 0, size = entityResourceGroup.size(); i < size; i++) {
+			final EntityResource entityResource = entityResourceGroup.get(i);
+			assertEquals("org.thinkit.test.generator.entity", entityResource.getPackageName());
+			assertEquals("TestEntity", entityResource.getResourceName());
+			assertEquals("java", entityResource.getExtension());
+			assertEquals(expectedTemplates.get(i), entityResource.getResource());
+		}
+	}
+
+	private EntityDefinition getEntityDefinitionOfBaseCase() {
+
+		final EntityMeta entityMeta = EntityMeta.builder().version("1.0.0")
+				.dependentPackages(List.of("java.util.ArrayList", "java.util.List")).build();
+
+		final EntityField entityField = EntityField.builder().description("This is the test field.").dataType("String")
+				.variableName("test").build();
+
+		final EntityDefinition entityDefinition = EntityDefinition.builder().entityMeta(entityMeta)
+				.packageName("org.thinkit.test.generator.entity").className("TestEntity")
+				.entityFields(List.of(entityField)).build();
+
+		return entityDefinition;
+	}
+
+	private EntityDefinition getEntityDefinitionWhenFieldHasDefaultValue() {
+
+		final EntityMeta entityMeta = EntityMeta.builder().version("1.0.0").build();
+
+		final EntityField entityField = EntityField.builder().description("This is the test field.").dataType("String")
+				.variableName("test").initialValue("test").build();
+
+		final EntityDefinition entityDefinition = EntityDefinition.builder().entityMeta(entityMeta)
+				.packageName("org.thinkit.test.generator.entity").className("TestEntity")
+				.entityFields(List.of(entityField)).build();
+
+		return entityDefinition;
+	}
+
+	private EntityDefinition getEntityDefinitionWhenFieldHasEnvaliAnnotation() {
 
 		final EntityMeta entityMeta = EntityMeta.builder().version("1.0.0").appliedEnvali(true).build();
 
@@ -124,24 +251,10 @@ public final class EntityResourceFormatterTest {
 				.packageName("org.thinkit.test.generator.entity").className("TestEntity")
 				.entityFields(List.of(entityField1, entityField2)).build();
 
-		final EntityMatrix entityMatrix = EntityMatrix.builder()
-				.entityCreator(EntityCreator.builder().creator("Kato Shinya").build())
-				.entityDefinitions(List.of(entityDefinition)).build();
-
-		final EntityResourceGroup entityResourceGroup = EntityResourceFormatter.newInstance().format(entityMatrix);
-
-		assertNotNull(entityResourceGroup);
-
-		final EntityResource entityResource = entityResourceGroup.get(0);
-
-		assertEquals("org.thinkit.test.generator.entity", entityResource.getPackageName());
-		assertEquals("TestEntity", entityResource.getResourceName());
-		assertEquals("java", entityResource.getExtension());
-		assertEquals(EXPECTED_ENTITY_WHEN_FIELD_HAS_ENVALI_ANNOTATION, entityResource.getResource());
+		return entityDefinition;
 	}
 
-	@Test
-	void testWhenFieldHasEnvaliAnnotationWithOptions() {
+	private EntityDefinition getEntityDefinitionWhenFieldHasEnvaliAnnotationWithOptions() {
 
 		final EntityMeta entityMeta = EntityMeta.builder().version("1.0.0").appliedEnvali(true).build();
 
@@ -189,24 +302,10 @@ public final class EntityResourceFormatterTest {
 				.packageName("org.thinkit.test.generator.entity").className("TestEntity")
 				.entityFields(List.of(entityField1, entityField2, entityField3, entityField4)).build();
 
-		final EntityMatrix entityMatrix = EntityMatrix.builder()
-				.entityCreator(EntityCreator.builder().creator("Kato Shinya").build())
-				.entityDefinitions(List.of(entityDefinition)).build();
-
-		final EntityResourceGroup entityResourceGroup = EntityResourceFormatter.newInstance().format(entityMatrix);
-
-		assertNotNull(entityResourceGroup);
-
-		final EntityResource entityResource = entityResourceGroup.get(0);
-
-		assertEquals("org.thinkit.test.generator.entity", entityResource.getPackageName());
-		assertEquals("TestEntity", entityResource.getResourceName());
-		assertEquals("java", entityResource.getExtension());
-		assertEquals(EXPECTED_ENTITY_WHEN_FIELD_HAS_ENVALI_ANNOTATION_WITH_OPTIONS, entityResource.getResource());
+		return entityDefinition;
 	}
 
-	@Test
-	void testWhenFieldHasLiteralEnvaliAnnotationWithOptions() {
+	private EntityDefinition getEntityDefinitionWhenFieldHasLiteralEnvaliAnnotationWithOptions() {
 
 		final EntityMeta entityMeta = EntityMeta.builder().version("1.0.0").appliedEnvali(true).build();
 
@@ -265,25 +364,10 @@ public final class EntityResourceFormatterTest {
 				.packageName("org.thinkit.test.generator.entity").className("TestEntity")
 				.entityFields(List.of(entityField1, entityField2, entityField3, entityField4, entityField5)).build();
 
-		final EntityMatrix entityMatrix = EntityMatrix.builder()
-				.entityCreator(EntityCreator.builder().creator("Kato Shinya").build())
-				.entityDefinitions(List.of(entityDefinition)).build();
-
-		final EntityResourceGroup entityResourceGroup = EntityResourceFormatter.newInstance().format(entityMatrix);
-
-		assertNotNull(entityResourceGroup);
-
-		final EntityResource entityResource = entityResourceGroup.get(0);
-
-		assertEquals("org.thinkit.test.generator.entity", entityResource.getPackageName());
-		assertEquals("TestEntity", entityResource.getResourceName());
-		assertEquals("java", entityResource.getExtension());
-		assertEquals(EXPECTED_ENTITY_WHEN_FIELD_HAS_LITERAL_ENVALI_ANNOTATION_WITH_OPTIONS,
-				entityResource.getResource());
+		return entityDefinition;
 	}
 
-	@Test
-	void testWhenFieldHasNumericEnvaliAnnotationWithOptions() {
+	private EntityDefinition getEntityDefinitionWhenFieldHasNumericEnvaliAnnotationWithOptions() {
 
 		final EntityMeta entityMeta = EntityMeta.builder().version("1.0.0").appliedEnvali(true).build();
 
@@ -345,21 +429,7 @@ public final class EntityResourceFormatterTest {
 				.packageName("org.thinkit.test.generator.entity").className("TestEntity")
 				.entityFields(List.of(entityField1, entityField2, entityField3, entityField4, entityField5)).build();
 
-		final EntityMatrix entityMatrix = EntityMatrix.builder()
-				.entityCreator(EntityCreator.builder().creator("Kato Shinya").build())
-				.entityDefinitions(List.of(entityDefinition)).build();
-
-		final EntityResourceGroup entityResourceGroup = EntityResourceFormatter.newInstance().format(entityMatrix);
-
-		assertNotNull(entityResourceGroup);
-
-		final EntityResource entityResource = entityResourceGroup.get(0);
-
-		assertEquals("org.thinkit.test.generator.entity", entityResource.getPackageName());
-		assertEquals("TestEntity", entityResource.getResourceName());
-		assertEquals("java", entityResource.getExtension());
-		assertEquals(EXPECTED_ENTITY_WHEN_FIELD_HAS_NUMERIC_ENVALI_ANNOTATION_WITH_OPTIONS,
-				entityResource.getResource());
+		return entityDefinition;
 	}
 
 	/**
