@@ -23,7 +23,7 @@ plugins {
 
 publishing {
    publications {
-        group 'org.thinkit.generator.common'
+        group 'org.thinkit.generator.entity.engine'
         version = gitVersion()
 
         gpr(MavenPublication) {
@@ -34,7 +34,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/myConsciousness/generator-commons")
+            url = uri("https://maven.pkg.github.com/myConsciousness/entity-generator-engine")
             credentials {
                 username = System.getenv("GITHUB_USER")
                 password = System.getenv("GITHUB_PUBLISH_TOKEN")
@@ -46,7 +46,7 @@ publishing {
 repositories {
     maven {
         name = "GitHubPackages"
-        url = uri("https://maven.pkg.github.com/myConsciousness/generator-commons")
+        url = uri("https://maven.pkg.github.com/myConsciousness/entity-generator-engine")
         credentials {
             username = System.getenv("GITHUB_USER")
             password = System.getenv("GITHUB_DOWNLOAD_PACKAGE_TOKEN")
